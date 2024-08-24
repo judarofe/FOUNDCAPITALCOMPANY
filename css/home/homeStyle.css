@@ -1,0 +1,115 @@
+/* seccion 1 */
+.seccion_1{
+    background-image: url(../../img/home/homeFondo.png);
+}
+
+.seccion_1 h2{
+    color: var(--blanco);
+}
+
+.seccion_1 hr{
+    width: 60%;
+    margin: auto;
+    border: none;
+    border-bottom: 0.2vw solid var(--blanco);
+}
+
+.seccion_2{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:    ". customers transactions payments ."
+                            ". . . . ."
+                            "info info . ilustracion ilustracion";
+}
+
+.customers{
+    grid-area: customers;
+}
+.transactions{
+    grid-area: transactions;
+}
+.payments{
+    grid-area: payments;
+}
+
+.info{
+    grid-area: info;
+}
+
+.ilustracion{
+    grid-area: ilustracion;
+}
+
+.marcador{
+    text-align: center;
+    line-height: 1.2;
+}
+
+.marcador p:nth-of-type(1) {
+    font-size: 6vw;
+}
+
+.ilustracion img{
+    width: 100%;
+}
+
+.slideHome{
+    width: 95%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "izquierda derecha";
+}
+
+.izquierda{
+    grid-area: izquierda;
+}
+
+.derecha{
+    grid-area: derecha;
+}
+
+.videoSlide{
+    width: 100%;
+    height: 46.4vw;
+    padding: 3vw;
+}
+
+.videoSlide img{
+    width: 100%;
+}
+
+.texto_1 {
+    height: 46.4vw;
+}
+
+.texto_1_1 svg{
+    height: 2vw;
+}
+
+.seccion_6{
+    background-image: url(../../img/home/homeFondo2.png);
+    position: relative;
+}
+
+.seccion_6 .leyenda{
+    position: absolute;
+    bottom: 2vw;
+    width: 87vw;
+    padding: 1vw;
+    border-radius: 2vw;
+}
+
+.leyenda p{
+    font-size: 2.6vw;
+    text-align: center;
+}
+
+.seccion_clara img{
+    width: 100%;
+}
+
+.seccion_clara hr{
+    border: none;
+    border-bottom: 0.3vw solid var(--azul);
+}

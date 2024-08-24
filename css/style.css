@@ -1,0 +1,293 @@
+@font-face {
+    font-family: 'NotoSans-Medium';
+    src: url(../fonts/NotoSans-Medium.ttf);
+}
+
+@font-face {
+    font-family: 'NotoSans-Regular';
+    src: url(../fonts/NotoSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Hero';
+    src: url(../fonts/Hero.otf);
+}
+
+:root {
+    --blanco: #ffffff;
+    --azul: #00183B;
+    --azul_1: #375272;
+    --negro: #000000;
+}
+
+h1, h2, h3 {
+    font-family: 'Hero', sans-serif;
+    font-size: 3vw;
+    text-align: center;
+}
+
+p, a, table, li {
+    font-family: 'NotoSans-Regular', sans-serif;
+    font-size: 1.3vw;
+}
+
+body{
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+}
+
+.imagenFondo{
+    background-size: cover;
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+
+section{
+    width: 100vw;
+    padding: 5vw;
+    padding-top: 10vw;
+}
+
+.centrarElementos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seccion_oscura{
+    background-color: var(--azul);
+    color: var(--blanco);
+}
+
+.seccion_oscura2{
+    background-color: var(--azul);
+    color: var(--blanco);
+}
+
+.seccion_clara{
+    background-color: var(--blanco);
+    color: var(--azul);
+}
+
+.seccion_clara h1, .seccion_clara h2, .seccion_clara h3{
+    color: var(--azul);
+}
+
+.galeriaX4 {
+    margin: 5vw 0vw 5vw 0vw;
+    display: grid;
+    gap: 3vw;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.articulos{
+    width: 95%;
+    margin: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.articulos article{
+    margin: 5%;
+    width: 35%;
+    min-width: 150px;
+}
+
+.articulos article:hover{
+    transform: scale(1.05);
+}
+
+.articulos article:active {
+	position:relative;
+	top:1px;
+}
+
+.tarjeta img{
+    width: 100%;
+}
+
+.tarjeta .row{
+    margin-bottom: 2.5vw;
+}
+
+.tarjeta h5{
+    font-size: 2vw;
+}
+
+.tarjeta h6{
+    font-size: 1.2vw;
+}
+
+.tarjeta .card{
+    padding: 0.6vw;
+}
+
+.tarjeta svg {
+    height: 1vw;
+}
+
+.btn-articule{
+    background-color: var(--azul);
+    color: var(--blanco);
+    font-size: 1.3vw;
+    width: 100%;
+}
+
+.btn-articule:hover{
+    background-color: var(--azul);
+    color: var(--blanco);
+    transform: scale(1.1);
+}
+
+.card{
+    border: 0.2vw solid var(--azul);
+    border-radius: 2vw;
+    box-shadow: 0.5vw 0.5vw 0vw 0vw var(--azul_1);
+}
+
+.primerSeccion{
+    padding-top: 10vw;
+    padding-bottom: 3vw;
+}
+
+.seccion_oscura hr{
+    width: 30%;
+    margin: auto;
+    border: none;
+    border-bottom: 0.2vw solid var(--blanco);
+}
+
+.cabeceraTable th{
+    background-color: var(--azul);
+    color: var(--blanco);
+    border: 0.1vw solid var(--blanco);
+}
+
+.espacioTabla th{
+    background-color: transparent;
+}
+
+.cuerpotabla td{
+    border-left: 0.1vw solid var(--azul);
+    border-right: 0.1vw solid var(--azul);
+}
+
+.tablaDepositos thead{
+    border-radius: 10px;
+}
+
+section hr{
+    width: 30%;
+    margin: auto;
+    border: none;
+    border-bottom: 0.2vw solid var(--azul);
+}
+
+.cuerpotabla tr:last-child td{
+    border-bottom: 0.1vw solid var(--azul);
+}
+
+.cuerpotabla tr:first-child td{
+    border-top: 0.1vw solid var(--azul);
+}
+
+.formDepositar {
+    width: 50%;
+    margin: auto;
+    background-color: var(--blanco);
+    border-radius: 2vw;
+    border: none;
+    position: relative;
+    padding: 2vw;
+    font-family: 'NotoSans-Regular', sans-serif;
+}
+
+.botonExtra{
+    width: 50%;
+    margin: auto;
+}
+.formDepositar input,
+.formDepositar select{
+    background-color: var(--azul_1);
+    border: 0.5vw solid var(--azul_1);
+    color: var(--blanco);
+}
+
+.formDepositar span{
+    background-color: var(--azul);
+    border: 0.5vw solid var(--azul);
+    color: var(--blanco);
+}
+
+.btnExtra{
+    display: block;
+    width: 40%;
+    margin: auto;
+    border: none;
+    font-family: 'Hero', sans-serif;
+    padding: 1.2vw;
+    background: linear-gradient(0deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+    border-radius: 0 0 2vw 2vw;
+    color: var(--blanco);
+}
+
+footer{
+    padding-top: 1.5vw;
+}
+
+.retirosForm {
+    width: 50%;
+    margin: auto;
+    border-radius: 2vw;
+    border: none;
+    position: relative;
+    padding: 2vw;
+    font-family: 'NotoSans-Regular', sans-serif;
+}
+
+.retirosForm input,
+.retirosForm select{
+    background-color: var(--blanco);
+    border: 0.5vw solid var(--blanco);
+    color: var(--azul);
+}
+
+.retirosForm h3{
+    color: var(--blanco);
+}
+
+.retirosForm span{
+    background-color: var(--azul);
+    border: 0.1vw solid var(--azul_1);
+    color: var(--blanco);
+}
+
+.btn-articule2{
+    background-color: var(--blanco);
+    color: var(--azul);
+    font-size: 1.3vw;
+}
+
+.btn-articule2:hover{
+    background-color: var(--blanco);
+    color: var(--azul);
+    transform: scale(1.1);
+}
+
+.svgCard{
+    height: 5vw;
+    margin: auto;
+}
+
+.inputCard {
+    width: 100%;
+    background-color: var(--azul_1);
+    color: var(--blanco);
+    padding: 0.5vw;
+    text-align: center;
+    border-radius: 0.5vw;
+}

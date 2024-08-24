@@ -1,0 +1,70 @@
+.linkReferido{
+    width: 100%;
+    padding-top: 0.6vw;
+    padding-bottom: 0.1vw;
+    background-color: #4C5C75;
+    color: #ffffff;
+    font-size: 1.5vw;
+    text-align: center;
+    border-radius: 0.6vw;
+}
+
+.contPublicidad{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2vw;
+    grid-row-gap: 2vw;
+    grid-template-rows: 10vw 10vw 10vw;
+    grid-template-areas:    "video video videoTxt"
+                            "pdf1 pdf2 pdfTxt"
+                            "flyer1 flyer2 flyerTxt";
+}
+
+.video{
+    grid-area: video;
+    background-color: #00183B;
+}
+
+.videoTxt{
+    grid-area: videoTxt;
+}
+
+.videoTxt p{
+    text-align: right;
+}
+
+.pdf1{
+    grid-area: pdf1;
+    background-color: #00183B;
+}
+
+.pdf2{
+    grid-area: pdf2;
+    background-color: #00183B;
+}
+
+.pdfTxt{
+    grid-area: pdfTxt;
+}
+
+.pdfTxt p{
+    text-align: right;
+}
+
+.flyer1{
+    grid-area: flyer1;
+    background-color: #00183B;
+}
+
+.flyer2{
+    grid-area: flyer2;
+    background-color: #00183B;
+}
+
+.flyerTxt{
+    grid-area: flyerTxt;
+}
+
+.flyerTxt p{
+    text-align: right;
+}

@@ -1,0 +1,36 @@
+.calendario{
+    background-color: var(--blanco);
+    border-radius: 1vw;
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+    grid-template-areas: "flechaIz semana flechaDe";
+    color: #5F616E;
+    padding: 2vw;
+}
+
+.flechaIz{
+    grid-area: flechaIz;
+}
+.semana{
+    grid-area: semana;
+}
+.flechaDe{
+    grid-area: flechaDe;
+}
+
+.semanatable th, .semanatable td {
+    width: 14.28%;
+    text-align: center;
+}
+
+.flechaIz svg,
+.flechaDe svg{
+    font-size: 5vw;
+}
+
+.activoDias{
+    background-color: var(--azul) !important;
+    color: var(--blanco) !important;
+    border-radius: 1vw;
+    font-family: 'NotoSans-Regular', sans-serif;
+}

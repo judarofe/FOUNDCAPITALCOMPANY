@@ -1,0 +1,166 @@
+header{
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    font-size: 1.2vw;
+}
+
+.nav-link {
+    text-align: center;
+    font-family: 'NotoSans-Medium', sans-serif;
+}
+
+.navbar-centrado {
+    margin: auto;
+}
+
+.navbar-centrado .nav-link{
+    margin: 0 0.9vw 0 0.9vw;
+}
+
+.navbar-brand{
+    font-size: 1.2vw;
+    font-family: 'Hero', sans-serif;
+}
+
+#login{
+    background-color: rgb(0, 24, 59, 0.3);
+}
+
+#login .modal-header{
+    border: none;
+}
+
+#login .modal-content{
+    background-color: transparent;
+    border: none;
+}
+
+#login .modal-body{
+    background-color: var(--blanco);
+    -webkit-box-shadow: 0px 1vw 0px 0px var(--blanco);
+    -moz-box-shadow: 0px 1vw 0px 0px var(--blanco);
+    box-shadow: 0px 1vw 0px 0px var(--blanco);
+    border-radius: 2vw;
+    border: none;
+    position: relative;
+}
+
+#login .modal-footer{
+    border: none;
+}
+
+.modal-footer{
+    text-align: center;
+}
+
+.bodyModal .input-group-text{
+    background-color: var(--azul);
+    border: 0.5vw solid var(--azul);
+}
+
+#login svg {
+    width: 16px;
+    height: 16px;
+}
+
+.bodyModal input{
+    background-color: var(--azul_1);
+    border: 0.5vw solid var(--azul_1);
+    color: var(--blanco);
+}
+
+.bodyModal label{
+    color: var(--azul);
+}
+
+.modalFoo{
+    margin-top: 3vw;
+}
+
+.modalFoo p{
+    font-size: 15px;
+}
+
+#btnLogin{
+    background: linear-gradient(0deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+    height: 60px;
+    width: 80%;
+    margin: auto;
+    border-radius: 0 0 2vw 2vw;
+    font-family: 'NotoSans-Medium', sans-serif;
+    color: var(--blanco);
+}
+
+#btnLogin button{
+    color: var(--blanco);
+    font-size: 20px;
+    display: block;
+    width: 100%;
+}
+
+#btnLogin:hover{
+    transform: scale(1.1);
+}
+
+.espacio{
+    text-align: center;
+    width: 100%;
+    height: 90px;
+    position: relative;
+}
+
+.espacio img{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -150%;
+    width: 50%;
+}
+
+.modalFoo a{
+    text-decoration: none;
+    color: var(--azul_1);
+    font-size: 15px;
+}
+
+.modalFoo label{
+    color: var(--azul_1);
+    font-size: 15px;
+    font-family: 'NotoSans-Medium', sans-serif;
+}
+
+#Registro{
+    background-color: rgb(0, 24, 59, 0.3);
+}
+
+#Registro .modal-content{
+    border-radius: 2vw;
+    font-family: 'NotoSans-Medium', sans-serif;
+}
+
+#Registro .modal-title{
+    color: var(--azul);
+}
+
+#Registro .inputRegistro{
+    background-color: var(--azul_1);
+    border: 0.5vw solid var(--azul_1);
+    color: var(--blanco);
+}
+
+#Registro label{
+    color: var(--azul);
+}
+
+.botonRegistro{
+    background-color: var(--azul);
+    border: 0.5vw solid var(--azul);
+    color: var(--blanco);
+}
+
+.botonRegistro:hover{
+    background-color: var(--azul);
+    transform: scale(1.1);
+    color: var(--blanco);
+}

@@ -139,13 +139,13 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control inputRegistro" name="Nombre" id="floatingInputNombre" placeholder="Nombre">
+                                <input type="text" class="form-control inputRegistro" name="Nombre" id="floatingInputNombre" placeholder="Nombre" required>
                                 <label for="floatingInputNombre">Nombre</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control inputRegistro" name="Apellido" id="floatingInputApellido" placeholder="Apellido">
+                                <input type="text" class="form-control inputRegistro" name="Apellido" id="floatingInputApellido" placeholder="Apellido" required>
                                 <label for="floatingInputApellido">Apellido</label>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control inputRegistro" name="Email" id="floatingInputemail" placeholder="Correo electrónico">
+                                <input type="email" class="form-control inputRegistro" name="Email" id="floatingInputemail" placeholder="Correo electrónico" required>
                                 <label for="floatingInputemail">Correo electrónico</label>
                             </div>
                         </div>
@@ -161,7 +161,15 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control inputRegistro" name="Password_1" id="floatingInputpassword" placeholder="Contraseña">
+                                <input type="text" class="form-control inputRegistro" name="userName" id="floatingInputuserName" placeholder="Nombre de usuario" required>
+                                <label for="floatingInputuserName">Nombre de usuario</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control inputRegistro" name="Password_1" id="floatingInputpassword" placeholder="Contraseña" required>
                                 <label for="floatingInputpassword">Contraseña</label>
                             </div>
                         </div>
@@ -169,7 +177,7 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control inputRegistro" name="Password_2" id="floatingInputpasswordConf" placeholder="Contraseña">
+                                <input type="password" class="form-control inputRegistro" name="Password_2" id="floatingInputpasswordConf" placeholder="Contraseña" required>
                                 <label for="floatingInputpasswordConf">Confirmar contraseña</label>
                             </div>
                         </div>
@@ -204,9 +212,9 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
     <h2>Invierte con sabiduría<hr></h2>
 </section>
 <section class="seccion_oscura seccion_2" style="height: 56.4vw;">
-    <div class="customers marcador"><p>254k</p><p>total customers</p></div>
-    <div class="transactions marcador"><p>50M</p><p>total transactions</p></div>
-    <div class="payments marcador"><p>2631</p><p>total daily Payments</p></div>
+    <div class="customers marcador"><!--<p>254k</p><p>total customers</p>--></div>
+    <div class="transactions marcador"><!--<p>50M</p><p>total transactions</p>--></div>
+    <div class="payments marcador"><!--<p>2631</p><p>total daily Payments</p>--></div>
     <div class="info"><p>En Found Capital Company, entendemos la importancia de tomar decisiones financieras inteligentes y seguras. Nuestro compromiso es brindarte la oportunidad de invertir en algunos de los mercados más sólidos, respetados y diversificados del mundo, incluyendo el S&P 500, la Bolsa de Valores de Tokio, la Bolsa de Londres, el NASDAQ, así como en materias primas y por supuesto, en criptomonedas con gran proyección de crecimiento. Aquí, no solo te brindamos un camino hacia la inversión, sino también hacia la confianza y la rentabilidad.</p></div>
     <div class="ilustracion"><img src="img/home/ilustracion1.png" alt=""></div>
 </section>

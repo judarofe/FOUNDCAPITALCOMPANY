@@ -135,7 +135,7 @@
     </div>
 </section>-->
 <section class="seccion_oscura"></section>
-
+<!--
 <div class="modal fade" id="buscarDocumento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buscarDocumentoLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -160,6 +160,7 @@
     </div>
   </div>
 </div>
+-->
 <input type="hidden" id="user_value" value="<?php echo $Iduser?>">
 <footer class="seccion_clara">
     <div class="row">

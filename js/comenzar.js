@@ -6,6 +6,12 @@ $(document).ready(function() {
         LetrasEspacio(nombreInput, 50, 3, 1, err_form_1);
     });
 
+    $("#floatingInputuserName").keyup(function() {
+        var err_form_1 = /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g;
+        var nombreInput = "#floatingInputuserName";
+        LetrasEspacio(nombreInput, 50, 3, 0, err_form_1);
+    });
+
     $("#floatingInputApellido").keyup(function() {
         var err_form_1 = /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g;
         var nombreInput = "#floatingInputApellido";
@@ -126,8 +132,14 @@ function LetrasEspacio(inputId, maxLength, minLength, N_palabras, err_form){
         
         var palabras = inputVal.split(" ");
 
-        if (palabras.length < N_palabras) {
-            proceder = false;
+        if (N_palabras === 0){
+            if (palabras.length > 1) {
+                proceder = false;
+            }
+        }else{
+            if (palabras.length < N_palabras) {
+                proceder = false;
+            }
         }
 
     }else{

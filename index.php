@@ -1,6 +1,6 @@
 <?php
-include(dirname(__FILE__).'/controller/sessionController.php');
-include(dirname(__FILE__).'/controller/selectPlanes.php');
+    include(dirname(__FILE__).'/controller/sessionController.php');
+    include(dirname(__FILE__).'/controller/selectPlanes.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,14 +18,14 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
     <link rel="stylesheet" href="css/home/homeStyle.css">
     <link rel="stylesheet" href="css/home/menu.css">
 
-    <title>INICIO | FOUND CAPITAL COMPANY</title>
+    <title>INICIO | ELITE FOUND</title>
 </head>
 <body>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">FOUND CAPITAL COMPANY</a>
+            <a class="navbar-brand" href="index.php">ELITE FOUND</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -215,7 +215,7 @@ include(dirname(__FILE__).'/controller/selectPlanes.php');
     <div class="customers marcador"><!--<p>254k</p><p>total customers</p>--></div>
     <div class="transactions marcador"><!--<p>50M</p><p>total transactions</p>--></div>
     <div class="payments marcador"><!--<p>2631</p><p>total daily Payments</p>--></div>
-    <div class="info"><p>En Found Capital Company, entendemos la importancia de tomar decisiones financieras inteligentes y seguras. Nuestro compromiso es brindarte la oportunidad de invertir en algunos de los mercados más sólidos, respetados y diversificados del mundo, incluyendo el S&P 500, la Bolsa de Valores de Tokio, la Bolsa de Londres, el NASDAQ, así como en materias primas y por supuesto, en criptomonedas con gran proyección de crecimiento. Aquí, no solo te brindamos un camino hacia la inversión, sino también hacia la confianza y la rentabilidad.</p></div>
+    <div class="info"><p>En ELITE FOUND, entendemos la importancia de tomar decisiones financieras inteligentes y seguras. Nuestro compromiso es brindarte la oportunidad de invertir en algunos de los mercados más sólidos, respetados y diversificados del mundo, incluyendo el S&P 500, la Bolsa de Valores de Tokio, la Bolsa de Londres, el NASDAQ, así como en materias primas y por supuesto, en criptomonedas con gran proyección de crecimiento. Aquí, no solo te brindamos un camino hacia la inversión, sino también hacia la confianza y la rentabilidad.</p></div>
     <div class="ilustracion"><img src="img/home/ilustracion1.png" alt=""></div>
 </section>
 <section class="seccion_clara" id="Mercados">

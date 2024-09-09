@@ -1,8 +1,12 @@
 <?php
+include('./controller/encoded.php');
+include('./controller/generarCodigo.php');
 
 if(isset($_POST['EmailUser'], $_POST['passUser'])){
         
     $email = filter_var(trim($_POST["EmailUser"]), FILTER_VALIDATE_EMAIL);
+    $email = encoded($email);
+
     $pass = $_POST['passUser'];
 
     if ($email === false) {
@@ -33,7 +37,8 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
             }else{
                 if($row['confirma'] === 0){
                     session_destroy();
-                    header("location: confirmarEmail.php?3m41l=".urlencode($row['email']));
+                    $emailUser = decoded($row['email']);
+                    header("location: confirmarEmail.php?3m41l=".urlencode($emailUser));
                     exit;
                 }else{
                     header("location: dashboard.php");

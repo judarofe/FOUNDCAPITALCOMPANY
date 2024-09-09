@@ -1,8 +1,10 @@
 <?php
 
 if(isset($_POST['email'], $_POST['pass'])){
-        
+    
     $email = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL);
+    $email = str_rot13(base64_encode($email));
+
     $pass = $_POST['pass'];
 
     if ($email === false) {

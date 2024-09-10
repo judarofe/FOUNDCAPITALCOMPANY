@@ -184,6 +184,14 @@
                     </div>
                     <div class="row">
                         <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control inputRegistro" name="Cedula" id="floatingInputCedula" placeholder="Cédula" required>
+                                <label for="floatingInputCedula">Cédula</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <div class="form-check">
                                 <input class="form-check-input" name="terminosCheck" type="checkbox" id="terminosCheck">
                                 <label class="form-check-label" for="terminosCheck">

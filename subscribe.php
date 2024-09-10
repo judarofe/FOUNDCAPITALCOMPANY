@@ -1,6 +1,7 @@
 <?php
 include('./controller/encoded.php');
 include('./controller/generarCodigo.php');
+include('./controller/Mailer.php');
 
 if(isset($_POST['EmailUser'], $_POST['passUser'])){
         
@@ -16,7 +17,7 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
 
     require_once('../../config-ext.php');
 
-    $stmt = $conn->prepare("SELECT id_user, contrasena, UserTipo, confirma, email FROM user WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -41,6 +42,13 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
                     header("location: confirmarEmail.php?3m41l=".urlencode(str_rot13($emailUser)));
                     exit;
                 }else{
+                    date_default_timezone_set('America/Bogota');
+                    $fechaHoraActual = date('Y-m-d H:i:s');
+                    $direccionIP = obtenerIP();
+                    $dispositivo = obtenerDispositivo();
+                    $userName = $row['username'];
+                    $email = decoded($row['email']);
+                    //accesoCuenta($fechaHoraActual,$direccionIP,$dispositivo,$userName,$email,$emailUser,$emailPass);
                     header("location: dashboard.php");
                     exit;
                 }
@@ -57,6 +65,22 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
  
 } else {
     echo "ERROR: correo electrónico y contraseña no están configurados o no son válidos.";
+}
+
+function obtenerIP() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    
+    return $ip;
+}
+
+function obtenerDispositivo() {
+    return $_SERVER['HTTP_USER_AGENT'];
 }
 
 ?>

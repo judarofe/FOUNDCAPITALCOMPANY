@@ -9,7 +9,7 @@ include(dirname(__FILE__).'/controller/planesController.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>T&C PLANES | FOUND CAPITAL COMPANY</title>
+    <title>T&C PLANES | ELITE FOUND</title>
     <link rel="stylesheet" href="css/tools/8_0_1_normalize.css">
     <link rel="stylesheet" href="css/tools/bootstrap_5_3_0_min.css">
     <link rel="stylesheet" href="css/tools/getbootstrap.com_docs_5.3_assets_css_docs.css">
@@ -24,7 +24,7 @@ include(dirname(__FILE__).'/controller/planesController.php');
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">FOUND CAPITAL COMPANY</a>
+            <a class="navbar-brand" href="index.php">ELITE FOUND</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -212,7 +212,7 @@ echo $articulosPlanes;
 
 <footer class="seccion_oscura">
     <div class="row">
-        <div class="col"><p style="text-align: right;">Found Capital Company</p></div>
+        <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>

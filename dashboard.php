@@ -16,19 +16,22 @@
 
     <link rel="stylesheet" href="css/home/menu.css">
 
-    <title>PANEL | FOUND CAPITAL COMPANY</title>
+    <title>PANEL | ELITE FOUND</title>
 </head>
 <body>
 <!-- inicio del menú -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">FOUND CAPITAL COMPANY</a>
+            <a class="navbar-brand" href="index.php">ELITE FOUND</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-centrado">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.php">Panel</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
@@ -36,7 +39,7 @@
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">Perfil</a>
+                        <a class="nav-link" href="">Referidos</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -60,7 +63,7 @@
                             <?php echo $userName ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="perfil.php" class="dropdown-item">Actualizar</a></li>
+                            <li><a href="perfil.php" class="dropdown-item">Perfil</a></li>
                             <li>
                                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                     <button type="submit" name="logout" class="dropdown-item">Cerrar sesión</button>
@@ -74,8 +77,8 @@
     </nav>
 </header>
 <!-- fin del menú -->
-<!--<section class="seccion_oscura">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<section class="seccion_oscura">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
             <div class="container">
                 <div class="card">
@@ -132,39 +135,27 @@
                 </div>
             </div>
         </div>
+        <div class="col">
+            <div class="container">
+                <div class="card">
+                    <h3 class="card-title">Referidos</h3>
+                    <br>
+                    <img class="svgCard" src="img/home/Grupo 21.png" alt="">
+                    <br>
+                    <div class="card-body">
+                        <div class="inputCard"><p class="card-text">10</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>-->
+</section>
 <section class="seccion_oscura"></section>
-<!--
-<div class="modal fade" id="buscarDocumento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buscarDocumentoLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <form action="" method="post">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="buscarDocumentoLabel">Ingresa tu cédula y adjuntala</h1>
-            </div>
-            <div class="modal-body">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control inputRegistro" name="identificacion" id="floatingInputidentificacion" placeholder="identificacion" required>
-                    <label for="floatingInputidentificacion">Identificación</label>
-                </div>
-                <div class="mb-3">
-                    <input class="form-control" type="file" id="formFile" accept=".pdf, .jpg, .png" aria-describedby="fileHelp" name="imagen" required>
-                    <div id="fileHelp" class="form-text">adjunte archivos con extensión .pdf, .jpg o .png</div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn botonRegistro">Adjuntar</button>
-            </div>
-        </form>
-    </div>
-  </div>
-</div>
--->
+
 <input type="hidden" id="user_value" value="<?php echo $Iduser?>">
 <footer class="seccion_clara">
     <div class="row">
-        <div class="col"><p style="text-align: right;">Found Capital Company</p></div>
+        <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>

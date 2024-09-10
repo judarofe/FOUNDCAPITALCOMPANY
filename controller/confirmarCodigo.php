@@ -1,11 +1,17 @@
 <?php
+include("encoded.php");
+include("Mailer.php");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $EmailUser = filter_input(INPUT_POST, 'EmailUser', FILTER_SANITIZE_STRING);
+    $EmailDecoded = filter_input(INPUT_POST, 'EmailUser', FILTER_SANITIZE_STRING);
     $passUser = filter_input(INPUT_POST, 'passUser', FILTER_SANITIZE_STRING);
-    if($EmailUser === "" || $passUser === ""){
+    if($EmailDecoded === "" || $passUser === ""){
         header("Location: ../index.php");
         exit;
     }
+
+    $EmailUser = encoded($EmailDecoded);
+
     require_once('../../../config-ext.php');
     
     $stmt = $conn->prepare("SELECT id, id_user FROM codigoemail WHERE codigo = ?");
@@ -21,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($valorEncontrado === true){
             eliminarRegistro($conn, $row['id']);
             modificarRegistro($conn, $user);
+            emailconfirmado($EmailDecoded, $emailUser, $emailPass);
             header("Location: ../index.php");
             exit;
         } else {

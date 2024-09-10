@@ -22,13 +22,13 @@ if(isset($_GET['3m41l'])){
     <link rel="stylesheet" href="css/home/homeStyle.css">
     <link rel="stylesheet" href="css/home/menu.css">
 
-    <title>CONFIRMA EMAIL | FOUND CAPITAL COMPANY</title>
+    <title>CONFIRMA EMAIL | ELITE FOUND</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">FOUND CAPITAL COMPANY</a>
+            <a class="navbar-brand" href="index.php">ELITE FOUND</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -72,7 +72,7 @@ if(isset($_GET['3m41l'])){
 
 <footer class="seccion_clara">
     <div class="row">
-        <div class="col"><p style="text-align: right;">Found Capital Company</p></div>
+        <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>

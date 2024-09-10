@@ -25,6 +25,7 @@ $Email_user = "";
 $Email = "";
 $Password_1 = "";
 $Password_2 = "";
+$cedula = "";
 
 if (empty($_POST["Nombre"])) {
     $Err_cons .= "No has ingresado Nombre.<br>";
@@ -47,6 +48,14 @@ if (empty($_POST["userName"])) {
     $proceso = false;
 } else {
     $username = filter_var(trim($_POST["userName"]), FILTER_SANITIZE_STRING);
+}
+
+if (empty($_POST["Cedula"])) {
+    $Err_cons .= "No has ingresado una Cédula.<br>";
+    $proceso = false;
+} else {
+    $cedula = filter_var(trim($_POST["Cedula"]), FILTER_SANITIZE_STRING);
+    $cedula = encoded($cedula);
 }
 
 if (empty($_POST["Email"])) {
@@ -121,11 +130,11 @@ if ($proceso == false) {
     </div>';
 } else {
     $hash = password_hash($Password_1, PASSWORD_ARGON2I);
-    $sql = "INSERT INTO user (nombre, apellido, email, contrasena, username) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO user (nombre, apellido, email, contrasena, username, cedula) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sssss", $Nombre, $Apellido, $Email, $hash, $username);
+        mysqli_stmt_bind_param($stmt, "ssssss", $Nombre, $Apellido, $Email, $hash, $username, $cedula);
         if (mysqli_stmt_execute($stmt)) {
             $nuevoID = mysqli_insert_id($conn);
             $prueba = '

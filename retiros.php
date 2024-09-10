@@ -14,27 +14,30 @@
     <link rel="stylesheet" href="css/tools/aos.css" type="text/css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/home/menu.css">
-    <title>RETIROS | FOUND CAPITAL COMPANY</title>
+    <title>RETIROS | ELITE FOUND</title>
 </head>
 <body>
 <!-- inicio del menú -->
 <header>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.php">FOUND CAPITAL COMPANY</a>
+            <a class="navbar-brand" href="index.php">ELITE FOUND</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-centrado">
                     <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">Panel</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="retiros.php">Retiros</a>
+                        <a class="nav-link active" href="retiros.php">Retiros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">Perfil</a>
+                        <a class="nav-link" href="">Referidos</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -58,6 +61,7 @@
                             <?php echo $userName ?>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="perfil.php" class="dropdown-item">Perfil</a></li>
                             <li>
                                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                     <button type="submit" name="logout" class="dropdown-item">Cerrar sesión</button>
@@ -138,7 +142,7 @@
 </section>
 <footer class="seccion_oscura">
     <div class="row">
-        <div class="col"><p style="text-align: right;">Found Capital Company</p></div>
+        <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>

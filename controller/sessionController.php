@@ -123,24 +123,37 @@ if ($proceso == false) {
     $hash = password_hash($Password_1, PASSWORD_ARGON2I);
     $sql = "INSERT INTO user (nombre, apellido, email, contrasena, username) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssss", $Nombre, $Apellido, $Email, $hash, $username);
-    mysqli_stmt_execute($stmt);
 
-    if (mysqli_stmt_affected_rows($stmt) > 0) {
-        $nuevoID = mysqli_insert_id($conn);
-
-        $prueba = '
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; z-index: 100; width: 100%; bottom: 0;">
-            <p><strong>CORRECTO</strong> Se ha realizado la inscripción exitosamente. Antes de iniciar sesión, por favor verifica tu correo electrónico en la bandeja de entrada, donde encontrarás un enlace de confirmación.</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
-        $codigo = generarCodigo();
-
-        enviaCodigo($nuevoID, $codigo, $Email_user);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "sssss", $Nombre, $Apellido, $Email, $hash, $username);
+        if (mysqli_stmt_execute($stmt)) {
+            $nuevoID = mysqli_insert_id($conn);
+            $prueba = '
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; z-index: 100; width: 100%; bottom: 0;">
+                <p><strong>CORRECTO</strong> Se ha realizado la inscripción exitosamente. Antes de iniciar sesión, por favor verifica tu correo electrónico en la bandeja de entrada, donde encontrarás un enlace de confirmación.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+            
+            $codigo = generarCodigo();
+            $sql_1 = "INSERT INTO codigoemail (id_user, codigo) VALUES (?, ?)";
+            $stmt_1 = mysqli_prepare($conn, $sql_1);
+            
+            if ($stmt_1) {
+                mysqli_stmt_bind_param($stmt_1, "is", $nuevoID, $codigo);
+                mysqli_stmt_execute($stmt_1);
+                mysqli_stmt_close($stmt_1);
+            } else {
+                error_log("Error al preparar la consulta para codigoemail: " . mysqli_error($conn));
+            }
+        } else {
+            error_log("Error al ejecutar la consulta para user: " . mysqli_error($conn));
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        error_log("Error al preparar la consulta para user: " . mysqli_error($conn));
     }
 
-    //mysqli_stmt_close($stmt);
-    //mysqli_close($conn);
+    enviaCodigo($codigo, $Email_user, $emailUser, $emailPass);
 }
 
 ?>

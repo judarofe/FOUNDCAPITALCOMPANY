@@ -38,7 +38,7 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
                 if($row['confirma'] === 0){
                     session_destroy();
                     $emailUser = decoded($row['email']);
-                    header("location: confirmarEmail.php?3m41l=".urlencode($emailUser));
+                    header("location: confirmarEmail.php?3m41l=".urlencode(str_rot13($emailUser)));
                     exit;
                 }else{
                     header("location: dashboard.php");

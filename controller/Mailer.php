@@ -3,31 +3,72 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once('../../config-ext.php');
+require 'phpMailer/Exception.php';
+require 'phpMailer/PHPMailer.php';
+require 'phpMailer/SMTP.php';
 
-function enviaCodigo($nuevoID, $codigo, $email, $emailUser, $emailPass) {
-    require_once('../phpMailer/Exception.php');
-require_once('../phpMailer/PHPMailer.php');
-require_once('../phpMailer/SMTP.php');
-    global $conn; // Asegúrate de que la conexión a la base de datos esté disponible
+$cssEmail = '
+.tabla {
+    width: 450px;
+    margin: auto;
+    border-collapse: collapse;
+    border: none;
+    text-align: center;
+}
 
-    $sql = "INSERT INTO codigoemail (id_user, codigo) VALUES (?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
+table * {
+    margin: 0;
+    padding: 6px 0;
+    box-sizing: border-box;
+}
 
-    if ($stmt === false) {
-        throw new Exception('Error en la preparación de la declaración: ' . mysqli_error($conn));
-    }
+.fontPoppins {
+    font-family: "Poppins", sans-serif;
+}
 
-    mysqli_stmt_bind_param($stmt, "is", $nuevoID, $codigo);
+.fontRoboto {
+    font-family: "Roboto", sans-serif;
+}
 
-    if (!mysqli_stmt_execute($stmt)) {
-        throw new Exception('Error en la ejecución de la declaración: ' . mysqli_stmt_error($stmt));
-    }
+.fontRobotoMono {
+    font-family: "Roboto Mono", monospace;
+}
 
-    if (mysqli_stmt_affected_rows($stmt) > 0) {
-        mysqli_stmt_close($stmt);
+.claro {
+    background-color: #ffffff;
+}
 
-        $mail = new PHPMailer(true);
+.oscuro {
+    background-color: #00183B;
+}    
+
+.claroFont {
+   color: #ffffff;
+}
+
+.letraDecoracion {
+    background-color: #375272;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin: 6px;
+}
+
+.titulo {
+    font-weight: 700;
+    padding: 9px 0px;
+    font-size: 26px;
+}
+';
+
+function enviaCodigo($codigo, $Email_user, $emailUser, $emailPass) {
+
+    global $cssEmail;
+        
+    $mail = new PHPMailer(true);
+
         try {
             $mail->SMTPDebug = 0;
             $mail->isSMTP();
@@ -38,19 +79,61 @@ require_once('../phpMailer/SMTP.php');
             $mail->Password = $emailPass;
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
-            $mail->setFrom('dinamico.moodle@gmail.com', 'Dinamico Web');
-            $mail->addAddress($email, $email);
+            
+            $mail->setFrom($emailUser);
+            $mail->addAddress($Email_user);
             $mail->isHTML(true);
             $mail->Subject = 'Código de confirmación';
-            $mail->Body = "<p><strong>Confirma tu código</strong></p><p>Tu código de confirmación de correo es el siguiente:</p><p>{$codigo}</p>";
+
+            $caracteres = mb_str_split($codigo);
+            $resultado = '';
+            foreach ($caracteres as $caracter) {
+                $resultado .= '<span class="fontRobotoMono letraDecoracion">' . htmlspecialchars($caracter) . '</span>';
+            }
+
+            $mail->Body = '
+            <html>
+                <head>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Roboto+Mono:wght@300;700&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+                    <style>'.$cssEmail.'</style>
+                </head>
+                <body>
+                    <table class="tabla oscuro claroFont" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th class="titulo fontPoppins">
+                                Verifica tu dirección de correo electrónico
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="fontRoboto">
+                                Por favor, utiliza este código de 6 caracteres para verificar tu dirección de correo electrónico.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fontRobotoMono">
+                                '.$resultado.'
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1 class="fontPoppins">
+                                    ELITE FOUND
+                                </h1>
+                            </td>
+                        <tr>
+                    </tabla>
+                </body>
+            </html>
+            ';
+
             $mail->send();
         } catch (Exception $e) {
             error_log("Error de envío: " . $mail->ErrorInfo);
         }
-    }
 
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn); // Cerrar la conexión a la base de datos
+        header("Location: ./confirmarEmail.php?3m41l=".urlencode(str_rot13($Email_user)));
+        exit();
 }
-
 ?>

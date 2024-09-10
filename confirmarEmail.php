@@ -1,6 +1,8 @@
 <?php
 if(isset($_GET['3m41l'])){
-    $variable1 = '<input type="email" class="form-control" name="EmailUser" id="EmailUser" placeholder="Email ID" value="'.$_GET['3m41l'].'" required readonly>';
+    $email = $_GET['3m41l'];
+    $email = str_rot13($email);
+    $variable1 = '<input type="email" class="form-control" name="EmailUser" id="EmailUser" placeholder="Email ID" value="'.$email.'" required readonly>';
 } else {
     $variable1 = '<input type="email" class="form-control" name="EmailUser" id="EmailUser" placeholder="Email ID" required>';
 }

@@ -237,7 +237,7 @@
                                     </svg>
                                 </h2>
                                 <br>
-                                <p>Desde la perspectiva de una cartera de inversión, incorporar materias primas en su estrategia es una elección inteligente para diversificar más allá de los activos convencionales. En Found Capital Company, le damos la oportunidad de aprovechar los mercados globales de metales preciosos y energéticos más destacados. Contamos con una presencia en más de 20 materias primas a nivel internacional y le ofrecemos la flexibilidad necesaria en cuanto al tamaño de sus inversiones, lo que facilita su participación en estos mercados con confianza.</p>
+                                <p>Desde la perspectiva de una cartera de inversión, incorporar materias primas en su estrategia es una elección inteligente para diversificar más allá de los activos convencionales. En ELITE FOUND, le damos la oportunidad de aprovechar los mercados globales de metales preciosos y energéticos más destacados. Contamos con una presencia en más de 20 materias primas a nivel internacional y le ofrecemos la flexibilidad necesaria en cuanto al tamaño de sus inversiones, lo que facilita su participación en estos mercados con confianza.</p>
                             </div>
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                                     ETF’S
                                 </h2>
                                 <br>
-                                <p>Considerar la incorporación de ETFs (Exchange Traded Funds) en su estrategia es una decisión inteligente para diversificar su cartera más allá de las inversiones tradicionales. Los ETFs ofrecen una forma eficiente y accesible de invertir en una amplia gama de activos financieros, desde acciones y bonos hasta sectores específicos de la economía. En Found Capital Company, le brindamos la oportunidad de explorar y capitalizar en una variedad de ETFs líderes a nivel mundial, proporcionándole la flexibilidad y la confianza necesarias para participar en estos mercados de manera efectiva.</p>
+                                <p>Considerar la incorporación de ETFs (Exchange Traded Funds) en su estrategia es una decisión inteligente para diversificar su cartera más allá de las inversiones tradicionales. Los ETFs ofrecen una forma eficiente y accesible de invertir en una amplia gama de activos financieros, desde acciones y bonos hasta sectores específicos de la economía. En ELITE FOUND, le brindamos la oportunidad de explorar y capitalizar en una variedad de ETFs líderes a nivel mundial, proporcionándole la flexibilidad y la confianza necesarias para participar en estos mercados de manera efectiva.</p>
                             </div>
                         </div>
                     </div>
@@ -296,7 +296,7 @@
                                     </svg>
                                 </h2>
                                 <br>
-                                <p>Explorar los índices bursátiles e incluirlos en su estrategia es una elección inteligente para ampliar su cartera. Estos índices son una herramienta efectiva para rastrear y capitalizar en el desempeño de los mercados financieros, reflejando a menudo segmentos específicos de la economía o regiones geográficas. En Found Capital Company, estamos para brindarle la flexibilidad y la confianza necesarias para diversificar su cartera de manera estratégica.</p>
+                                <p>Explorar los índices bursátiles e incluirlos en su estrategia es una elección inteligente para ampliar su cartera. Estos índices son una herramienta efectiva para rastrear y capitalizar en el desempeño de los mercados financieros, reflejando a menudo segmentos específicos de la economía o regiones geográficas. En ELITE FOUND, estamos para brindarle la flexibilidad y la confianza necesarias para diversificar su cartera de manera estratégica.</p>
                             </div>
                         </div>
                     </div>
@@ -331,7 +331,7 @@
         </article>
         <article class="row">
              <div class="col-3 centrarElementos"><img src="img/home/universal.png" alt=""></div>
-             <div class="col-9"><h3>Acceso Universal</h3><p>No importa si eres un inversor experimentado o si apenas estás empezando tu viaje en el mundo de las inversiones. En Found Capital Company, todos son bienvenidos. Nuestro de paquete se adapta a diferentes niveles de inversión y experiencia.</p></div>
+             <div class="col-9"><h3>Acceso Universal</h3><p>No importa si eres un inversor experimentado o si apenas estás empezando tu viaje en el mundo de las inversiones. En ELITE FOUND, todos son bienvenidos. Nuestro de paquete se adapta a diferentes niveles de inversión y experiencia.</p></div>
         </article>
         <article class="row">
              <div class="col-3 centrarElementos"><img src="img/home/seguridad.png" alt=""></div>
@@ -352,7 +352,7 @@
 </section>
 <footer class="seccion_oscura">
     <div class="row">
-        <div class="col"><p style="text-align: right;">Found Capital Company</p></div>
+        <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>

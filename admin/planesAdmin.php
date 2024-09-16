@@ -46,6 +46,47 @@
                 <input name="fijoPlan" id="fijoPlan" type="number" step="0.01" class="form-control" min="0" aria-describedby="fijoHelp" value="<?php echo empty($fijoPlan_1) || $fijoPlan_1 == 0 ? 0 : $fijoPlan_1 ?>">
                 <div id="fijoHelp" class="form-text">Ingresa el valor fijo de ganancia mensual, si no corresponde deje el campo vacío</div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <p><strong>Referidos</strong></p>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="nivelMaximo" class="form-label">Nivel máximo</label>
+                        <input name="nivelMaximo" id="nivelMaximo" type="number" class="form-control" min="0" aria-describedby="nivelMaximoHelp" value="">
+                        <div id="nivelMaximoHelp" class="form-text">Ingresa el valor máximo del nivel para el conteo de referidos</div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn btn-secondary" id="addReferidos">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="referidosTotal">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="porcentajeReferido" class="form-label">Porcentaje</label>
+                            <input name="porcentajeReferido[]" type="number" class="form-control" min="0" aria-describedby="porcentajeReferidoHelp" value="">
+                            <div id="porcentajeReferidoHelp" class="form-text">Ingresa el porcentaje de ganancia por referido</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="referidosMinimos" class="form-label">Referidos mínimos</label>
+                            <input name="referidosMinimos[]" type="number" class="form-control" min="0" aria-describedby="referidosMinimosHelp" value="">
+                            <div id="referidosMinimosHelp" class="form-text">Ingresa el total de referidos requeridos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
             <div class="mb-3">
                 <label for="tiempoPlan" class="form-label">Duración</label>
                 <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>">
@@ -67,5 +108,6 @@
 
 <script src="../js/tools/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_js_bootstrap.bundle.min.js"></script>
 <script src="../js/tools/ajax.googleapis.com_ajax_libs_jquery_1.6.2_jquery.min.js"></script>
+<script src="referidosAdmin.js"></script>
 </body>
 </html>

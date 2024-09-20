@@ -23,27 +23,27 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="mb-3">
                 <label for="NombrePlan" class="form-label">Nombre</label>
-                <input name="NombrePlan" id="NombrePlan" type="text" class="form-control" aria-describedby="nombreHelp" value="<?php  echo empty($NombrePlan_1) || $NombrePlan_1 == 0 ? "" : $NombrePlan_1 ?>">
+                <input name="NombrePlan" id="NombrePlan" type="text" class="form-control" aria-describedby="nombreHelp" value="<?php  echo empty($NombrePlan_1) || $NombrePlan_1 == 0 ? "" : $NombrePlan_1 ?>" required>
                 <div id="nombreHelp" class="form-text">Escribe el nombre del plan.</div>
             </div>
             <div class="mb-3">
                 <label for="items" class="form-label">Items</label>
-                <textarea name="items" id="items" class="form-control" aria-describedby="itemsHelp" rows="8"><?php echo empty($items_1) || $items_1 == 0 ? "" : $items_1 ?></textarea>
+                <textarea name="items" id="items" class="form-control" aria-describedby="itemsHelp" rows="8" required><?php echo empty($items_1) || $items_1 == 0 ? "" : $items_1 ?></textarea>
                 <div id="itemsHelp" class="form-text">Escribe 8 items con lo principal del plan cada uno separado por salto de linea.</div>
             </div>
             <div class="mb-3">
                 <label for="descripcion" class="form-label">Descripción</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" aria-describedby="descripcionHelp" rows="8"><?php echo empty($descripcion_1) || $descripcion_1 == 0 ? "" : $descripcion_1?></textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control" aria-describedby="descripcionHelp" rows="8" required><?php echo empty($descripcion_1) || $descripcion_1 == 0 ? "" : $descripcion_1?></textarea>
                 <div id="descripcionHelp" class="form-text">Escribe una descripción del plan con un máximo de 1700 y un mínimo de 1200 caracteres.</div>
             </div>
             <div class="mb-3">
                 <label for="PorcentajePlan" class="form-label">Porcentaje</label>
-                <input name="PorcentajePlan" id="PorcentajePlan" type="number" step="0.01" class="form-control" min="0" max="100" aria-describedby="PorcentajeHelp" value="<?php echo empty($PorcentajePlan_1) || $PorcentajePlan_1 == 0 ? 0 : $PorcentajePlan_1 ?>">
+                <input name="PorcentajePlan" id="PorcentajePlan" type="number" step="0.01" class="form-control" min="0" max="100" aria-describedby="PorcentajeHelp" value="<?php echo empty($PorcentajePlan_1) || $PorcentajePlan_1 == 0 ? 0 : $PorcentajePlan_1 ?>" required>
                 <div id="PorcentajeHelp" class="form-text">Ingresa el valor del porcentaje de ganancia mensual, si no corresponde deje el campo vacío</div>
             </div>
             <div class="mb-3">
                 <label for="fijoPlan" class="form-label">Valor fijo</label>
-                <input name="fijoPlan" id="fijoPlan" type="number" step="0.01" class="form-control" min="0" aria-describedby="fijoHelp" value="<?php echo empty($fijoPlan_1) || $fijoPlan_1 == 0 ? 0 : $fijoPlan_1 ?>">
+                <input name="fijoPlan" id="fijoPlan" type="number" step="0.01" class="form-control" min="0" aria-describedby="fijoHelp" value="<?php echo empty($fijoPlan_1) || $fijoPlan_1 == 0 ? 0 : $fijoPlan_1 ?>" required>
                 <div id="fijoHelp" class="form-text">Ingresa el valor fijo de ganancia mensual, si no corresponde deje el campo vacío</div>
             </div>
             <hr>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div id="referidosTotal">
-                <div class="row">
+                <div class="row referidosRegla align-items-center" id="referidosRegla_1">
                     <div class="col">
                         <div class="mb-3">
                             <label for="porcentajeReferido" class="form-label">Porcentaje</label>
@@ -89,8 +89,24 @@
             <hr>
             <div class="mb-3">
                 <label for="tiempoPlan" class="form-label">Duración</label>
-                <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>">
+                <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>" required>
                 <div id="tiempoHelp" class="form-text">Ingresa el tiempo máximo en días del plan</div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="invMinima" class="form-label">Inversión mínima</label>
+                        <input name="invMinima" type="number" class="form-control" aria-describedby="invMinimaHelp" value="" required>
+                        <div id="invMinimaHelp" class="form-text">Ingresa la inversion mínima</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="invMaxima" class="form-label">Inversión máxima</label>
+                        <input name="invMaxima" type="number" class="form-control" aria-describedby="invMaximaHelp" value="" required>
+                        <div id="invMaximaHelp" class="form-text">Ingresa la inversion máxima</div>
+                    </div>
+                </div>
             </div>
             <div class="form-check">
                 <input name="visible" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -104,6 +120,12 @@
         </form>
     </div>
     
+</section>
+
+<section>
+    <div class="container">
+        <?php echo $planesTotales; ?>
+    </div>
 </section>
 
 <script src="../js/tools/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_js_bootstrap.bundle.min.js"></script>

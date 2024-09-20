@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-09-2024 a las 22:56:04
+-- Tiempo de generación: 20-09-2024 a las 20:16:53
 -- Versión del servidor: 8.0.39-0ubuntu0.24.04.2
 -- Versión de PHP: 8.3.6
 
@@ -88,7 +88,9 @@ CREATE TABLE `planes` (
   `porcentaje` int NOT NULL DEFAULT '0',
   `fijo` int NOT NULL DEFAULT '0',
   `tiempo` int NOT NULL,
-  `pagos` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '30',
+  `pagos` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Nivel` int DEFAULT NULL,
+  `referidos` text COLLATE utf8mb4_general_ci,
   `visibilidad` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

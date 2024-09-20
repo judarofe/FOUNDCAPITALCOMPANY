@@ -93,7 +93,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, p.plan, p.porcentaje, p.fijo, p.tiempo
+$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, p.plan, p.porcentaje, p.fijo, p.tiempo, p.pagos
 FROM depositos AS d
 JOIN planes AS p ON d.id_plan = p.id_plan
 WHERE d.id_user = $Iduser";

@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="../css/tools/bootstrap_5_3_0_min.css">
     <link rel="stylesheet" href="../css/tools/getbootstrap.com_docs_5.3_assets_css_docs.css">
+    <link rel="stylesheet" href="../css/pestannas.css">
 
     <title>PLANES | FOUND CAPITAL COMPANY</title>
 </head>
@@ -36,17 +37,56 @@
                 <textarea name="descripcion" id="descripcion" class="form-control" aria-describedby="descripcionHelp" rows="8" required><?php echo empty($descripcion_1) || $descripcion_1 == 0 ? "" : $descripcion_1?></textarea>
                 <div id="descripcionHelp" class="form-text">Escribe una descripción del plan con un máximo de 1700 y un mínimo de 1200 caracteres.</div>
             </div>
-            <div class="mb-3">
-                <label for="PorcentajePlan" class="form-label">Porcentaje</label>
-                <input name="PorcentajePlan" id="PorcentajePlan" type="number" step="0.01" class="form-control" min="0" max="100" aria-describedby="PorcentajeHelp" value="<?php echo empty($PorcentajePlan_1) || $PorcentajePlan_1 == 0 ? 0 : $PorcentajePlan_1 ?>" required>
-                <div id="PorcentajeHelp" class="form-text">Ingresa el valor del porcentaje de ganancia mensual, si no corresponde deje el campo vacío</div>
+            <div class="row">
+                <div class="col">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <label for="select_1" onclick="verActivo(1)"><p id="nav-link_1" class="nav-link active">Plan variable</p></label>
+                            <label for="select_2" onclick="verActivo(2)"><p id="nav-link_2" class="nav-link">Plan fijo</p></label>
+                        </li>
+                    </ul>
+                    <div class="select_main">
+                        <ul>
+                            <li>
+                                <input type="radio" name="inputRadio" class="inputRadio" id="select_1" checked>
+                                <div class="select_content">
+                                    <div class="row align-items-center">
+                                        <div class="col py-3">
+                                            <div class="mb-3">
+                                                <label for="PorcentajePlaMin" class="form-label">Porcentaje mínimo</label>
+                                                <input name="PorcentajePlanMin" id="PorcentajePlanMin" type="number" step="1" class="form-control" min="0" max="100" aria-describedby="PorcentajeMinHelp" value="<?php echo empty($PorcentajePlan_1) || $PorcentajePlan_1 == 0 ? 0 : $PorcentajePlan_1 ?>" required>
+                                                <div id="PorcentajeMinHelp" class="form-text">Ingresa el valor del porcentaje de ganancia mensual mínimo</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="PorcentajePlanMax" class="form-label">Porcentaje máximo</label>
+                                                <input name="PorcentajePlanMax" id="PorcentajePlanMax" type="number" step="1" class="form-control" min="0" max="100" aria-describedby="PorcentajeMaxHelp" value="<?php echo empty($PorcentajePlan_2) || $PorcentajePlan_2 == 0 ? 0 : $PorcentajePlan_2 ?>" required>
+                                                <div id="PorcentajeMaxHelp" class="form-text">Ingresa el valor del porcentaje de ganancia mensual máximo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="radio" name="inputRadio" class="inputRadio" id="select_2">
+                                <div class="select_content">
+                                    <div class="mb-3 py-3">
+                                        <label for="fijoPlan" class="form-label">Porcentaje fijo</label>
+                                        <input name="fijoPlan" id="fijoPlan" type="number" step="0.01" class="form-control" min="0" aria-describedby="fijoHelp" value="<?php echo empty($fijoPlan_1) || $fijoPlan_1 == 0 ? 0 : $fijoPlan_1 ?>" required>
+                                        <div id="fijoHelp" class="form-text">Ingresa el porcentaje fijo de ganancia mensual</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="fijoPlan" class="form-label">Valor fijo</label>
-                <input name="fijoPlan" id="fijoPlan" type="number" step="0.01" class="form-control" min="0" aria-describedby="fijoHelp" value="<?php echo empty($fijoPlan_1) || $fijoPlan_1 == 0 ? 0 : $fijoPlan_1 ?>" required>
-                <div id="fijoHelp" class="form-text">Ingresa el valor fijo de ganancia mensual, si no corresponde deje el campo vacío</div>
+            <div class="row">
+                <div class="col">
+                    <?php echo $selectGananciaFrecuencia ?>
+                </div>
             </div>
-            <hr>
             <div class="row">
                 <div class="col">
                     <p><strong>Referidos</strong></p>
@@ -87,6 +127,11 @@
                 </div>
             </div>
             <hr>
+            <div class="row">
+                <div class="col">
+                    <?php echo $selectRetirosFrecuencia ?>
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="tiempoPlan" class="form-label">Duración</label>
                 <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>" required>
@@ -131,5 +176,12 @@
 <script src="../js/tools/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_js_bootstrap.bundle.min.js"></script>
 <script src="../js/tools/ajax.googleapis.com_ajax_libs_jquery_1.6.2_jquery.min.js"></script>
 <script src="referidosAdmin.js"></script>
+<script>
+    function verActivo(selector){
+        $('.nav-link').removeClass('active');
+        $('.nav-link input').val(0);
+        $('#nav-link_'+selector).addClass('active');
+    }
+</script>
 </body>
 </html>

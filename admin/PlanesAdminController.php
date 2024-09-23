@@ -58,12 +58,33 @@ if ($result->num_rows > 0) {
     }
 }
 
+$sql_1 = "SELECT * FROM frecuenciaTransaccion";
+$result_1 = $conn->query($sql_1);
+
+if ($result_1->num_rows > 0) {
+    $options = [];
+    while($row_1 = $result_1->fetch_assoc()) {
+        $options[] = '<option value="'.$row_1['id'].'">' . htmlspecialchars($row_1['frecuencia']) . '</option>';
+    }
+    $selectGananciaFrecuencia = '<div class="mb-3">
+            <label for="GananciaFrecuencia" class="form-label">Interés</label>
+            <select name="GananciaFrecuencia" id="GananciaFrecuencia" class="form-select" required><option selected disabled value="">Seleccionar</option>' . implode('', $options) .
+        '</select>
+        </div>';
+
+    $selectRetirosFrecuencia = '<div class="mb-3">
+        <label for="RetirosFrecuencia" class="form-label">Retiros</label>
+        <select name="RetirosFrecuencia" id="RetirosFrecuencia" class="form-select" required><option selected disabled value="">Seleccionar</option>' . implode('', $options) .
+    '</select>
+    </div>';
+}
+
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     return;
 }
 
 $proceso = true;
-$Err_cons = $NombrePlan = $items = $descripcion = $PorcentajePlan = $fijoPlan = $tiempoPlan = $visible = '';
+$Err_cons = $retiros = $interes = $NombrePlan = $items = $descripcion = $PorcentajePlan_1 = $PorcentajePlan_2 = $fijoPlan = $tiempoPlan = $visible = '';
 
 if (empty($_POST["NombrePlan"])) {
     $Err_cons .= "No has ingresado nombre del plan.<br>";
@@ -121,10 +142,13 @@ $porcentajeReferido = !empty($_POST["porcentajeReferido"]) ? $_POST["porcentajeR
 $referidosMinimos = !empty($_POST["referidosMinimos"]) ? $_POST["referidosMinimos"] : 0;
 $nivelMaximo = !empty($_POST["nivelMaximo"]) ? $_POST["nivelMaximo"] : 0;
 
-$invMinima = !empty($_POST["invMinima"]) ? $_POST["invMinima"] : 0;
-$invMaximo = !empty($_POST["invMaxima"]) ? $_POST["invMaxima"] : 0;
+$invMinima = !empty($_POST["invMinima"]) ? $_POST["invMinima"] : 0; // quitar
+$invMaximo = !empty($_POST["invMaxima"]) ? $_POST["invMaxima"] : 0; // quitar
 
-$invPagos = $invMinima.",".$invMaximo;
+$retiros = !empty($_POST["RetirosFrecuencia"]) ? $_POST["RetirosFrecuencia"] : 0;
+$interes = !empty($_POST["GananciaFrecuencia"]) ? $_POST["GananciaFrecuencia"] : 0;
+
+$invPagos = $invMinima.",".$invMaximo; // quitar
 
 $resultadoReferidos = [];
 
@@ -136,21 +160,34 @@ if (count($referidosMinimos) === count($porcentajeReferido)) {
 
 $cadenaFinalReferidos = implode(',', $resultadoReferidos);
 
-$PorcentajePlan = filter_var(trim($_POST["PorcentajePlan"]), FILTER_SANITIZE_STRING);
-$PorcentajePlan_1 = filter_var(trim($_POST["PorcentajePlan"]), FILTER_SANITIZE_STRING);
-$PorcentajePlan = (int) $PorcentajePlan;
+$PorcentajePlan_1 = filter_var(trim($_POST["PorcentajePlanMin"]), FILTER_SANITIZE_STRING);
+$PorcentajePlan_1 = (int) $PorcentajePlan_1;
+
+$PorcentajePlan_2 = filter_var(trim($_POST["PorcentajePlanMax"]), FILTER_SANITIZE_STRING);
+$PorcentajePlan_2 = (int) $PorcentajePlan_2;
 
 $fijoPlan = filter_var(trim($_POST["fijoPlan"]), FILTER_SANITIZE_STRING);
 $fijoPlan_1 = filter_var(trim($_POST["fijoPlan"]), FILTER_SANITIZE_STRING);
 $fijoPlan = (int) $fijoPlan;
 
-if ($PorcentajePlan === 0 && $fijoPlan === 0) {
+if ($PorcentajePlan_1 === 0 && $fijoPlan === 0) {
     $Err_cons .= "porcentaje y valor fijo no pueden ser 0 al mismo tiempo.<br>";
     $proceso = false;
-}elseif ($PorcentajePlan > 0 && $fijoPlan > 0){
+}elseif ($PorcentajePlan_1 > 0 && $fijoPlan > 0){
     $Err_cons .= "porcentaje y valor fijo no pueden ser mayor a 0 al mismo tiempo.<br>";
     $proceso = false;
-}elseif($PorcentajePlan > 100){
+}elseif($PorcentajePlan_1 > 100){
+    $Err_cons .= "valor incorrecto ingresado en el porcentaje del plan.<br>";
+    $proceso = false;
+}
+
+if ($PorcentajePlan_1 > $PorcentajePlan_2) {
+    $Err_cons .= "porcentaje mínimo de bebe ser menor<br>";
+    $proceso = false;
+}elseif ($PorcentajePlan_2 > 0 && $fijoPlan > 0){
+    $Err_cons .= "porcentaje y valor fijo no pueden ser mayor a 0 al mismo tiempo.<br>";
+    $proceso = false;
+}elseif($PorcentajePlan_2 > 100){
     $Err_cons .= "valor incorrecto ingresado en el porcentaje del plan.<br>";
     $proceso = false;
 }
@@ -183,21 +220,22 @@ if ($proceso === false) {
     $NombrePlan = mysqli_real_escape_string($conn, $NombrePlan);
     $items_lista = mysqli_real_escape_string($conn, $items_lista);
     $descripcion = mysqli_real_escape_string($conn, $descripcion);
-    $PorcentajePlan = mysqli_real_escape_string($conn, $PorcentajePlan);
+    $PorcentajePlan_1 = mysqli_real_escape_string($conn, $PorcentajePlan_1);
+    $PorcentajePlan_2 = mysqli_real_escape_string($conn, $PorcentajePlan_2);
     $fijoPlan = mysqli_real_escape_string($conn, $fijoPlan);
     $tiempoPlan = mysqli_real_escape_string($conn, $tiempoPlan);
     $visible = mysqli_real_escape_string($conn, $visible);
 
-    $sql = "INSERT INTO planes (plan, items, descripcion, porcentaje, fijo, tiempo, visibilidad, Nivel, referidos, pagos) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO planes (plan, items, descripcion, porcentajeMin, porcentajeMax, fijo, id_interes, id_Retiros, tiempo, visibilidad, Nivel, referidos, pagos) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan, $fijoPlan, $tiempoPlan, $visible,$nivelMaximo,$cadenaFinalReferidos,$invPagos);
+        mysqli_stmt_bind_param($stmt, "sssssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan_1, $PorcentajePlan_2, $fijoPlan, $interes, $retiros, $tiempoPlan, $visible,$nivelMaximo,$cadenaFinalReferidos,$invPagos);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
-        $Err_cons = $NombrePlan = $items = $descripcion = $PorcentajePlan = $fijoPlan = $tiempoPlan = $mensaje_error = '';
-        $NombrePlan_1 = $items_1 = $descripcion_1 = $PorcentajePlan_1 = $fijoPlan_1 = $tiempoPlan_1 = $mensaje_error_1 = '';
+        $Err_cons = $NombrePlan = $items = $descripcion = $PorcentajePlan_1 = $PorcentajePlan_2 = $fijoPlan = $tiempoPlan = $mensaje_error = '';
+        $NombrePlan_1 = $items_1 = $descripcion_1 = $fijoPlan_1 = $tiempoPlan_1 = $mensaje_error_1 = $interes = $retiros = '';
 
         header("Location: planesAdmin.php");
 

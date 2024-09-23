@@ -1,0 +1,16 @@
+.select_main ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.inputRadio, .select_content{
+    display: none;
+}
+.inputRadio:checked~.select_content{
+    display: block;
+}
+
+.nav-link{
+    cursor: pointer;
+}

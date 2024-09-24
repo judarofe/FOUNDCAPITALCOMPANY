@@ -1,6 +1,7 @@
 <?php
 require_once("../../../config-ext.php");
 $sql = "SELECT * FROM planes";
+$planesTotales = "";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -141,14 +142,16 @@ if (empty($_POST["descripcion"])) {
 $porcentajeReferido = !empty($_POST["porcentajeReferido"]) ? $_POST["porcentajeReferido"] : 0;
 $referidosMinimos = !empty($_POST["referidosMinimos"]) ? $_POST["referidosMinimos"] : 0;
 $nivelMaximo = !empty($_POST["nivelMaximo"]) ? $_POST["nivelMaximo"] : 0;
+$Inversion = !empty($_POST["Inversion"]) ? $_POST["Inversion"] : 0;
+$invPagos = implode(',', $Inversion);
 
-$invMinima = !empty($_POST["invMinima"]) ? $_POST["invMinima"] : 0; // quitar
-$invMaximo = !empty($_POST["invMaxima"]) ? $_POST["invMaxima"] : 0; // quitar
+//$invMinima = !empty($_POST["invMinima"]) ? $_POST["invMinima"] : 0; // quitar
+//$invMaximo = !empty($_POST["invMaxima"]) ? $_POST["invMaxima"] : 0; // quitar
 
 $retiros = !empty($_POST["RetirosFrecuencia"]) ? $_POST["RetirosFrecuencia"] : 0;
 $interes = !empty($_POST["GananciaFrecuencia"]) ? $_POST["GananciaFrecuencia"] : 0;
 
-$invPagos = $invMinima.",".$invMaximo; // quitar
+//$invPagos = $invMinima.",".$invMaximo; // quitar
 
 $resultadoReferidos = [];
 

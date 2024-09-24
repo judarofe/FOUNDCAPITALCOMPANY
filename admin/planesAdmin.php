@@ -137,19 +137,21 @@
                 <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>" required>
                 <div id="tiempoHelp" class="form-text">Ingresa el tiempo máximo en días del plan</div>
             </div>
-            <div class="row align-items-center">
-                <div class="col">
-                    <div class="mb-3">
-                        <label for="invMinima" class="form-label">Inversión mínima</label>
-                        <input name="invMinima" type="number" class="form-control" aria-describedby="invMinimaHelp" value="" required>
-                        <div id="invMinimaHelp" class="form-text">Ingresa la inversion mínima</div>
+            <div id="InversioTotal">
+                <div class="row align-items-center InversionRegla" id="InversionRegla_1">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="Inversion" class="form-label">Inversión</label>
+                            <input name="Inversion[]" type="number" class="form-control" aria-describedby="InversionHelp" value="" required>
+                            <div id="InversionHelp" class="form-text">Ingresa la inversion</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                        <label for="invMaxima" class="form-label">Inversión máxima</label>
-                        <input name="invMaxima" type="number" class="form-control" aria-describedby="invMaximaHelp" value="" required>
-                        <div id="invMaximaHelp" class="form-text">Ingresa la inversion máxima</div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-secondary" id="addInversion">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>

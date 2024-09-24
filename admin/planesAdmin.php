@@ -124,6 +124,9 @@
                             <div id="referidosMinimosHelp" class="form-text">Ingresa el total de referidos requeridos</div>
                         </div>
                     </div>
+                    <div class="col" id="contenedorLiderazgo">
+                        <?php echo $selectLiderazgo; ?>
+                    </div>
                 </div>
             </div>
             <hr>

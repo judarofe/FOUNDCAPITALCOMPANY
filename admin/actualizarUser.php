@@ -1,10 +1,16 @@
 <?php
+include("../controller/encoded.php");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreInput = filter_input(INPUT_POST, 'nombreInput', FILTER_SANITIZE_STRING);
     $ApellidosInput = filter_input(INPUT_POST, 'ApellidosInput', FILTER_SANITIZE_STRING);
     $UserInput = filter_input(INPUT_POST, 'UserInput', FILTER_SANITIZE_STRING);
     $EmailInput = filter_input(INPUT_POST, 'EmailInput', FILTER_SANITIZE_STRING);
     $Iduser = filter_input(INPUT_POST, 'Iduser', FILTER_SANITIZE_STRING);
+
+    $nombreInput = encoded($nombreInput);
+    $ApellidosInput = encoded($ApellidosInput);
+    $EmailInput = encoded($EmailInput);
 
     require_once("../../../config-ext.php");
         if($conn){

@@ -1,54 +1,70 @@
 <?php
 require_once("../../../config-ext.php");
-$sql = "SELECT * FROM planes";
+$sql = "SELECT id_plan, plan, descripcion, referidos, porcentajeMin, porcentajeMax, fijo, tiempo, pagos, visibilidad, items, Nivel FROM planes";
 $planesTotales = "";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $niveles = 0;
-        $listado = "";
+        $listado = [];
         $cadena = $row['items'];
         $elementos = explode("|", $cadena);
-        $pagos = explode(",", $row['pagos']);
-
+        $pagos = $row['pagos'];
         $descripcionVisual = str_replace("\\r\\n", '', $row['descripcion']);
-        $arrayVisual = explode(",",$row['referidos']);
+        $arrayVisual = explode(",", $row['referidos']);
         $cantidadArrayVisual = count($arrayVisual);
+        
+        // Obtener todos los liderazgos en una sola consulta
+        $liderazgoIds = array_map(function($item) {
+            return explode("-", $item)[2];
+        }, $arrayVisual);
+        $liderazgoIds = array_unique($liderazgoIds);
+        
+        $liderazgos = [];
+        if (count($liderazgoIds) > 0) {
+            $stmt = $conn->prepare("SELECT id, rango FROM liderazgo WHERE id IN (" . implode(',', array_fill(0, count($liderazgoIds), '?')) . ")");
+            $stmt->bind_param(str_repeat('i', count($liderazgoIds)), ...$liderazgoIds);
+            $stmt->execute();
+            $resultLiderazgo = $stmt->get_result();
+            while ($liderazgo = $resultLiderazgo->fetch_assoc()) {
+                $liderazgos[$liderazgo['id']] = $liderazgo['rango'];
+            }
+            $stmt->close();
+        }
 
-        $referidosVisual = '<table class="table"><tr><th>Nivel</th><th>Porcentaje ganancia</th><th>Referidos necesarios<br>hasta [nivel: '.$row['Nivel'].']</th></tr>';
-        for($i=0; $i < $cantidadArrayVisual; $i++){
+        $referidosVisual = '<table class="table"><tr><th>Nivel</th><th>Porcentaje ganancia</th><th>Referidos necesarios<br>hasta [nivel: '.$row['Nivel'].']</th><th>Rango</th></tr>';
+        
+        foreach ($arrayVisual as $variableReferido) {
             $niveles++;
-            $variableReferido = $arrayVisual[$i];
-            $arrayVariableReferido = explode("-",$variableReferido);
-            $referidosVisual .= '<tr><td>'.$niveles.'</td><td>% '.$arrayVariableReferido[0].'</td><td>'.$arrayVariableReferido[1].'</td></tr>';
+            $arrayVariableReferido = explode("-", $variableReferido);
+            $Liderazgo = $liderazgos[$arrayVariableReferido[2]] ?? ''; // Usar el valor de liderazgo correspondiente
+            $referidosVisual .= '<tr><td>'.$niveles.'</td><td>% '.$arrayVariableReferido[0].'</td><td>'.$arrayVariableReferido[1].'</td><td>'.$Liderazgo.'</td></tr>';
         }
         $referidosVisual .= '</table>';
-
+        
         foreach ($elementos as $elemento) {
-            $listado .= '<p class="card-text">
+            $listado[] = '<p class="card-text">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32.42" height="25.5" viewBox="0 0 32.42 25.5">
                                 <path id="Trazado_376" data-name="Trazado 376" d="M340.913,6932.681l7.98,7.98,22.319-22.318" transform="translate(-339.853 -6917.282)" fill="none" stroke="#39b54a" stroke-miterlimit="10" stroke-width="3"/>
                             </svg>
                             '.$elemento.'
                         </p>';
         }
-        if($row['visibilidad'] == 0){
-            $laVisibilidad = "No";
-        }else{
-            $laVisibilidad = "Si";
-        }
+        
+        $laVisibilidad = $row['visibilidad'] == 0 ? "No" : "Si";
+        
         $planesTotales .= '<div class="card">
             <div class="card-header text-center">Plan 
                 '.$row['id_plan'].'
             </div>
             <div class="card-body">
                 <h5 class="card-title text-center">'.$row['plan'].'</h5>
-                '.$listado.'
+                '.implode('', $listado).'
                 <p class="card-text">'.$descripcionVisual.'</p>
-                <p class="card-text"><strong>Porcentaje ganancia: </strong>%'.$row['porcentaje'].'</p>
-                <p class="card-text"><strong>Ganancia fija: </strong>USD '.number_format($row['fijo'], 2, ',', '.').'</p>
+                <p class="card-text"><strong>Porcentaje ganancia: </strong>%'.$row['porcentajeMin'].' - %'.$row['porcentajeMax'].'</p>
+                <p class="card-text"><strong>Ganancia fija: </strong>% '.number_format($row['fijo'], 2, ',', '.').'</p>
                 <p class="card-text"><strong>Tiempo (días): </strong>'.$row['tiempo'].'</p>
-                <p class="card-text"><strong>Pagos: </strong>mínimo (USD '.number_format($pagos[0], 2, ',', '.').') - máximo (USD '.number_format($pagos[1], 2, ',', '.').')</p>
+                <p class="card-text"><strong>Pagos: </strong>USD '.$pagos.'</p>
                 '.$referidosVisual.'
                 <button class="btn btn-danger" style="float: right; margin-right: 5px" onclick="eliminar('.$row['id_plan'].',\'planes\')">Eliminar</button>
             </div>
@@ -79,6 +95,21 @@ if ($result_1->num_rows > 0) {
     '</select>
     </div>';
 }
+
+$sql_2 = "SELECT * FROM liderazgo";
+    $result_2 = $conn->query($sql_2);
+    if ($result_2->num_rows > 0) {
+        $optionLiderazgo[] = "";
+        while($row_2 = $result_2->fetch_assoc()) {
+            $optionLiderazgo[] = '<option value="'.$row_2['id'].'">' . htmlspecialchars($row_2['rango']) . '</option>';
+        }
+    }
+
+$selectLiderazgo =  '<div class="mb-3">
+    <label for="LiderazgoBono" class="form-label">Liderazgo</label>
+    <select name="LiderazgoBono[]" id="LiderazgoBono" class="form-select" aria-describedby="LiderazgoBonoHelp" required><option selected disabled value="">Seleccionar</option>' . implode('', $optionLiderazgo) .'</select>
+    <div id="LiderazgoBonoHelp" class="form-text">Ingresa el nivel de inversión</div>
+</div>';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     return;
@@ -145,19 +176,15 @@ $nivelMaximo = !empty($_POST["nivelMaximo"]) ? $_POST["nivelMaximo"] : 0;
 $Inversion = !empty($_POST["Inversion"]) ? $_POST["Inversion"] : 0;
 $invPagos = implode(',', $Inversion);
 
-//$invMinima = !empty($_POST["invMinima"]) ? $_POST["invMinima"] : 0; // quitar
-//$invMaximo = !empty($_POST["invMaxima"]) ? $_POST["invMaxima"] : 0; // quitar
-
 $retiros = !empty($_POST["RetirosFrecuencia"]) ? $_POST["RetirosFrecuencia"] : 0;
 $interes = !empty($_POST["GananciaFrecuencia"]) ? $_POST["GananciaFrecuencia"] : 0;
-
-//$invPagos = $invMinima.",".$invMaximo; // quitar
+$Liderazgo = !empty($_POST["LiderazgoBono"]) ? $_POST["LiderazgoBono"] : 0;
 
 $resultadoReferidos = [];
 
 if (count($referidosMinimos) === count($porcentajeReferido)) {
     for ($i = 0; $i < count($referidosMinimos); $i++) {
-        $resultadoReferidos[] = $porcentajeReferido[$i] . '-' . $referidosMinimos[$i];
+        $resultadoReferidos[] = $porcentajeReferido[$i] . '-' . $referidosMinimos[$i] . '-' . $Liderazgo[$i];
     }
 }
 

@@ -23,6 +23,8 @@ if ($UserTipo === "1"){
     header("location: admin/index.php");
 }
 
+include("encoded.php");
+
 if(isset($_GET['mensaje'])){
     $variable1 = $_GET['mensaje'];
     if($variable1 === "Su depósito ha sido enviado para su revisión"){
@@ -93,7 +95,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, p.plan, p.porcentaje, p.fijo, p.tiempo, p.pagos
+$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.pagos
 FROM depositos AS d
 JOIN planes AS p ON d.id_plan = p.id_plan
 WHERE d.id_user = $Iduser";
@@ -108,9 +110,10 @@ if ($result->num_rows > 0) {
         $inicio = $row["fecha"];
         $cantidad = $row["cantidad"];
         $plan = $row["plan"];
-        $porcentaje = $row["porcentaje"];
+        $porcentajeMin = $row["porcentajeMin"];
+        $porcentajeMax = $row["porcentajeMax"];
         $fijo = $row["fijo"];
-        $ganancias = $porcentaje === "0" ? "&#36;US ".$fijo : "% ".$porcentaje;
+        $ganancias = $fijo != "0" ? "&#36;US ".$fijo : "% ".$porcentajeMin." - % ".$porcentajeMax;
         $tiempo = $row["tiempo"];
         $estado = $row["estado"];
 

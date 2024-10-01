@@ -186,7 +186,7 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="number" class="form-control inputRegistro" name="Cedula" id="floatingInputCedula" placeholder="Cédula" required>
-                                <label for="floatingInputCedula">Cédula</label>
+                                <label for="floatingInputCedula">Documento de identidad</label>
                             </div>
                         </div>
                     </div>

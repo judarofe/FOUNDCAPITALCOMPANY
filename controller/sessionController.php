@@ -56,6 +56,15 @@ if (empty($_POST["Cedula"])) {
 } else {
     $cedula = filter_var(trim($_POST["Cedula"]), FILTER_SANITIZE_STRING);
     $cedula = encoded($cedula);
+    $query_identidad = "SELECT * FROM user WHERE cedula = ?";
+    $stmt_identidad = mysqli_prepare($conn, $query_identidad);
+    mysqli_stmt_bind_param($stmt_identidad, "s", $cedula);
+    mysqli_stmt_execute($stmt_identidad);
+    $resultado_identidad = mysqli_stmt_get_result($stmt_identidad);
+    if (mysqli_num_rows($resultado_identidad) > 0) {
+        $Err_cons .= "El numero de identidad ya existe.";
+        $proceso = false;
+    }
 }
 
 if (empty($_POST["Email"])) {

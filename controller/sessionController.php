@@ -7,6 +7,15 @@ include('encoded.php');
 include('Mailer.php');
 include('generarCodigo.php');
 
+$referido = "";
+
+if(isset($_GET["id"])){
+    $referido = '<div class="form-floating mb-3">
+        <input type="text" class="form-control inputRegistro" name="referido" id="floatingInputReferido" placeholder="Patrocinador" value="'.$_GET["id"].'" readonly>
+        <label for="floatingInputReferido">Patrocinador</label>
+    </div>';
+}
+
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     return;
 }
@@ -63,6 +72,32 @@ if (empty($_POST["Cedula"])) {
     $resultado_identidad = mysqli_stmt_get_result($stmt_identidad);
     if (mysqli_num_rows($resultado_identidad) > 0) {
         $Err_cons .= "El numero de identidad ya existe.";
+        $proceso = false;
+    }
+}
+
+if (!empty($_POST["referido"])) {
+    $referido = filter_var(trim($_POST["referido"]), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $query_referido = "SELECT id_user FROM user WHERE username = ?";
+    $stmt_referido = mysqli_prepare($conn, $query_referido);
+    
+    if ($stmt_referido) {
+        mysqli_stmt_bind_param($stmt_referido, "s", $referido);
+        mysqli_stmt_execute($stmt_referido);
+        $resultado_referido = mysqli_stmt_get_result($stmt_referido);
+        
+        if (mysqli_num_rows($resultado_referido) > 0) {
+            $registro = mysqli_fetch_assoc($resultado_referido);
+            $id_referido = $registro['id_user'];
+        } else {
+            $Err_cons = "El identificador de su patrocinador no es correcto.";
+            $proceso = false;
+        }
+
+        mysqli_stmt_close($stmt_referido);
+    } else {
+        // Manejo de error en la preparación de la declaración
+        $Err_cons = "Error al preparar la declaración: " . mysqli_error($conn);
         $proceso = false;
     }
 }
@@ -163,6 +198,19 @@ if ($proceso == false) {
             } else {
                 error_log("Error al preparar la consulta para codigoemail: " . mysqli_error($conn));
             }
+            
+            if (!empty($_POST["referido"])) {
+                $sql_2 = "INSERT INTO referidos (padre, hijo) VALUES (?, ?)";
+                $stmt_2 = mysqli_prepare($conn, $sql_2);
+                if ($stmt_2) {
+                    mysqli_stmt_bind_param($stmt_2, "ii", $id_referido, $nuevoID);
+                    mysqli_stmt_execute($stmt_2);
+                    mysqli_stmt_close($stmt_2);
+                } else {
+                    error_log("Error al preparar la consulta para referidos: " . mysqli_error($conn));
+                }
+            }
+            
         } else {
             error_log("Error al ejecutar la consulta para user: " . mysqli_error($conn));
         }

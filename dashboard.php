@@ -35,12 +35,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="">Referidos</a>
                     </li>
+                    
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -82,7 +85,7 @@
         <div class="col">
             <div class="container">
                 <div class="card">
-                    <h3 class="card-title">Depósito<br><br></h3>
+                    <h3 class="card-title">Depósito</h3>
                     <br>
                         <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112.351 76.093">
                         <g id="Grupo_18" data-name="Grupo 18" transform="translate(-450.063 -331)">
@@ -95,26 +98,12 @@
                         </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">500.00</p></div>
+                        <div class="inputCard"><p class="card-text">0.00</p></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="container">
-                <div class="card">
-                    <h3 class="card-title">Saldo<br>Actual</h3>
-                    <br>
-                    <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
-                        <path id="Trazado_20" data-name="Trazado 20" d="M955.919,364H966.67c11.479,0,19.974,11.057,16.6,22.028q-.161.522-.348,1.059s10.166-4.384,6-24.174c-4-19-33-14.565-33-14.565V338.174l-21,18.739,21,18.044Z" transform="translate(-934.919 -338.174)" fill="#00183b"/>
-                    </svg>
-                    <br>
-                    <div class="card-body">
-                        <div class="inputCard"><p class="card-text">510.00</p></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="col">
             <div class="container">
                 <div class="card">
@@ -130,11 +119,12 @@
 
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">10</p></div>
+                        <div class="inputCard"><p class="card-text">0.00</p></div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col">
             <div class="container">
                 <div class="card">
@@ -143,11 +133,60 @@
                     <img class="svgCard" src="img/home/Grupo 21.png" alt="">
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">10</p></div>
+                        <div class="inputCard"><p class="card-text">0</p></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col">
+            <div class="container">
+                <div class="card">
+                    <h3 class="card-title">Bonos liderazgo</h3>
+                    <br>
+                    <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
+                        <path id="Trazado_20" data-name="Trazado 20" d="M955.919,364H966.67c11.479,0,19.974,11.057,16.6,22.028q-.161.522-.348,1.059s10.166-4.384,6-24.174c-4-19-33-14.565-33-14.565V338.174l-21,18.739,21,18.044Z" transform="translate(-934.919 -338.174)" fill="#00183b"/>
+                    </svg>
+                    <br>
+                    <div class="card-body">
+                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="container">
+                <div class="card">
+                    <h3 class="card-title">Herramientas</h3>
+                    <br>
+                    <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
+                        <path id="Trazado_20" data-name="Trazado 20" d="M955.919,364H966.67c11.479,0,19.974,11.057,16.6,22.028q-.161.522-.348,1.059s10.166-4.384,6-24.174c-4-19-33-14.565-33-14.565V338.174l-21,18.739,21,18.044Z" transform="translate(-934.919 -338.174)" fill="#00183b"/>
+                    </svg>
+                    <br>
+                    <div class="card-body">
+                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="container">
+                <div class="card">
+                    <h3 class="card-title">Simulador</h3>
+                    <br>
+                    <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
+                        <path id="Trazado_20" data-name="Trazado 20" d="M955.919,364H966.67c11.479,0,19.974,11.057,16.6,22.028q-.161.522-.348,1.059s10.166-4.384,6-24.174c-4-19-33-14.565-33-14.565V338.174l-21,18.739,21,18.044Z" transform="translate(-934.919 -338.174)" fill="#00183b"/>
+                    </svg>
+                    <br>
+                    <div class="card-body">
+                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 <section class="seccion_oscura"></section>

@@ -138,6 +138,11 @@
                     <br>
                     <div class="row">
                         <div class="col">
+                            <?php echo $referido; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control inputRegistro" name="Nombre" id="floatingInputNombre" placeholder="Nombre" required>
                                 <label for="floatingInputNombre">Nombre</label>

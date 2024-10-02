@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    if ($('#floatingInputReferido').length) {
+        $('#Registro').modal('show');
+    }
+
     $("#floatingInputNombre").keyup(function() {
         var err_form_1 = /[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g;
         var nombreInput = "#floatingInputNombre";

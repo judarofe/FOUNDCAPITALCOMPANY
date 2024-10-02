@@ -36,12 +36,16 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="depositar.php">Depósitos</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
+                    -->
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="">Referidos</a>
                     </li>
+                    -->
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

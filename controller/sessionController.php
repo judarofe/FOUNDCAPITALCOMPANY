@@ -14,6 +14,11 @@ if(isset($_GET["id"])){
         <input type="text" class="form-control inputRegistro" name="referido" id="floatingInputReferido" placeholder="Patrocinador" value="'.$_GET["id"].'" readonly>
         <label for="floatingInputReferido">Patrocinador</label>
     </div>';
+}else{
+    $referido = '<div class="form-floating mb-3">
+        <input type="text" class="form-control inputRegistro" name="referido" placeholder="Patrocinador" value="Elite.Found" readonly>
+        <label for="floatingInputReferido">Patrocinador</label>
+    </div>';
 }
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {

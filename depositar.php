@@ -36,16 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="depositar.php">Depósitos</a>
                     </li>
-                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
-                    -->
-                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="">Referidos</a>
                     </li>
-                    -->
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -127,8 +123,8 @@
                                         <br>
                                         <div class="mb-3 text-center">
                                             <label for="PlanInversion" class="form-label">Plan de Inversión</label>
-                                            <select id="PlanInversion" name="PlanInversion" class="form-select">
-                                                <option value="" selected>Seleccione</option>
+                                            <select id="PlanInversion" name="PlanInversion" class="form-select" onchange="cargarInversion()">
+                                                <option value="" selected disabled>Seleccione</option>
                                                 <?php echo $selectPlanes; ?>
                                             </select>
                                         </div>
@@ -139,16 +135,15 @@
                                                 <?php echo $resultadoOption; ?>
                                             </select>
                                         </div>
+
                                         <div class="mb-3 text-center">
                                             <label for="CantidadInversion" class="form-label">Cantidad</label>
-                                            <div class="input-group mb-3">
-                                                <input id="CantidadInversion" name="CantidadInversion" type="number" class="form-control">
-                                                <span class="input-group-text">USD</span>
-                                            </div>
+                                            <select id="CantidadInversion" name="CantidadInversion" class="form-select"></select>
                                         </div>
+                                        
                                     </div>
                                     <label class="btnExtra text-center" for="select_2">CONFIRMAR</label>
-                                    <!---->
+                                    
                                 </div>
                             </li>
                             <li>

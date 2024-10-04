@@ -87,6 +87,7 @@
                     <?php echo $selectGananciaFrecuencia ?>
                 </div>
             </div>
+<!--
             <div class="row">
                 <div class="col">
                     <p><strong>Referidos</strong></p>
@@ -129,6 +130,7 @@
                     </div>
                 </div>
             </div>
+-->
             <hr>
             <div class="row">
                 <div class="col">

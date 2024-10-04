@@ -1,6 +1,6 @@
 <?php
 require_once("../../../config-ext.php");
-$sql = "SELECT id_plan, plan, descripcion, referidos, porcentajeMin, porcentajeMax, fijo, tiempo, pagos, visibilidad, items, Nivel FROM planes";
+$sql = "SELECT id_plan, plan, descripcion, porcentajeMin, porcentajeMax, fijo, tiempo, pagos, visibilidad, items FROM planes";
 $planesTotales = "";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -11,36 +11,6 @@ if ($result->num_rows > 0) {
         $elementos = explode("|", $cadena);
         $pagos = $row['pagos'];
         $descripcionVisual = str_replace("\\r\\n", '', $row['descripcion']);
-        $arrayVisual = explode(",", $row['referidos']);
-        $cantidadArrayVisual = count($arrayVisual);
-        
-        // Obtener todos los liderazgos en una sola consulta
-        $liderazgoIds = array_map(function($item) {
-            return explode("-", $item)[2];
-        }, $arrayVisual);
-        $liderazgoIds = array_unique($liderazgoIds);
-        
-        $liderazgos = [];
-        if (count($liderazgoIds) > 0) {
-            $stmt = $conn->prepare("SELECT id, rango FROM liderazgo WHERE id IN (" . implode(',', array_fill(0, count($liderazgoIds), '?')) . ")");
-            $stmt->bind_param(str_repeat('i', count($liderazgoIds)), ...$liderazgoIds);
-            $stmt->execute();
-            $resultLiderazgo = $stmt->get_result();
-            while ($liderazgo = $resultLiderazgo->fetch_assoc()) {
-                $liderazgos[$liderazgo['id']] = $liderazgo['rango'];
-            }
-            $stmt->close();
-        }
-
-        $referidosVisual = '<table class="table"><tr><th>Nivel</th><th>Porcentaje ganancia</th><th>Referidos necesarios<br>hasta [nivel: '.$row['Nivel'].']</th><th>Rango</th></tr>';
-        
-        foreach ($arrayVisual as $variableReferido) {
-            $niveles++;
-            $arrayVariableReferido = explode("-", $variableReferido);
-            $Liderazgo = $liderazgos[$arrayVariableReferido[2]] ?? ''; // Usar el valor de liderazgo correspondiente
-            $referidosVisual .= '<tr><td>'.$niveles.'</td><td>% '.$arrayVariableReferido[0].'</td><td>'.$arrayVariableReferido[1].'</td><td>'.$Liderazgo.'</td></tr>';
-        }
-        $referidosVisual .= '</table>';
         
         foreach ($elementos as $elemento) {
             $listado[] = '<p class="card-text">
@@ -65,7 +35,6 @@ if ($result->num_rows > 0) {
                 <p class="card-text"><strong>Ganancia fija: </strong>% '.number_format($row['fijo'], 2, ',', '.').'</p>
                 <p class="card-text"><strong>Tiempo (días): </strong>'.$row['tiempo'].'</p>
                 <p class="card-text"><strong>Pagos: </strong>USD '.$pagos.'</p>
-                '.$referidosVisual.'
                 <button class="btn btn-danger" style="float: right; margin-right: 5px" onclick="eliminar('.$row['id_plan'].',\'planes\')">Eliminar</button>
             </div>
             <div class="card-footer text-body-secondary text-center">
@@ -95,7 +64,7 @@ if ($result_1->num_rows > 0) {
     '</select>
     </div>';
 }
-
+/*
 $sql_2 = "SELECT * FROM liderazgo";
     $result_2 = $conn->query($sql_2);
     if ($result_2->num_rows > 0) {
@@ -110,7 +79,7 @@ $selectLiderazgo =  '<div class="mb-3">
     <select name="LiderazgoBono[]" id="LiderazgoBono" class="form-select" aria-describedby="LiderazgoBonoHelp" required><option selected disabled value="">Seleccionar</option>' . implode('', $optionLiderazgo) .'</select>
     <div id="LiderazgoBonoHelp" class="form-text">Ingresa el nivel de inversión</div>
 </div>';
-
+*/
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     return;
 }
@@ -170,25 +139,11 @@ if (empty($_POST["descripcion"])) {
     }  
 }
 
-$porcentajeReferido = !empty($_POST["porcentajeReferido"]) ? $_POST["porcentajeReferido"] : 0;
-$referidosMinimos = !empty($_POST["referidosMinimos"]) ? $_POST["referidosMinimos"] : 0;
-$nivelMaximo = !empty($_POST["nivelMaximo"]) ? $_POST["nivelMaximo"] : 0;
 $Inversion = !empty($_POST["Inversion"]) ? $_POST["Inversion"] : 0;
 $invPagos = implode(',', $Inversion);
 
 $retiros = !empty($_POST["RetirosFrecuencia"]) ? $_POST["RetirosFrecuencia"] : 0;
 $interes = !empty($_POST["GananciaFrecuencia"]) ? $_POST["GananciaFrecuencia"] : 0;
-$Liderazgo = !empty($_POST["LiderazgoBono"]) ? $_POST["LiderazgoBono"] : 0;
-
-$resultadoReferidos = [];
-
-if (count($referidosMinimos) === count($porcentajeReferido)) {
-    for ($i = 0; $i < count($referidosMinimos); $i++) {
-        $resultadoReferidos[] = $porcentajeReferido[$i] . '-' . $referidosMinimos[$i] . '-' . $Liderazgo[$i];
-    }
-}
-
-$cadenaFinalReferidos = implode(',', $resultadoReferidos);
 
 $PorcentajePlan_1 = filter_var(trim($_POST["PorcentajePlanMin"]), FILTER_SANITIZE_STRING);
 $PorcentajePlan_1 = (int) $PorcentajePlan_1;
@@ -256,11 +211,11 @@ if ($proceso === false) {
     $tiempoPlan = mysqli_real_escape_string($conn, $tiempoPlan);
     $visible = mysqli_real_escape_string($conn, $visible);
 
-    $sql = "INSERT INTO planes (plan, items, descripcion, porcentajeMin, porcentajeMax, fijo, id_interes, id_Retiros, tiempo, visibilidad, Nivel, referidos, pagos) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO planes (plan, items, descripcion, porcentajeMin, porcentajeMax, fijo, id_interes, id_Retiros, tiempo, visibilidad, pagos) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sssssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan_1, $PorcentajePlan_2, $fijoPlan, $interes, $retiros, $tiempoPlan, $visible,$nivelMaximo,$cadenaFinalReferidos,$invPagos);
+        mysqli_stmt_bind_param($stmt, "sssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan_1, $PorcentajePlan_2, $fijoPlan, $interes, $retiros, $tiempoPlan, $visible,$invPagos);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 

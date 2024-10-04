@@ -1,22 +1,22 @@
 <?php
-    include(dirname(__FILE__).'/controller/retirosController.php');
-    include(dirname(__FILE__).'/controller/selectBilletera.php');
+    include(dirname(__FILE__).'/controller/referidosController.php');
 ?>
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>REFERIDOS | ELITE FOUND</title>
     <link rel="stylesheet" href="css/tools/8_0_1_normalize.css">
     <link rel="stylesheet" href="css/tools/bootstrap_5_3_0_min.css">
     <link rel="stylesheet" href="css/tools/getbootstrap.com_docs_5.3_assets_css_docs.css">
     <link rel="stylesheet" href="css/tools/aos.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/home/menu.css">
-    <title>RETIROS | ELITE FOUND</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
 <!-- inicio del menú -->
 <header>
     <nav class="navbar navbar-expand-lg">
@@ -34,10 +34,10 @@
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="retiros.php">Retiros</a>
+                        <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="referidos.php">Referidos</a>
+                        <a class="nav-link active" href="referidos.php">Referidos</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -74,82 +74,69 @@
         </div>
     </nav>
 </header>
-<!-- fin del menú --> 
-<section class="seccion_clara">
-
-    <div class="retirosForm seccion_oscura">
-        <h3>
-            SOLICITUD RETIRO
-        </h3>
-        <br>
-        <form action="controller/enviarRetiro.php" method="post">
-            <?php echo $variable1 ?>
-            <div class="mb-3 text-center">
-                <label for="Billetera" class="form-label">Dirección Billetera</label>
-                <select id="Billetera" name="Billetera" class="form-select">
-                    <option value="" selected>Seleccione</option>
-                    <?php echo $resultadoOption ?>
-                </select>
-            </div>
-            <div class="mb-3 text-center">
-                <label for="Planes" class="form-label">Planes</label>
-                <select id="Planes" name="Planes" class="form-select" onchange="cargarPlanes()">
-                    <option disabled selected>Seleccione</option>
-                    <?php echo $selectPlanes ?>
-                </select>
-            </div>
-            <input type="hidden" name="Iduser" value="<?php echo $Iduser?>">
-            <br>
-            <button type="submit" class="btn btn-articule2" style="margin: auto; display: block">RETIRAR</button>
-        </form>
-    </div>
-
-</section>
 <section class="seccion_clara">
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>HISTORIAL RETIROS</h1>
+                <h1>REFERIDOS</h1>
+                <hr>
+                <br></br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <h4>¡ESTE ES EL CORAZÓN DE SU INGRESO RESIDUAL DE POR VIDA!</h4>
+                <br>
+                <p>Genere comisiones residuales día a día de las compras de licencias generadas en su<br>organización, hasta <strong>ocho niveles</strong> de  profundidad.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="seccion_oscura">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>BONO DE RED</h1>
                 <hr>
             </div>
         </div>
-        <div class="row primerSeccion">
-            <div class="col">
+        <div class="row">
+            <div class="col my-5">
                 <div class="table-responsive tablaDepositos">
                     <table class="table table-hover text-center table-borderless">
                         <thead>
                             <tr class="cabeceraTable">
-                                <th>FECHA</th>
-                                <th>CANTIDAD<br>TOTAL</th>
-                                <th>PLAN</th>
+                                <th>NIVEL</th>
+                                <th>PORCENTAJE</th>
+                                <th>REFERIDOS</th>
+                                <th>GANANCIAS</th>
                             </tr>
                             <tr class="espacioTabla">
+                                <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody class="cuerpotabla">
-                            <tr>
-                                <?php echo $tablaRetiros; ?>
-                            </tr>
+                            
                         </tbody>
                     </table>
-                </div>             
+                </div>
             </div>
         </div>
     </div>
 </section>
-<footer class="seccion_oscura">
+<footer class="seccion_clara">
     <div class="row">
         <div class="col"><p style="text-align: right;">ELITE FOUND</p></div>
         <div class="col"><p style="text-align: center;">Privacidad y legal</p></div>
         <div class="col"><p style="text-align: left;">Contacto</p></div>
     </div>
 </footer>
+
 <script src="js/tools/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_js_bootstrap.bundle.min.js"></script>
 <script src="js/tools/ajax.googleapis.com_ajax_libs_jquery_1.6.2_jquery.min.js"></script>
-<script src="js/retiros.js"></script>
 <script src="js/tools/aos.js"></script>
 <script>
     $(document).ready(function() {

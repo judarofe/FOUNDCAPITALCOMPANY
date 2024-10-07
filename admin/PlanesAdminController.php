@@ -63,6 +63,12 @@ if ($result_1->num_rows > 0) {
         <select name="RetirosFrecuencia" id="RetirosFrecuencia" class="form-select" required><option selected disabled value="">Seleccionar</option>' . implode('', $options) .
     '</select>
     </div>';
+
+    $selectDuracion = '<div class="mb-3">
+        <label for="DuracionPlan" class="form-label">Duración</label>
+        <select name="DuracionPlan" id="DuracionPlan" class="form-select" required><option selected disabled value="">Seleccionar</option>' . implode('', $options) .
+    '</select>
+    </div>';
 }
 /*
 $sql_2 = "SELECT * FROM liderazgo";
@@ -86,6 +92,11 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 
 $proceso = true;
 $Err_cons = $retiros = $interes = $NombrePlan = $items = $descripcion = $PorcentajePlan_1 = $PorcentajePlan_2 = $fijoPlan = $tiempoPlan = $visible = '';
+
+$duracion = filter_var($_POST["DuracionPlan"], FILTER_SANITIZE_STRING);
+$multiplicacion = filter_var($_POST["Multiplicador"], FILTER_SANITIZE_STRING);
+
+$tiempoPlan = $duracion.",".$multiplicacion;
 
 if (empty($_POST["NombrePlan"])) {
     $Err_cons .= "No has ingresado nombre del plan.<br>";
@@ -177,20 +188,6 @@ if ($PorcentajePlan_1 > $PorcentajePlan_2) {
     $proceso = false;
 }
 
-if (empty($_POST["tiempoPlan"])) {
-    $Err_cons .= "No has ingresado tiempo del plan.<br>";
-    $proceso = false;
-} else {
-    $tiempoPlan = filter_var(trim($_POST["tiempoPlan"]), FILTER_SANITIZE_STRING);
-    $tiempoPlan_1 = filter_var(trim($_POST["tiempoPlan"]), FILTER_SANITIZE_STRING);
-
-    $tiempoPlan = (int) $tiempoPlan;
-    if ($tiempoPlan < 30){
-        $Err_cons .= "La duración debe ser mayor a 30 días.<br>";
-        $proceso = false;
-    }
-}
-
 if (isset($_POST["visible"])) {
     $visible = 1;
 } else {
@@ -215,12 +212,12 @@ if ($proceso === false) {
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan_1, $PorcentajePlan_2, $fijoPlan, $interes, $retiros, $tiempoPlan, $visible,$invPagos);
+        mysqli_stmt_bind_param($stmt, "sssssssssss", $NombrePlan, $items_lista, $descripcion, $PorcentajePlan_1, $PorcentajePlan_2, $fijoPlan, $interes, $retiros, $tiempoPlan, $visible, $invPagos);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
         $Err_cons = $NombrePlan = $items = $descripcion = $PorcentajePlan_1 = $PorcentajePlan_2 = $fijoPlan = $tiempoPlan = $mensaje_error = '';
-        $NombrePlan_1 = $items_1 = $descripcion_1 = $fijoPlan_1 = $tiempoPlan_1 = $mensaje_error_1 = $interes = $retiros = '';
+        $NombrePlan_1 = $items_1 = $descripcion_1 = $fijoPlan_1 = $mensaje_error_1 = $interes = $retiros = '';
 
         header("Location: planesAdmin.php");
 

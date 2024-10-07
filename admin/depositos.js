@@ -1,5 +1,5 @@
 function procesar(dato){
-    Swal.fire({
+   Swal.fire({
         title: '¿Estás seguro?',
         text: "Estás a punto de aceptar el depósito.",
         icon: 'question',
@@ -11,21 +11,14 @@ function procesar(dato){
     }).then((result) => {
         if (result.isConfirmed) {
             var datos = $("#dato_"+dato).val();
-            var datosArray = datos.split(",");
-        
             $.ajax({
                 url: 'depositosActualizar.php',
                 type: 'POST',
                 data:{
-                    idDeposito: datosArray[0],
-                    valor: 1
+                    datos: datos,
                 },
                 success: function(data){
-                    if(data === "OK"){
-                        location.reload();
-                    }else{
-                        alert ("Error al actualizar registro");
-                    }
+                    $("#registrosDepositos").html(data);
                 }
             });
         }

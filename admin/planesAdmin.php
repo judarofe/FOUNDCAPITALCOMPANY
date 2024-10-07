@@ -138,9 +138,17 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="tiempoPlan" class="form-label">Duración</label>
-                <input name="tiempoPlan" id="tiempoPlan" type="number" class="form-control" aria-describedby="tiempoHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>" required>
-                <div id="tiempoHelp" class="form-text">Ingresa el tiempo máximo en días del plan</div>
+                
+            </div>
+            <div class="row">
+                <div class="col">
+                    <?php echo $selectDuracion ?>
+                </div>
+                <div class="col">
+                    <label for="Multiplicador" class="form-label">Multiplicador</label>
+                    <input name="Multiplicador" id="Multiplicador" type="number" class="form-control" aria-describedby="tiempoMultiplicadorHelp" value="<?php echo empty($tiempoPlan_1) || $tiempoPlan_1 == 0 ? 0 : $tiempoPlan_1?>" required>
+                    <div id="tiempoMultiplicadorHelp" class="form-text">multiplica la cantidad de tiempo</div>
+                </div>
             </div>
             <div id="InversioTotal">
                 <div class="row align-items-center InversionRegla" id="InversionRegla_1">

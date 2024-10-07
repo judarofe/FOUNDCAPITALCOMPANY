@@ -162,18 +162,18 @@
                                             Ahora vaya a su billetera externa, pegue la dirección y digite cuidadosamente la cantidad exacta a invertir. 
                                         </li>
                                         <li>
-                                            Una vez se haya realizado de manera exitosa la transacción, adjunte a continuación el comprobante.
+                                            Una vez se haya realizado de manera exitosa la transacción, Ingrese el hash de su transacción a continuación.
                                         </li>
                                         <li>
                                             Recuerde completar el  pago lo antes posible.
                                         </li>
                                     </ol>
                                     <br>
-                                    <h3>Adjunte comprobante</h3>
+                                    <h3>Hash de transacción</h3>
                                     <input type="hidden" name="Iduser" value="<?php echo $Iduser?>">
                                     <div class="mb-3">
-                                        <input class="form-control" type="file" id="formFile" accept=".pdf, .jpg, .png" aria-describedby="fileHelp" name="imagen">
-                                        <div id="fileHelp" class="form-text">adjunte archivos con extensión .pdf, .jpg o .png</div>
+                                        <input class="form-control" type="text" id="formFile" aria-describedby="fileHelp" name="imagen">
+                                        <div id="fileHelp" class="form-text">Ingrese el hash de su transacción</div>
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-articule" style="margin: auto; display: block">ENVIAR</button>
@@ -214,7 +214,7 @@
                                 <th>CANTIDAD</th>
                                 <th>PLAN</th>
                                 <th>GANANCIAS</th>
-                                <th>DIAS</th>
+                                <th>TIEMPO</th>
                                 <th>FINAL</th>
                             </tr>
                             <tr class="espacioTabla">

@@ -105,6 +105,7 @@ $depositosAll = "";
 $beneficios = 0;
 $Totalbeneficios = 0;
 $colorAlert = "";
+
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $inicio = $row["fecha"];
@@ -113,9 +114,28 @@ if ($result->num_rows > 0) {
         $porcentajeMin = $row["porcentajeMin"];
         $porcentajeMax = $row["porcentajeMax"];
         $fijo = $row["fijo"];
-        $ganancias = $fijo != "0" ? "&#36;US ".$fijo : "% ".$porcentajeMin." - % ".$porcentajeMax;
-        $tiempo = $row["tiempo"];
+        $ganancias = $fijo != "0" ? "% ".$fijo : "% ".$porcentajeMin." - % ".$porcentajeMax;
         $estado = $row["estado"];
+
+        $tiempoBD = $row["tiempo"];
+        $tiempoArray = explode(",", $tiempoBD);
+        $duracion = $tiempoArray[0];
+        $multiplicador = $tiempoArray[1];
+
+        switch ($duracion){
+            case 1:
+                $tiempo = "Día (x".$multiplicador.")";
+                break;
+            case 2:
+                $tiempo = "Semana (x".$multiplicador.")";
+                break;
+            case 3:
+                $tiempo = "Mes (x".$multiplicador.")";
+                break;
+            case 4:
+                $tiempo = "Año (x".$multiplicador.")";
+                break;
+        }
 
         $fechaInicio = date('Y-m-d', strtotime($inicio));
         $hoy = date('Y-m-d');

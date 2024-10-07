@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2024 a las 05:26:14
+-- Tiempo de generación: 07-10-2024 a las 05:21:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,10 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `beneficios`
+-- Estructura de tabla para la tabla `beneficiosliderazgo`
 --
 
-CREATE TABLE `beneficios` (
+CREATE TABLE `beneficiosliderazgo` (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `valor` double NOT NULL,
+  `rango` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `beneficiosplan`
+--
+
+CREATE TABLE `beneficiosplan` (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `valor` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `beneficiosreferidos`
+--
+
+CREATE TABLE `beneficiosreferidos` (
   `id` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   `fecha` date NOT NULL,
@@ -71,7 +98,9 @@ CREATE TABLE `billeterauser` (
 --
 
 INSERT INTO `billeterauser` (`id_billeteraUser`, `id_user`, `Id_billetera`, `link`) VALUES
-(7, 14, 1, 'http://localhost/gold/perfil.php');
+(8, 2, 1, 'https://www.youtube.com/'),
+(9, 7, 1, 'dasdsadsadasd'),
+(10, 12, 2, 'fdfdsfdfdsfdsfs');
 
 -- --------------------------------------------------------
 
@@ -93,7 +122,7 @@ CREATE TABLE `bonored` (
 --
 
 INSERT INTO `bonored` (`id`, `nivel`, `porcentaje`, `patrocinio`, `inversion`, `rango`) VALUES
-(1, 1, 10, 1, 500, NULL),
+(1, 1, 10, 0, 500, NULL),
 (2, 2, 3, 3, 1000, 1),
 (3, 3, 2, 3, 1000, 1),
 (4, 4, 1, 3, 2000, 2),
@@ -126,18 +155,11 @@ CREATE TABLE `depositos` (
   `id_plan` int(11) NOT NULL,
   `id_billetera` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
+  `fechafinal` date NOT NULL,
   `cantidad` int(11) NOT NULL,
   `archivo` text NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `depositos`
---
-
-INSERT INTO `depositos` (`id_depositos`, `id_user`, `id_plan`, `id_billetera`, `fecha`, `cantidad`, `archivo`, `estado`) VALUES
-(5, 14, 3, 7, '2024-10-03 05:05:01', 500, '20241003050501_14.jpg', 0),
-(6, 14, 4, 7, '2024-10-03 05:05:23', 3500, '20241003050523_14.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -209,8 +231,8 @@ CREATE TABLE `planes` (
   `fijo` int(11) NOT NULL DEFAULT 0,
   `id_interes` int(11) DEFAULT NULL,
   `id_Retiros` int(11) DEFAULT NULL,
-  `tiempo` int(11) NOT NULL,
   `pagos` varchar(100) DEFAULT NULL,
+  `tiempo` varchar(200) NOT NULL,
   `visibilidad` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -218,10 +240,9 @@ CREATE TABLE `planes` (
 -- Volcado de datos para la tabla `planes`
 --
 
-INSERT INTO `planes` (`id_plan`, `plan`, `items`, `descripcion`, `porcentajeMin`, `porcentajeMax`, `fijo`, `id_interes`, `id_Retiros`, `tiempo`, `pagos`, `visibilidad`) VALUES
-(3, 'prueba 1', 'item 1|item 2|item 3|item 4|item 5|item 6|item 7|item 8', 'Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los textos simulados. Viven aislados en casas de letras, en la costa de la semántica, un gran océano de lenguas. Un riachuelo llamado Pons fluye por su pueblo y los abastece con las normas necesarias. Hablamos de un país paraisomático en el que a uno le caen pedazos de frases asadas en la boca. Ni siquiera los todopoderosos signos de puntuación dominan a los textos simulados; una vida, se puede decir, poco ortográfica. Pero un buen día, una pequeña línea de texto simulado, llamada Lorem Ipsum, decidió aventurarse y salir al vasto mundo de la gramática. El gran Oxmox le desanconsejó hacerlo, ya que esas tierras estaban llenas de comas malvadas, signos de interrogación salvajes y puntos y coma traicioneros, pero el texto simulado no se dejó atemorizar. Empacó sus siete versales, enfundó su inicial en el cinturón y se puso en camino. Cuando ya había escalado las primeras colinas de las montañas cursivas, se dio media vuelta para dirigir su mirada por última vez, hacia su ciudad natal Letralandia, el encabezamiento del pueblo Alfabeto y el subtítulo de su propia calle, la cal', 5, 8, 0, 3, 4, 200, '500,1000,1500,2000', 1),
-(4, 'prueba 2', 'item 1|item 2|item 3|item 4|item 5|item 6|item 7|item 8', 'Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los textos simulados. Viven aislados en casas de letras, en la costa de la semántica, un gran océano de lenguas. Un riachuelo llamado Pons fluye por su pueblo y los abastece con las normas necesarias. Hablamos de un país paraisomático en el que a uno le caen pedazos de frases asadas en la boca. Ni siquiera los todopoderosos signos de puntuación dominan a los textos simulados; una vida, se puede decir, poco ortográfica. Pero un buen día, una pequeña línea de texto simulado, llamada Lorem Ipsum, decidió aventurarse y salir al vasto mundo de la gramática. El gran Oxmox le desanconsejó hacerlo, ya que esas tierras estaban llenas de comas malvadas, signos de interrogación salvajes y puntos y coma traicioneros, pero el texto simulado no se dejó atemorizar. Empacó sus siete versales, enfundó su inicial en el cinturón y se puso en camino. Cuando ya había escalado las primeras colinas de las montañas cursivas, se dio media vuelta para dirigir su mirada por última vez, hacia su ciudad natal Letralandia, el encabezamiento del pueblo Alfabeto y el subtítulo de su propia calle, la cal', 5, 8, 0, 3, 4, 200, '100,2000,3500,6000', 1),
-(5, 'plan 666', '1|2|3|4|5|6|7|8', 'Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los textos simulados. Viven aislados en casas de letras, en la costa de la semántica, un gran océano de lenguas. Un riachuelo llamado Pons fluye por su pueblo y los abastece con las normas necesarias. Hablamos de un país paraisomático en el que a uno le caen pedazos de frases asadas en la boca. Ni siquiera los todopoderosos signos de puntuación dominan a los textos simulados; una vida, se puede decir, poco ortográfica. Pero un buen día, una pequeña línea de texto simulado, llamada Lorem Ipsum, decidió aventurarse y salir al vasto mundo de la gramática. El gran Oxmox le desanconsejó hacerlo, ya que esas tierras estaban llenas de comas malvadas, signos de interrogación salvajes y puntos y coma traicioneros, pero el texto simulado no se dejó atemorizar. Empacó sus siete versales, enfundó su inicial en el cinturón y se puso en camino. Cuando ya había escalado las primeras colinas de las montañas cursivas, se dio media vuelta para dirigir su mirada por última vez, hacia su ciudad natal Letralandia, el encabezamiento del pueblo Alfabeto y el subtítulo de su propia calle, la cal', 10, 15, 0, 2, 3, 400, '100,200,500,1000', 0);
+INSERT INTO `planes` (`id_plan`, `plan`, `items`, `descripcion`, `porcentajeMin`, `porcentajeMax`, `fijo`, `id_interes`, `id_Retiros`, `pagos`, `tiempo`, `visibilidad`) VALUES
+(12, 'prueba 1', '1|2|3|4|5|6|7|8', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget', 9, 12, 0, 3, 2, '200,500,1000', '4,1', 1),
+(13, 'prueba 2', '1|2|3|4|5|6|7|8', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget', 0, 0, 2, 3, 4, '500,1000,1500', '3,6', 1);
 
 -- --------------------------------------------------------
 
@@ -253,7 +274,17 @@ CREATE TABLE `referidos` (
 --
 
 INSERT INTO `referidos` (`id`, `padre`, `hijo`) VALUES
-(6, 3, 14);
+(7, 1, 2),
+(8, 2, 3),
+(17, 2, 12),
+(9, 3, 4),
+(10, 4, 5),
+(11, 5, 6),
+(12, 6, 7),
+(13, 7, 8),
+(14, 8, 9),
+(15, 9, 10),
+(16, 10, 11);
 
 -- --------------------------------------------------------
 
@@ -294,17 +325,42 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nombre`, `apellido`, `email`, `contrasena`, `username`, `cedula`, `UserTipo`, `confirma`) VALUES
-(3, 'naIuot==', 'Hz9xpzyaqJI6', 'nJ5aYzEuqzyxMzIlpzIlDTqgLJyfYzAioD==', '$argon2i$v=19$m=65536,t=4,p=1$aUk4OVlqZzdhVXlrYkNuag$0apUP+9DJQIp6Ese8LgV6aP2+lcU04PKKjVmBKICcTU', 'Elite.Found', 'ZGN0BGLlZGV1ZN==', 1, 1),
-(14, 'naIuot==', 'Hz9xpzyaqJI6', 'naIuozAbo3WiMUWcM3IyrwV5DTqgLJyfYzAioD==', '$argon2i$v=19$m=65536,t=4,p=1$TmJWbThKL2JhTmpVVlNMMA$/FDi5CpMzTuedbpoDLQe8csF5y37FGqgJ+dbTO4bBjE', 'joaquin', 'ZGVjBGZ0AGDm', 2, 1);
+(1, 'DJEgnJ5cp3ElLJEipt==', 'EJkcqTHtEz91ozD=', 'nJ5aYzEuqzyxMzIlpzIlDTqgLJyfYzAioD==', '$argon2i$v=19$m=65536,t=4,p=1$aUk4OVlqZzdhVXlrYkNuag$0apUP+9DJQIp6Ese8LgV6aP2+lcU04PKKjVmBKICcTU', 'Elite.Found', 'ZGN0BGLlZGV1ZN==', 1, 1),
+(2, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZxOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$a1c4aU1VVG9nYk1NTDVndg$+4qVlDNTwmSzuGiKS0OuXF/A99aJ+REU3fmMPrWDxt0', 'prueba', 'ZD==', 2, 1),
+(3, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZ0Ozo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$OFNiM0dUZnVlQU9HeTNpVQ$mKc51T+L/T13AcjtR+USTkBjpTI/dpAu+cWKqVjIiXU', 'niveluno', 'Zj==', 2, 1),
+(4, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuAROzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$OS8zVnQ1NGZqL0hYQ2l5QQ$8vDAFcuVfnHCpCBrDzF458oELgqLIpri+dFAgY1u+gs', 'niveldos', 'Zt==', 2, 1),
+(5, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuAHOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$UVVaZXlMdmlxNUx1TjVXUA$JJAXxurJ0/rGl/KFpSX2z52gV9Li6Ll5wzxbcqfTskc', 'niveltres', 'AD==', 2, 1),
+(6, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuAxOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$aHNFYVNSdTRTVUFNZzFJYg$oHQfrZQbDWEm3h4H1c4N/4IwBV2ePjV/7VSJDwmhsAg', 'nivelcuatro', 'At==', 2, 1),
+(7, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuA0Ozo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$dkJMb2JhRTB2UTd2dDhnZA$ftxU+60cRWfGDUdZDoGbsv4o+F/Z9rujHG+OGYI2MgE', 'nivelcinco', 'Aj==', 2, 1),
+(8, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuBROzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$T2RxQVowTVBjS1Exa3ByTg$vHDZhgeeTD5kdmI/Uu3Yjpnnz4iQZFUz+E1DRHzO7hg', 'nivelseis', 'BN==', 2, 1),
+(9, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuBHOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$TXhINTdtVVJhN2FuS2dvaA$n/6bNVecizKud6rNTDCKsaudXY5Vxl/426xAMzGz60k', 'nivelsiete', 'BD==', 2, 1),
+(10, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZGONMz91ozDhL29g', '$argon2i$v=19$m=65536,t=4,p=1$Zy96VWlUc2R0TlBWZkdHSw$5q0yICMBSMedYak7qCX01lQ7D96fAmKmLC+I8YdxhYo', 'nivelocho', 'ZGN=', 2, 1),
+(11, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZGSNMz91ozDhL29g', '$argon2i$v=19$m=65536,t=4,p=1$RnN3Z1N0VzlkY3FKam1oOQ$MhH4PHw8PIrOiZyxSESuZChS27trMtgdPWYbskNdP2Q', 'nivelnueve', 'ZGR=', 2, 1),
+(12, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZmSNMz91ozDhL29g', '$argon2i$v=19$m=65536,t=4,p=1$U0Q0OENzbmdoSFNCQ1VsZQ$uCBWySvJgDeRWD2KPCBClbPW7+zLXpPqmlRr5Hf4zWc', 'nivelunob', 'ZmR=', 2, 1);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `beneficios`
+-- Indices de la tabla `beneficiosliderazgo`
 --
-ALTER TABLE `beneficios`
+ALTER TABLE `beneficiosliderazgo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`user`),
+  ADD KEY `rango` (`rango`);
+
+--
+-- Indices de la tabla `beneficiosplan`
+--
+ALTER TABLE `beneficiosplan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`user`);
+
+--
+-- Indices de la tabla `beneficiosreferidos`
+--
+ALTER TABLE `beneficiosreferidos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user` (`user`);
 
@@ -400,9 +456,21 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT de la tabla `beneficios`
+-- AUTO_INCREMENT de la tabla `beneficiosliderazgo`
 --
-ALTER TABLE `beneficios`
+ALTER TABLE `beneficiosliderazgo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `beneficiosplan`
+--
+ALTER TABLE `beneficiosplan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `beneficiosreferidos`
+--
+ALTER TABLE `beneficiosreferidos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -415,7 +483,7 @@ ALTER TABLE `billetera`
 -- AUTO_INCREMENT de la tabla `billeterauser`
 --
 ALTER TABLE `billeterauser`
-  MODIFY `id_billeteraUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_billeteraUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `bonored`
@@ -427,13 +495,13 @@ ALTER TABLE `bonored`
 -- AUTO_INCREMENT de la tabla `codigoemail`
 --
 ALTER TABLE `codigoemail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `depositos`
 --
 ALTER TABLE `depositos`
-  MODIFY `id_depositos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_depositos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `frecuenciatransaccion`
@@ -445,13 +513,13 @@ ALTER TABLE `frecuenciatransaccion`
 -- AUTO_INCREMENT de la tabla `liderazgo`
 --
 ALTER TABLE `liderazgo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `planes`
 --
 ALTER TABLE `planes`
-  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `porcentajes`
@@ -463,7 +531,7 @@ ALTER TABLE `porcentajes`
 -- AUTO_INCREMENT de la tabla `referidos`
 --
 ALTER TABLE `referidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `retiros`
@@ -475,17 +543,30 @@ ALTER TABLE `retiros`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `beneficios`
+-- Filtros para la tabla `beneficiosliderazgo`
 --
-ALTER TABLE `beneficios`
-  ADD CONSTRAINT `beneficios_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`);
+ALTER TABLE `beneficiosliderazgo`
+  ADD CONSTRAINT `beneficiosliderazgo_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `beneficiosliderazgo_ibfk_2` FOREIGN KEY (`rango`) REFERENCES `liderazgo` (`id`);
+
+--
+-- Filtros para la tabla `beneficiosplan`
+--
+ALTER TABLE `beneficiosplan`
+  ADD CONSTRAINT `beneficiosplan_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`);
+
+--
+-- Filtros para la tabla `beneficiosreferidos`
+--
+ALTER TABLE `beneficiosreferidos`
+  ADD CONSTRAINT `beneficiosreferidos_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`);
 
 --
 -- Filtros para la tabla `billeterauser`

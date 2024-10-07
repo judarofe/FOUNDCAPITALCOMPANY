@@ -46,7 +46,7 @@ a:active {
                                     <th>Billetera</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Archivo</th>
+                                    <th>Hash</th>
                                     <th>Estado</th>
                                 </tr>
                             </thead>

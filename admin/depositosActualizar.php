@@ -13,9 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $apellido = $arraydatos[3];
     $email = $arraydatos[4];
     $plan = $arraydatos[5];
-    $porcentajeMin = $arraydatos[6];
-    $porcentajeMax = $arraydatos[7];
-    $fijo = $arraydatos[8];
+    $porcentajeMin = empty($arraydatos[6]) || $arraydatos[6] == 0 ? "" : $arraydatos[6];
+    $porcentajeMax = empty($arraydatos[7]) || $arraydatos[7] == 0 ? "" : $arraydatos[7];
+    $fijo = empty($arraydatos[8]) || $arraydatos[8] == 0 ? "" : $arraydatos[8];
+
     $tiempo = $arraydatos[9];
     $multiplicador = $arraydatos[10];
     $billetera = $arraydatos[11];
@@ -31,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rango = rango($inversionPersonal, $volumen, $conn);
     $beneficioRango = cargarrango($id_user, $rango, $conn);
 
+    if($fijo != ""){
+        valoresFijos($fijo, $id_user, $inversion, $id_depositos, $tiempo, $multiplicador, $conn);
+    }
+    
     echo "Inversion personal: ".$inversionPersonal."<br>";
     echo "Niveles: ".$equipo."<br>";
     echo "Volumen: ".$volumen."<br>";
@@ -131,6 +136,11 @@ function cargarrango($id_user, $rango, $conn) {
 
     $stmt->close();
     return $bono;
+}
+
+function valoresFijos($fijo, $id_user, $inversion, $id_depositos, $tiempo, $multiplicador, $conn){
+    $fechaActual = date('Y-m-d');
+    return $tiempo." ".$multiplicador;
 }
 
 /*

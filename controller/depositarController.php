@@ -95,7 +95,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.pagos
+$sql = "SELECT d.id_depositos, d.fecha, d.cantidad, d.estado, d.fechafinal, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.pagos
 FROM depositos AS d
 JOIN planes AS p ON d.id_plan = p.id_plan
 WHERE d.id_user = $Iduser";
@@ -111,6 +111,8 @@ if ($result->num_rows > 0) {
         $inicio = $row["fecha"];
         $cantidad = $row["cantidad"];
         $plan = $row["plan"];
+        $fechafinal = $row["fechafinal"];
+        $idDeposito = $row["id_depositos"];
         $porcentajeMin = $row["porcentajeMin"];
         $porcentajeMax = $row["porcentajeMax"];
         $fijo = $row["fijo"];
@@ -138,53 +140,22 @@ if ($result->num_rows > 0) {
         }
 
         $fechaInicio = date('Y-m-d', strtotime($inicio));
-        $hoy = date('Y-m-d');
-        $diferencia = strtotime($hoy) - strtotime($fechaInicio);
-        $dias = $diferencia / (60 * 60 * 24);
-        
+        $beneficios = buscarBeneficios($Iduser, $idDeposito, $conn);
+
         if($estado != "4"){
             if ($estado === "0"){
                 $final = "En espera";
                 $beneficios = 0;
                 $colorAlert = 'class="table-warning"';
             }elseif($estado === "1"){
-                $totalDepositado = $totalDepositado + floatval($cantidad);
-                if($dias >= $tiempo){
-                    $final = "finalizado";
-                    $colorAlert = 'class="table-danger"';
-                    if($porcentaje === "0"){
-                        $beneficios = round(intval($tiempo)/30)*(intval($fijo));
-                    }else{
-                        $beneficios = round(intval($tiempo)/30)*(floatval($cantidad)*(intval($porcentaje)/100));
-                    }
-                }else{
-                    $colorAlert = 'class="table-success"';
-                    $final = date('Y-m-d', strtotime($inicio . ' +'.$tiempo.' days'));
-                    if($porcentaje === "0"){
-                        $beneficios = round(((round(intval($tiempo)/30)*(intval($fijo)))/$tiempo)*$dias);
-                    }else{
-                        $beneficios = round(((round(intval($tiempo)/30)*(floatval($cantidad)*(intval($porcentaje)/100)))/$tiempo)*$dias);
-                    }
-                }
+                $colorAlert = 'class="table-danger"';
+                $final = $fechafinal;
             }elseif($estado === "2"){
                 $final = "finalizado";
                 $colorAlert = 'class="table-danger"';
-                $totalDepositado = $totalDepositado + floatval($cantidad);
-                if($porcentaje === "0"){
-                    $beneficios = round(intval($tiempo)/30)*(intval($fijo));
-                }else{
-                    $beneficios = round(intval($tiempo)/30)*(floatval($cantidad)*(intval($porcentaje)/100));
-                }
             }elseif($estado === "3"){
                 $final = "Retiro en proceso";
                 $colorAlert = 'class="table-info"';
-                $totalDepositado = $totalDepositado + floatval($cantidad);
-                $beneficios = 0;
-                if($porcentaje === "0"){
-                    $beneficios = round(intval($tiempo)/30)*(intval($fijo));
-                }else{
-                    $beneficios = round(intval($tiempo)/30)*(floatval($cantidad)*(intval($porcentaje)/100));
-                }
             }
 
             $Totalbeneficios = $Totalbeneficios + $beneficios;
@@ -198,4 +169,16 @@ if ($result->num_rows > 0) {
                                 <td '.$colorAlert.'><strong>'.$final.'</strong></td></tr>';
         }
     }
+}
+
+function buscarBeneficios($Iduser, $idDeposito, $conn) {
+    $sql = "SELECT SUM(valor) AS totalPlanBeneficios 
+            FROM beneficiosplan 
+            WHERE user = ? AND id_deposito = ? AND fecha <= CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $Iduser, $idDeposito);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['totalPlanBeneficios'];
 }

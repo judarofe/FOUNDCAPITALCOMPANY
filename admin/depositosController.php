@@ -20,7 +20,7 @@
             $apellido = decoded($row['apellido']);
             $email = decoded($row['email']);
 
-            $datos = $row['id_depositos'].",".$row['id_user'].",".$nombre.",".$apellido.",".$email.",".$row['plan'].",".$row['porcentajeMin'].",".$row['porcentajeMax'].",".$row['fijo'].",".$row['tiempo'].",".$row['link'].",".$row['fecha'].",".$row['cantidad'].",".$row['archivo'].",".$row['estado'];
+            $datos = $row['id_depositos'].",".$row['id_user'].",".$nombre.",".$apellido.",".$email.",".$row['plan'].",".$row['porcentajeMin'].",".$row['porcentajeMax'].",".$row['fijo'].",".$row['tiempo'].",".$row['link'].",".$row['fecha'].",".$row['cantidad'].",".$row['archivo'].",".$row['estado'].",".$row['id_interes'];
 
             if($row['estado'] === "0"){
                 $estado = "<td class=\"table-danger\"><button type=\"button\" class=\"btn btn-danger\" onclick=\"procesar('".$row['id_depositos']."')\">Aceptar</button></td>";

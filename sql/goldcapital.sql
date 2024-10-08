@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-10-2024 a las 05:21:57
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: localhost
+-- Tiempo de generación: 08-10-2024 a las 22:40:47
+-- Versión del servidor: 8.0.39-0ubuntu0.24.04.2
+-- Versión de PHP: 8.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `beneficiosliderazgo` (
-  `id` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user` int NOT NULL,
   `fecha` date NOT NULL,
   `valor` double NOT NULL,
-  `rango` int(100) DEFAULT NULL
+  `rango` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,10 +42,11 @@ CREATE TABLE `beneficiosliderazgo` (
 --
 
 CREATE TABLE `beneficiosplan` (
-  `id` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user` int NOT NULL,
   `fecha` date NOT NULL,
-  `valor` double NOT NULL
+  `valor` double NOT NULL,
+  `id_deposito` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -55,8 +56,8 @@ CREATE TABLE `beneficiosplan` (
 --
 
 CREATE TABLE `beneficiosreferidos` (
-  `id` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `user` int NOT NULL,
   `fecha` date NOT NULL,
   `valor` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,8 +69,8 @@ CREATE TABLE `beneficiosreferidos` (
 --
 
 CREATE TABLE `billetera` (
-  `id_billetera` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL
+  `id_billetera` int NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -87,10 +88,10 @@ INSERT INTO `billetera` (`id_billetera`, `nombre`) VALUES
 --
 
 CREATE TABLE `billeterauser` (
-  `id_billeteraUser` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `Id_billetera` int(11) NOT NULL,
-  `link` varchar(100) NOT NULL
+  `id_billeteraUser` int NOT NULL,
+  `id_user` int NOT NULL,
+  `Id_billetera` int NOT NULL,
+  `link` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -100,7 +101,15 @@ CREATE TABLE `billeterauser` (
 INSERT INTO `billeterauser` (`id_billeteraUser`, `id_user`, `Id_billetera`, `link`) VALUES
 (8, 2, 1, 'https://www.youtube.com/'),
 (9, 7, 1, 'dasdsadsadasd'),
-(10, 12, 2, 'fdfdsfdfdsfdsfs');
+(10, 12, 2, 'fdfdsfdfdsfdsfs'),
+(11, 3, 1, 'fdsfdsfsdfsdfdsfsdfsdfsd'),
+(12, 4, 2, 'kjkhkkjhkjh'),
+(13, 5, 1, 'fsdfdsfsdfsf'),
+(14, 6, 1, 'fhahshshgsgh'),
+(15, 8, 1, 'dfgdgfdgdfgdfgdfgg'),
+(16, 9, 1, 'afgfgagfagagg'),
+(17, 10, 1, 'jknkjfanvkjavnakf'),
+(18, 11, 1, 'kjnlknglkernglkng');
 
 -- --------------------------------------------------------
 
@@ -109,12 +118,12 @@ INSERT INTO `billeterauser` (`id_billeteraUser`, `id_user`, `Id_billetera`, `lin
 --
 
 CREATE TABLE `bonored` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nivel` float NOT NULL,
   `porcentaje` float NOT NULL,
   `patrocinio` double NOT NULL,
   `inversion` double NOT NULL,
-  `rango` int(11) DEFAULT NULL
+  `rango` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -138,9 +147,9 @@ INSERT INTO `bonored` (`id`, `nivel`, `porcentaje`, `patrocinio`, `inversion`, `
 --
 
 CREATE TABLE `codigoemail` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `codigo` text NOT NULL
+  `id` int NOT NULL,
+  `id_user` int NOT NULL,
+  `codigo` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -150,16 +159,34 @@ CREATE TABLE `codigoemail` (
 --
 
 CREATE TABLE `depositos` (
-  `id_depositos` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_plan` int(11) NOT NULL,
-  `id_billetera` int(11) NOT NULL,
+  `id_depositos` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_plan` int NOT NULL,
+  `id_billetera` int NOT NULL,
   `fecha` datetime NOT NULL,
-  `fechafinal` date NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `archivo` text NOT NULL,
-  `estado` int(11) NOT NULL DEFAULT 0
+  `fechafinal` date DEFAULT NULL,
+  `cantidad` int NOT NULL,
+  `archivo` text COLLATE utf8mb4_general_ci NOT NULL,
+  `estado` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `depositos`
+--
+
+INSERT INTO `depositos` (`id_depositos`, `id_user`, `id_plan`, `id_billetera`, `fecha`, `fechafinal`, `cantidad`, `archivo`, `estado`) VALUES
+(15, 2, 12, 8, '2024-10-07 13:44:55', NULL, 500, 'dsadsadasd', 0),
+(16, 3, 12, 11, '2024-10-07 14:12:36', NULL, 500, 'fsdfdfdsfsd', 0),
+(17, 4, 12, 12, '2024-10-07 14:14:47', NULL, 500, 'gfdgfdgfdg', 0),
+(18, 5, 12, 13, '2024-10-07 14:21:10', NULL, 500, 'jhdhsfhshgsh', 0),
+(19, 6, 12, 14, '2024-10-07 14:22:18', NULL, 500, 'dfaagfadgafg', 0),
+(20, 7, 12, 9, '2024-10-07 14:23:11', NULL, 500, 'gfsbbxcvbvcb', 0),
+(21, 8, 12, 15, '2024-10-07 14:26:40', NULL, 500, 'gsjhajjsjsjsjsjsjjsjs', 0),
+(22, 9, 12, 16, '2024-10-07 14:28:25', NULL, 500, 'hehaahhaghah', 0),
+(23, 10, 12, 17, '2024-10-07 14:30:12', NULL, 500, 'nvlskjnvlkjnvldvd', 0),
+(24, 11, 12, 18, '2024-10-07 14:31:12', NULL, 500, 'nkdmklvavkfvnvf', 0),
+(25, 12, 12, 10, '2024-10-07 14:33:21', NULL, 500, 'dsbcjsdbcjhcbsdc', 0),
+(26, 2, 13, 8, '2024-10-07 17:54:58', NULL, 500, 'hghsghshghsh', 0);
 
 -- --------------------------------------------------------
 
@@ -168,8 +195,8 @@ CREATE TABLE `depositos` (
 --
 
 CREATE TABLE `frecuenciatransaccion` (
-  `id` int(11) NOT NULL,
-  `frecuencia` varchar(100) DEFAULT '0'
+  `id` int NOT NULL,
+  `frecuencia` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -189,11 +216,11 @@ INSERT INTO `frecuenciatransaccion` (`id`, `frecuencia`) VALUES
 --
 
 CREATE TABLE `liderazgo` (
-  `id` int(11) NOT NULL,
-  `rango` varchar(100) NOT NULL,
-  `inversionpersonal` int(11) NOT NULL,
-  `volumendered` int(11) DEFAULT NULL,
-  `bono` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `rango` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `inversionpersonal` int NOT NULL,
+  `volumendered` int DEFAULT NULL,
+  `bono` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -222,18 +249,18 @@ INSERT INTO `liderazgo` (`id`, `rango`, `inversionpersonal`, `volumendered`, `bo
 --
 
 CREATE TABLE `planes` (
-  `id_plan` int(11) NOT NULL,
-  `plan` varchar(30) NOT NULL,
-  `items` varchar(500) DEFAULT NULL,
-  `descripcion` varchar(2000) DEFAULT NULL,
-  `porcentajeMin` int(11) NOT NULL DEFAULT 0,
-  `porcentajeMax` int(11) NOT NULL DEFAULT 0,
-  `fijo` int(11) NOT NULL DEFAULT 0,
-  `id_interes` int(11) DEFAULT NULL,
-  `id_Retiros` int(11) DEFAULT NULL,
-  `pagos` varchar(100) DEFAULT NULL,
-  `tiempo` varchar(200) NOT NULL,
-  `visibilidad` tinyint(1) NOT NULL DEFAULT 1
+  `id_plan` int NOT NULL,
+  `plan` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `items` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `descripcion` varchar(2000) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `porcentajeMin` int NOT NULL DEFAULT '0',
+  `porcentajeMax` int NOT NULL DEFAULT '0',
+  `fijo` int NOT NULL DEFAULT '0',
+  `id_interes` int DEFAULT NULL,
+  `id_Retiros` int DEFAULT NULL,
+  `pagos` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tiempo` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `visibilidad` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -251,9 +278,9 @@ INSERT INTO `planes` (`id_plan`, `plan`, `items`, `descripcion`, `porcentajeMin`
 --
 
 CREATE TABLE `porcentajes` (
-  `id` int(11) NOT NULL,
-  `planes` int(11) NOT NULL,
-  `porcentaje` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `planes` int NOT NULL,
+  `porcentaje` int NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -264,9 +291,9 @@ CREATE TABLE `porcentajes` (
 --
 
 CREATE TABLE `referidos` (
-  `id` int(11) NOT NULL,
-  `padre` int(11) NOT NULL,
-  `hijo` int(11) NOT NULL
+  `id` int NOT NULL,
+  `padre` int NOT NULL,
+  `hijo` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -293,13 +320,13 @@ INSERT INTO `referidos` (`id`, `padre`, `hijo`) VALUES
 --
 
 CREATE TABLE `retiros` (
-  `id_retiros` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_depositos` int(11) NOT NULL,
-  `id_billeteraUser` int(11) NOT NULL,
+  `id_retiros` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_depositos` int NOT NULL,
+  `id_billeteraUser` int NOT NULL,
   `fecha` date NOT NULL,
-  `estado` int(11) NOT NULL DEFAULT 0,
-  `cantidad` varchar(100) DEFAULT NULL
+  `estado` int NOT NULL DEFAULT '0',
+  `cantidad` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -309,15 +336,15 @@ CREATE TABLE `retiros` (
 --
 
 CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `apellido` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `contrasena` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `cedula` varchar(100) DEFAULT NULL,
-  `UserTipo` int(11) NOT NULL DEFAULT 2,
-  `confirma` bigint(20) NOT NULL DEFAULT 0
+  `id_user` int NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `apellido` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `contrasena` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `cedula` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `UserTipo` int NOT NULL DEFAULT '2',
+  `confirma` bigint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -326,7 +353,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `nombre`, `apellido`, `email`, `contrasena`, `username`, `cedula`, `UserTipo`, `confirma`) VALUES
 (1, 'DJEgnJ5cp3ElLJEipt==', 'EJkcqTHtEz91ozD=', 'nJ5aYzEuqzyxMzIlpzIlDTqgLJyfYzAioD==', '$argon2i$v=19$m=65536,t=4,p=1$aUk4OVlqZzdhVXlrYkNuag$0apUP+9DJQIp6Ese8LgV6aP2+lcU04PKKjVmBKICcTU', 'Elite.Found', 'ZGN0BGLlZGV1ZN==', 1, 1),
-(2, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZxOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$a1c4aU1VVG9nYk1NTDVndg$+4qVlDNTwmSzuGiKS0OuXF/A99aJ+REU3fmMPrWDxt0', 'prueba', 'ZD==', 2, 1),
+(2, 'pUW1MJWu', 'L2Iloj==', 'pUW1MJWuZxOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$a1c4aU1VVG9nYk1NTDVndg$+4qVlDNTwmSzuGiKS0OuXF/A99aJ+REU3fmMPrWDxt0', 'prueba', 'ZD==', 2, 1),
 (3, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuZ0Ozo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$OFNiM0dUZnVlQU9HeTNpVQ$mKc51T+L/T13AcjtR+USTkBjpTI/dpAu+cWKqVjIiXU', 'niveluno', 'Zj==', 2, 1),
 (4, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuAROzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$OS8zVnQ1NGZqL0hYQ2l5QQ$8vDAFcuVfnHCpCBrDzF458oELgqLIpri+dFAgY1u+gs', 'niveldos', 'Zt==', 2, 1),
 (5, 'pUW1MJWu', 'MJkcqTHtMz91ozD=', 'pUW1MJWuAHOzo3IhMP5wo20=', '$argon2i$v=19$m=65536,t=4,p=1$UVVaZXlMdmlxNUx1TjVXUA$JJAXxurJ0/rGl/KFpSX2z52gV9Li6Ll5wzxbcqfTskc', 'niveltres', 'AD==', 2, 1),
@@ -355,7 +382,8 @@ ALTER TABLE `beneficiosliderazgo`
 --
 ALTER TABLE `beneficiosplan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user` (`user`);
+  ADD KEY `user` (`user`),
+  ADD KEY `id_deposito` (`id_deposito`);
 
 --
 -- Indices de la tabla `beneficiosreferidos`
@@ -459,91 +487,91 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `beneficiosliderazgo`
 --
 ALTER TABLE `beneficiosliderazgo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `beneficiosplan`
 --
 ALTER TABLE `beneficiosplan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `beneficiosreferidos`
 --
 ALTER TABLE `beneficiosreferidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `billetera`
 --
 ALTER TABLE `billetera`
-  MODIFY `id_billetera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_billetera` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `billeterauser`
 --
 ALTER TABLE `billeterauser`
-  MODIFY `id_billeteraUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_billeteraUser` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `bonored`
 --
 ALTER TABLE `bonored`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `codigoemail`
 --
 ALTER TABLE `codigoemail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `depositos`
 --
 ALTER TABLE `depositos`
-  MODIFY `id_depositos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_depositos` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `frecuenciatransaccion`
 --
 ALTER TABLE `frecuenciatransaccion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `liderazgo`
 --
 ALTER TABLE `liderazgo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `planes`
 --
 ALTER TABLE `planes`
-  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_plan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `porcentajes`
 --
 ALTER TABLE `porcentajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `referidos`
 --
 ALTER TABLE `referidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
 ALTER TABLE `retiros`
-  MODIFY `id_retiros` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_retiros` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -560,7 +588,8 @@ ALTER TABLE `beneficiosliderazgo`
 -- Filtros para la tabla `beneficiosplan`
 --
 ALTER TABLE `beneficiosplan`
-  ADD CONSTRAINT `beneficiosplan_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `beneficiosplan_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `beneficiosplan_ibfk_2` FOREIGN KEY (`id_deposito`) REFERENCES `depositos` (`id_depositos`);
 
 --
 -- Filtros para la tabla `beneficiosreferidos`

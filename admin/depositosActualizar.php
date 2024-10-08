@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inversion = $arraydatos[13];
     $hash = $arraydatos[14];
     $estado = $arraydatos[15];
+    $id_interes = $id_interes[16];
 
     $inversionPersonal = inversionPersonal($id_user, $conn);
     $equipo = equipo($id_user, $conn);
@@ -31,16 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $volumen = volumen($equipo, $conn);
     $rango = rango($inversionPersonal, $volumen, $conn);
     $beneficioRango = cargarrango($id_user, $rango, $conn);
-
-    if($fijo != ""){
-        valoresFijos($fijo, $id_user, $inversion, $id_depositos, $tiempo, $multiplicador, $conn);
-    }
+    $diaInicial = diaInicial();
+    $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
+    $contarDias = contarDias($diaInicial, $diaFinal);
     
     echo "Inversion personal: ".$inversionPersonal."<br>";
     echo "Niveles: ".$equipo."<br>";
     echo "Volumen: ".$volumen."<br>";
     echo "Rango: ".$rango."<br>";
     echo "Beneficio: ".$beneficioRango."<br>";
+    echo "Dia incial: ".$diaInicial."<br>";
+    echo "Dia final: ".$diaFinal."<br>";
+    echo "Dias habiles: ".$contarDias."<br>";
+    
+    if($fijo !== ""){
+        $ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
+        echo "ganancias diarias: ".$ganancias."<br>";
+    }
 }
 
 function inversionPersonal($id_user, $conn) {
@@ -138,11 +146,78 @@ function cargarrango($id_user, $rango, $conn) {
     return $bono;
 }
 
-function valoresFijos($fijo, $id_user, $inversion, $id_depositos, $tiempo, $multiplicador, $conn){
-    $fechaActual = date('Y-m-d');
-    return $tiempo." ".$multiplicador;
+function diaInicial(){
+    $fechaActual = new DateTime();
+    $dia = $fechaActual->format('N');
+
+    if ($dia == 5) {
+        $fechaActual->modify('+3 days');
+    } elseif ($dia == 6) {
+        $fechaActual->modify('+2 days');
+    } elseif ($dia == 7) {
+        $fechaActual->modify('+1 day');
+    } else {
+        $fechaActual->modify('+1 day');
+    }
+
+    return $fechaActual->format('Y-m-d');
 }
 
+function diaFinal($diaInicial, $tiempo, $multiplicador){
+
+    $fechaFinal = new DateTime($diaInicial);
+
+    switch ($tiempo) {
+        case 1: // Días hábiles
+            $diasAgregados = 0;
+            while ($diasAgregados < $multiplicador) {
+                $fechaFinal->modify('+1 day');
+                if ($fechaFinal->format('N') < 6) {
+                    $diasAgregados++;
+                }
+            }
+            break;
+        case 2: // Semanas
+            $fechaFinal->modify('+' . ($multiplicador * 7) . ' days');
+            break;
+        case 3: // Meses
+            $fechaFinal->modify('+' . $multiplicador . ' months');
+            break;
+        case 4: // Años
+            $fechaFinal->modify('+' . $multiplicador . ' years');
+            break;
+    }
+
+    $diasRestantes = $fechaFinal->format('N');
+    if ($diasRestantes == 6) {
+        $fechaFinal->modify('+1 day');
+    } elseif ($diasRestantes == 7) {
+        $fechaFinal->modify('+2 days');
+    }
+
+    return $fechaFinal->format('Y-m-d');
+
+}
+
+function contarDias($diaInicial, $diaFinal){
+    $diaInicial = new DateTime($diaInicial);
+    $diaFinal = new DateTime($diaFinal);
+    $diasLaborales = 0;
+
+    while ($diaInicial <= $diaFinal) {
+        if ($diaInicial->format('N') < 6) {
+            $diasLaborales++;
+        }
+        $diaInicial->modify('+1 day');
+    }
+
+    return $diasLaborales;
+}
+
+function gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias){
+    $ganancias = (($inversion*($fijo/100))*$multiplicador)/$contarDias;
+    return $ganancias;
+}
 /*
     $registros = "";
 

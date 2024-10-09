@@ -164,7 +164,7 @@ if ($result->num_rows > 0) {
                                 <td>'.$fechaInicio.'</td>
                                 <td>'.$cantidad.'</td>
                                 <td>'.$plan.' ('.$ganancias.')</td>
-                                <td>&#36;US '.$beneficios.'</td>
+                                <td>&#36;US '.round($beneficios, 2).'</td>
                                 <td>'.$tiempo.'</td>
                                 <td '.$colorAlert.'><strong>'.$final.'</strong></td></tr>';
         }

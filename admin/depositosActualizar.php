@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inversion = $arraydatos[13];
     $hash = $arraydatos[14];
     $estado = $arraydatos[15];
-    $id_interes = $id_interes[16];
+    $id_interes = $arraydatos[16];
 
     $inversionPersonal = inversionPersonal($id_user, $conn);
     $equipo = equipo($id_user, $conn);
@@ -35,20 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $diaInicial = diaInicial();
     $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
     $contarDias = contarDias($diaInicial, $diaFinal);
-    
-    echo "Inversion personal: ".$inversionPersonal."<br>";
-    echo "Niveles: ".$equipo."<br>";
-    echo "Volumen: ".$volumen."<br>";
-    echo "Rango: ".$rango."<br>";
-    echo "Beneficio: ".$beneficioRango."<br>";
-    echo "Dia incial: ".$diaInicial."<br>";
-    echo "Dia final: ".$diaFinal."<br>";
-    echo "Dias habiles: ".$contarDias."<br>";
-    
+        
     if($fijo !== ""){
         $ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
-        echo "ganancias diarias: ".$ganancias."<br>";
+        $gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
     }
+
+    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
 }
 
 function inversionPersonal($id_user, $conn) {
@@ -218,45 +211,48 @@ function gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias){
     $ganancias = (($inversion*($fijo/100))*$multiplicador)/$contarDias;
     return $ganancias;
 }
-/*
-    $registros = "";
 
-    $sql = "SELECT hijo FROM referidos WHERE padre = $id_user";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        while($row = $result->fetch_assoc()) {
-            $registros .= $row["hijo"]."<br>";
+function crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn){
+    $diaInicial = new DateTime($diaInicial);
+    $diaFinal = new DateTime($diaFinal);
+    $ganaciasemanal = 0;
+    $arrayGanancias = 0;
+
+    while ($diaInicial <= $diaFinal) {
+        if ($diaInicial->format('N') < 6) {
+            $ganaciasemanal++;
+            if($diaInicial->format('N') == 5){
+                $arrayGanancias = $ganaciasemanal * $ganancias;
+                subirGanaciasFijas($arrayGanancias, $diaInicial->format('Y-m-d'), $id_user, $id_depositos, $conn);
+                $ganaciasemanal = 0;
+            }
         }
+        $diaInicial->modify('+1 day');
     }
-
-    return $registros;
-*/
-/*
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $idDeposito = filter_input(INPUT_POST, 'idDeposito', FILTER_SANITIZE_NUMBER_INT);
-    $valor = filter_input(INPUT_POST, 'valor', FILTER_SANITIZE_NUMBER_INT);
-
-    if ($idDeposito !== null && $valor !== null){
-        require_once("../../../config-ext.php");
-        if($valor === "2"){
-            $fecha = date('Y-m-d H:i:s');
-            $sql = "UPDATE depositos SET estado = ?, fecha = ? WHERE id_depositos = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isi", $valor, $fecha, $idDeposito);
-        }else{
-            $sql = "UPDATE depositos SET estado = ? WHERE id_depositos = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ii", $valor, $idDeposito);
-        }
-
-        if ($stmt->execute()) {
-            echo "OK";
-        }
-        $stmt->close();
-        $conn->close();
-    } else {
-        return;
+    if($ganaciasemanal > 0){
+        $arrayGanancias = $ganaciasemanal * $ganancias;
+        subirGanaciasFijas($arrayGanancias, $diaInicial->format('Y-m-d'), $id_user, $id_depositos, $conn);
     }
+    
+    return $arrayGanancias;
 }
-    */
+
+function subirGanaciasFijas($Ganancias, $diaInicial, $id_user, $id_depositos, $conn) {
+    $diaInicial = new DateTime($diaInicial);
+    $fechaFormateada = $diaInicial->format('Y-m-d');
+
+    $sql = "INSERT INTO beneficiosplan (user, fecha, valor, id_deposito) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isdi", $id_user, $fechaFormateada, $Ganancias, $id_depositos);
+    $stmt->execute();
+}
+
+function cambiarEstado($valor, $fecha, $idDeposito, $diaFinal, $conn) {
+    $sql = "UPDATE depositos SET estado = ?, fecha = ?, fechafinal = ? WHERE id_depositos = ?";
+    $stmt = $conn->prepare($sql);
+
+
+    $stmt->bind_param("issi", $valor, $fecha, $diaFinal, $idDeposito);
+    $stmt->execute();
+}
 ?>

@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 08-10-2024 a las 22:40:47
--- Versión del servidor: 8.0.39-0ubuntu0.24.04.2
--- Versión de PHP: 8.3.6
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 09-10-2024 a las 05:46:32
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `beneficiosliderazgo` (
-  `id` int NOT NULL,
-  `user` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `valor` double NOT NULL,
-  `rango` int DEFAULT NULL
+  `rango` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,12 +42,45 @@ CREATE TABLE `beneficiosliderazgo` (
 --
 
 CREATE TABLE `beneficiosplan` (
-  `id` int NOT NULL,
-  `user` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `valor` double NOT NULL,
-  `id_deposito` int NOT NULL
+  `id_deposito` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `beneficiosplan`
+--
+
+INSERT INTO `beneficiosplan` (`id`, `user`, `fecha`, `valor`, `id_deposito`) VALUES
+(1, 2, '2024-10-11', 0.916030534351145, 26),
+(2, 2, '2024-10-18', 2.2900763358778624, 26),
+(3, 2, '2024-10-25', 2.2900763358778624, 26),
+(4, 2, '2024-11-01', 2.2900763358778624, 26),
+(5, 2, '2024-11-08', 2.2900763358778624, 26),
+(6, 2, '2024-11-15', 2.2900763358778624, 26),
+(7, 2, '2024-11-22', 2.2900763358778624, 26),
+(8, 2, '2024-11-29', 2.2900763358778624, 26),
+(9, 2, '2024-12-06', 2.2900763358778624, 26),
+(10, 2, '2024-12-13', 2.2900763358778624, 26),
+(11, 2, '2024-12-20', 2.2900763358778624, 26),
+(12, 2, '2024-12-27', 2.2900763358778624, 26),
+(13, 2, '2025-01-03', 2.2900763358778624, 26),
+(14, 2, '2025-01-10', 2.2900763358778624, 26),
+(15, 2, '2025-01-17', 2.2900763358778624, 26),
+(16, 2, '2025-01-24', 2.2900763358778624, 26),
+(17, 2, '2025-01-31', 2.2900763358778624, 26),
+(18, 2, '2025-02-07', 2.2900763358778624, 26),
+(19, 2, '2025-02-14', 2.2900763358778624, 26),
+(20, 2, '2025-02-21', 2.2900763358778624, 26),
+(21, 2, '2025-02-28', 2.2900763358778624, 26),
+(22, 2, '2025-03-07', 2.2900763358778624, 26),
+(23, 2, '2025-03-14', 2.2900763358778624, 26),
+(24, 2, '2025-03-21', 2.2900763358778624, 26),
+(25, 2, '2025-03-28', 2.2900763358778624, 26),
+(26, 2, '2025-04-04', 2.2900763358778624, 26),
+(27, 2, '2025-04-11', 1.83206106870229, 26);
 
 -- --------------------------------------------------------
 
@@ -56,8 +89,8 @@ CREATE TABLE `beneficiosplan` (
 --
 
 CREATE TABLE `beneficiosreferidos` (
-  `id` int NOT NULL,
-  `user` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `valor` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -69,8 +102,8 @@ CREATE TABLE `beneficiosreferidos` (
 --
 
 CREATE TABLE `billetera` (
-  `id_billetera` int NOT NULL,
-  `nombre` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `id_billetera` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -88,10 +121,10 @@ INSERT INTO `billetera` (`id_billetera`, `nombre`) VALUES
 --
 
 CREATE TABLE `billeterauser` (
-  `id_billeteraUser` int NOT NULL,
-  `id_user` int NOT NULL,
-  `Id_billetera` int NOT NULL,
-  `link` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
+  `id_billeteraUser` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `Id_billetera` int(11) NOT NULL,
+  `link` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -118,12 +151,12 @@ INSERT INTO `billeterauser` (`id_billeteraUser`, `id_user`, `Id_billetera`, `lin
 --
 
 CREATE TABLE `bonored` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `nivel` float NOT NULL,
   `porcentaje` float NOT NULL,
   `patrocinio` double NOT NULL,
   `inversion` double NOT NULL,
-  `rango` int DEFAULT NULL
+  `rango` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -147,9 +180,9 @@ INSERT INTO `bonored` (`id`, `nivel`, `porcentaje`, `patrocinio`, `inversion`, `
 --
 
 CREATE TABLE `codigoemail` (
-  `id` int NOT NULL,
-  `id_user` int NOT NULL,
-  `codigo` text COLLATE utf8mb4_general_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `codigo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -159,15 +192,15 @@ CREATE TABLE `codigoemail` (
 --
 
 CREATE TABLE `depositos` (
-  `id_depositos` int NOT NULL,
-  `id_user` int NOT NULL,
-  `id_plan` int NOT NULL,
-  `id_billetera` int NOT NULL,
+  `id_depositos` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_plan` int(11) NOT NULL,
+  `id_billetera` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `fechafinal` date DEFAULT NULL,
-  `cantidad` int NOT NULL,
-  `archivo` text COLLATE utf8mb4_general_ci NOT NULL,
-  `estado` int NOT NULL DEFAULT '0'
+  `cantidad` int(11) NOT NULL,
+  `archivo` text NOT NULL,
+  `estado` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -175,7 +208,7 @@ CREATE TABLE `depositos` (
 --
 
 INSERT INTO `depositos` (`id_depositos`, `id_user`, `id_plan`, `id_billetera`, `fecha`, `fechafinal`, `cantidad`, `archivo`, `estado`) VALUES
-(15, 2, 12, 8, '2024-10-07 13:44:55', NULL, 500, 'dsadsadasd', 0),
+(15, 2, 12, 8, '2024-10-10 00:00:00', '2025-10-10', 500, 'dsadsadasd', 1),
 (16, 3, 12, 11, '2024-10-07 14:12:36', NULL, 500, 'fsdfdfdsfsd', 0),
 (17, 4, 12, 12, '2024-10-07 14:14:47', NULL, 500, 'gfdgfdgfdg', 0),
 (18, 5, 12, 13, '2024-10-07 14:21:10', NULL, 500, 'jhdhsfhshgsh', 0),
@@ -186,7 +219,7 @@ INSERT INTO `depositos` (`id_depositos`, `id_user`, `id_plan`, `id_billetera`, `
 (23, 10, 12, 17, '2024-10-07 14:30:12', NULL, 500, 'nvlskjnvlkjnvldvd', 0),
 (24, 11, 12, 18, '2024-10-07 14:31:12', NULL, 500, 'nkdmklvavkfvnvf', 0),
 (25, 12, 12, 10, '2024-10-07 14:33:21', NULL, 500, 'dsbcjsdbcjhcbsdc', 0),
-(26, 2, 13, 8, '2024-10-07 17:54:58', NULL, 500, 'hghsghshghsh', 0);
+(26, 2, 13, 8, '2024-10-10 00:00:00', '2025-04-10', 500, 'hghsghshghsh', 1);
 
 -- --------------------------------------------------------
 
@@ -195,8 +228,8 @@ INSERT INTO `depositos` (`id_depositos`, `id_user`, `id_plan`, `id_billetera`, `
 --
 
 CREATE TABLE `frecuenciatransaccion` (
-  `id` int NOT NULL,
-  `frecuencia` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '0'
+  `id` int(11) NOT NULL,
+  `frecuencia` varchar(100) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -216,11 +249,11 @@ INSERT INTO `frecuenciatransaccion` (`id`, `frecuencia`) VALUES
 --
 
 CREATE TABLE `liderazgo` (
-  `id` int NOT NULL,
-  `rango` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `inversionpersonal` int NOT NULL,
-  `volumendered` int DEFAULT NULL,
-  `bono` int DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `rango` varchar(100) NOT NULL,
+  `inversionpersonal` int(11) NOT NULL,
+  `volumendered` int(11) DEFAULT NULL,
+  `bono` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -249,18 +282,18 @@ INSERT INTO `liderazgo` (`id`, `rango`, `inversionpersonal`, `volumendered`, `bo
 --
 
 CREATE TABLE `planes` (
-  `id_plan` int NOT NULL,
-  `plan` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `items` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `descripcion` varchar(2000) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `porcentajeMin` int NOT NULL DEFAULT '0',
-  `porcentajeMax` int NOT NULL DEFAULT '0',
-  `fijo` int NOT NULL DEFAULT '0',
-  `id_interes` int DEFAULT NULL,
-  `id_Retiros` int DEFAULT NULL,
-  `pagos` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tiempo` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  `visibilidad` tinyint(1) NOT NULL DEFAULT '1'
+  `id_plan` int(11) NOT NULL,
+  `plan` varchar(30) NOT NULL,
+  `items` varchar(500) DEFAULT NULL,
+  `descripcion` varchar(2000) DEFAULT NULL,
+  `porcentajeMin` int(11) NOT NULL DEFAULT 0,
+  `porcentajeMax` int(11) NOT NULL DEFAULT 0,
+  `fijo` int(11) NOT NULL DEFAULT 0,
+  `id_interes` int(11) DEFAULT NULL,
+  `id_Retiros` int(11) DEFAULT NULL,
+  `pagos` varchar(100) DEFAULT NULL,
+  `tiempo` varchar(200) NOT NULL,
+  `visibilidad` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -278,9 +311,9 @@ INSERT INTO `planes` (`id_plan`, `plan`, `items`, `descripcion`, `porcentajeMin`
 --
 
 CREATE TABLE `porcentajes` (
-  `id` int NOT NULL,
-  `planes` int NOT NULL,
-  `porcentaje` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `planes` int(11) NOT NULL,
+  `porcentaje` int(11) NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -291,9 +324,9 @@ CREATE TABLE `porcentajes` (
 --
 
 CREATE TABLE `referidos` (
-  `id` int NOT NULL,
-  `padre` int NOT NULL,
-  `hijo` int NOT NULL
+  `id` int(11) NOT NULL,
+  `padre` int(11) NOT NULL,
+  `hijo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -320,13 +353,13 @@ INSERT INTO `referidos` (`id`, `padre`, `hijo`) VALUES
 --
 
 CREATE TABLE `retiros` (
-  `id_retiros` int NOT NULL,
-  `id_user` int NOT NULL,
-  `id_depositos` int NOT NULL,
-  `id_billeteraUser` int NOT NULL,
+  `id_retiros` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_depositos` int(11) NOT NULL,
+  `id_billeteraUser` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `estado` int NOT NULL DEFAULT '0',
-  `cantidad` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `estado` int(11) NOT NULL DEFAULT 0,
+  `cantidad` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -336,15 +369,15 @@ CREATE TABLE `retiros` (
 --
 
 CREATE TABLE `user` (
-  `id_user` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `apellido` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `contrasena` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `cedula` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `UserTipo` int NOT NULL DEFAULT '2',
-  `confirma` bigint NOT NULL DEFAULT '0'
+  `id_user` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `contrasena` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `cedula` varchar(100) DEFAULT NULL,
+  `UserTipo` int(11) NOT NULL DEFAULT 2,
+  `confirma` bigint(20) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -487,91 +520,91 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `beneficiosliderazgo`
 --
 ALTER TABLE `beneficiosliderazgo`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `beneficiosplan`
 --
 ALTER TABLE `beneficiosplan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `beneficiosreferidos`
 --
 ALTER TABLE `beneficiosreferidos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `billetera`
 --
 ALTER TABLE `billetera`
-  MODIFY `id_billetera` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_billetera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `billeterauser`
 --
 ALTER TABLE `billeterauser`
-  MODIFY `id_billeteraUser` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_billeteraUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `bonored`
 --
 ALTER TABLE `bonored`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `codigoemail`
 --
 ALTER TABLE `codigoemail`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `depositos`
 --
 ALTER TABLE `depositos`
-  MODIFY `id_depositos` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_depositos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `frecuenciatransaccion`
 --
 ALTER TABLE `frecuenciatransaccion`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `liderazgo`
 --
 ALTER TABLE `liderazgo`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `planes`
 --
 ALTER TABLE `planes`
-  MODIFY `id_plan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `porcentajes`
 --
 ALTER TABLE `porcentajes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `referidos`
 --
 ALTER TABLE `referidos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `retiros`
 --
 ALTER TABLE `retiros`
-  MODIFY `id_retiros` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_retiros` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas

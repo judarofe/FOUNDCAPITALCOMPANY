@@ -18,7 +18,7 @@ function procesar(dato){
                     datos: datos,
                 },
                 success: function(data){
-                    $("#registrosDepositos").html(data);
+                    location.reload();
                 }
             });
         }

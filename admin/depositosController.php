@@ -2,7 +2,7 @@
     require_once("../../../config-ext.php");
     include("../controller/encoded.php");
     
-    $sql="  SELECT d.id_depositos, u.id_user, u.nombre, u.apellido, u.email, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, b.link, d.fecha, d.cantidad, d.archivo, d.estado
+    $sql="  SELECT d.id_depositos, u.id_user, u.nombre, u.apellido, u.email, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.id_interes, b.link, d.fecha, d.cantidad, d.archivo, d.estado
     FROM depositos d
     JOIN user u ON d.id_user = u.id_user
     JOIN planes p ON d.id_plan = p.id_plan

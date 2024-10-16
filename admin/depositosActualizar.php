@@ -27,21 +27,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_interes = $arraydatos[16];
 
     $inversionPersonal = inversionPersonal($id_user, $conn);
-    $equipo = equipo($id_user, $conn);
-    $equipo = substr($equipo, 0, -1);
-    $volumen = volumen($equipo, $conn);
-    $rango = rango($inversionPersonal, $volumen, $conn);
-    $beneficioRango = cargarrango($id_user, $rango, $conn);
-    $diaInicial = diaInicial();
-    $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
-    $contarDias = contarDias($diaInicial, $diaFinal);
+    //$equipo = equipo($id_user, $conn);
+    //$equipo = substr($equipo, 0, -1);
+    //$volumen = volumen($equipo, $conn);
+    $actualizacionInversion = $inversionPersonal + $inversion;
+    //$rango = rango($actualizacionInversion, $volumen, $conn);
+    //$beneficioRango = cargarrango($id_user, $rango, $conn);
+    //$diaInicial = diaInicial();
+    //$diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
+    //$contarDias = contarDias($diaInicial, $diaFinal);
         
-    if($fijo !== ""){
-        $ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
-        $gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
-    }
+    //if($fijo !== ""){
+        //$ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
+        //$gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
+    //}
 
-    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
+    //cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
+    $buscarReferidos = buscarReferidos($id_user, $conn);
+    $buscarReferidos = substr($buscarReferidos, 0, -1);
+    actualizarRangoReferidos($buscarReferidos, $conn);
+
+    echo $buscarReferidos;
+
 }
 
 function inversionPersonal($id_user, $conn) {
@@ -254,5 +261,45 @@ function cambiarEstado($valor, $fecha, $idDeposito, $diaFinal, $conn) {
 
     $stmt->bind_param("issi", $valor, $fecha, $diaFinal, $idDeposito);
     $stmt->execute();
+}
+
+function buscarReferidos($id_user, $conn, $contador = 0){
+    $Registro = "";
+    $sql = "SELECT padre FROM referidos WHERE hijo = $id_user";
+    
+    $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()) {
+            $contador++;
+            if($contador <= 8){
+                $Registro .= $row["padre"].",";
+                $Registro .= buscarReferidos($row["padre"], $conn, $contador);
+            }else{
+                break;
+            }
+        }
+    }
+
+    return $Registro;
+}
+
+function actualizarRangoReferidos($buscarReferidos, $conn){
+    $arrayBuscarReferidos = explode(",", $buscarReferidos);
+    $inversion = "";
+    $equipo = "";
+    $volumen = "";
+    $rango = "";
+    $beneficioRango = "";
+
+    foreach ($arrayBuscarReferidos as $datos){
+        $inversion = inversionPersonal($datos, $conn);
+        $equipo = equipo($datos, $conn);
+        $equipo = substr($equipo, 0, -1);
+        $volumen = volumen($equipo, $conn);
+        $rango = rango($inversion, $volumen, $conn);
+        cargarrango($datos, $rango, $conn);
+    }
+
+    return;
 }
 ?>

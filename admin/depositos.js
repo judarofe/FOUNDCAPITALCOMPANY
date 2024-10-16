@@ -18,7 +18,8 @@ function procesar(dato){
                     datos: datos,
                 },
                 success: function(data){
-                    location.reload();
+                    //location.reload();
+                    console.log(data);
                 }
             });
         }

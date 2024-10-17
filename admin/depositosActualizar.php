@@ -27,22 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_interes = $arraydatos[16];
 
     $inversionPersonal = inversionPersonal($id_user, $conn);
-    //$equipo = equipo($id_user, $conn);
-    //$equipo = substr($equipo, 0, -1);
-    //$volumen = volumen($equipo, $conn);
+    $equipo = equipo($id_user, $conn);
+    $equipo = substr($equipo, 0, -1);
+    $volumen = volumen($equipo, $conn);
     $actualizacionInversion = $inversionPersonal + $inversion;
-    //$rango = rango($actualizacionInversion, $volumen, $conn);
-    //$beneficioRango = cargarrango($id_user, $rango, $conn);
-    //$diaInicial = diaInicial();
-    //$diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
-    //$contarDias = contarDias($diaInicial, $diaFinal);
+    $rango = rango($actualizacionInversion, $volumen, $conn);
+    $beneficioRango = cargarrango($id_user, $rango, $conn);
+    $diaInicial = diaInicial();
+    $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
+    $contarDias = contarDias($diaInicial, $diaFinal);
         
-    //if($fijo !== ""){
-        //$ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
-        //$gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
-    //}
+    if($fijo !== ""){
+        $ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
+        $gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
+    }
 
-    //cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
+    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
     $buscarReferidos = buscarReferidos($id_user, $conn);
     $buscarReferidos = substr($buscarReferidos, 0, -1);
     actualizarRangoReferidos($buscarReferidos, $conn);
@@ -331,14 +331,16 @@ function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $co
                     AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
                 }elseif($row["rango"] != NULL && $row["inversion"] <= $inversionPadre){
                     $resultArray[] = "ID: " . $row["id"] . " - Inversion: " . $row["inversion"] . " - referido " . $arrayBuscarReferidos[$index];
-                    $ElRAngo = verificarRAngoReferidos($id_user, $row["patrocinio"], $row["rango"], $conn);
+                    $ElRAngo = verificarRAngoReferidos($arrayBuscarReferidos[$index], $row["patrocinio"], $row["rango"], $conn);
                     if($ElRAngo){
                         $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
                         AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
                     }else{
+                        $Ganancias = 0;
                         AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
                     }
                 }else{
+                    $Ganancias = 0;
                     AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
                 }
             }
@@ -381,7 +383,41 @@ function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
     return true;
 }
 
-function verificarRAngoReferidos($id_user, $patrocinio, $rango, $conn){
+function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn){
+    $id_user = (int)$id_user;
+    $sql_1 = "SELECT COUNT(*) as total FROM referidos WHERE padre = ?";
+    $stmt_1 = $conn->prepare($sql_1);
+    
+    if (!$stmt_1) {
+        return false;
+    }
+
+    $stmt_1->bind_param("i", $id_user);
+    $stmt_1->execute();
+    
+    $result_1 = $stmt_1->get_result();
+
+    if ($result_1) {
+        $row = $result_1->fetch_assoc();
+        $patrocinio = (int)$patrocinio;
+        $row = (int)$row;
+
+        if($row >= $patrocinio){
+            return true;
+        }else{
+            return false;
+        }
+
+    }else{
+        return false;
+    }
+        
+    /*if ($result_1) {
+        $row = $result_1->fetch_assoc();
+        return $row['total'] >= $patrocinio;
+    } else {
+        return false;
+    }*/
     
 }
 ?>

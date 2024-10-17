@@ -46,8 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $buscarReferidos = buscarReferidos($id_user, $conn);
     $buscarReferidos = substr($buscarReferidos, 0, -1);
     actualizarRangoReferidos($buscarReferidos, $conn);
+    $bonodeREdPreuba = distribuirBonodeRed($buscarReferidos, $id_user, $inversion, $conn);
 
-    echo $buscarReferidos;
+    echo $bonodeREdPreuba;
 
 }
 
@@ -264,14 +265,21 @@ function cambiarEstado($valor, $fecha, $idDeposito, $diaFinal, $conn) {
 }
 
 function buscarReferidos($id_user, $conn, $contador = 0){
+
+    $sql_0 = "SELECT * FROM bonored";
+    $result_0 = $conn->query($sql_0);
+
     $Registro = "";
     $sql = "SELECT padre FROM referidos WHERE hijo = $id_user";
-    
+    if ($result_0->num_rows > 0) {
+        $valorBonos = $result_0->num_rows;
+    }
+
     $result = $conn->query($sql);
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()) {
             $contador++;
-            if($contador <= 8){
+            if($contador <= $valorBonos){
                 $Registro .= $row["padre"].",";
                 $Registro .= buscarReferidos($row["padre"], $conn, $contador);
             }else{
@@ -301,5 +309,79 @@ function actualizarRangoReferidos($buscarReferidos, $conn){
     }
 
     return;
+}
+
+function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $conn) {
+    $arrayBuscarReferidos = explode(",", $buscarReferidos);
+    $Ganancias = 0;
+    $inversionPadre = 0;
+    $msm = "";
+    $sql = "SELECT * FROM bonored";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $resultArray = [];
+        $index = 0;
+
+        while ($row = $result->fetch_assoc()) {
+            if (isset($arrayBuscarReferidos[$index]) && $arrayBuscarReferidos[$index] != "") {
+                $inversionPadre = inversionPersonal($arrayBuscarReferidos[$index], $conn);
+                if($row["rango"] === NULL && $row["inversion"] <= $inversionPadre){
+                    $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
+                    AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                }elseif($row["rango"] != NULL && $row["inversion"] <= $inversionPadre){
+                    $resultArray[] = "ID: " . $row["id"] . " - Inversion: " . $row["inversion"] . " - referido " . $arrayBuscarReferidos[$index];
+                    $ElRAngo = verificarRAngoReferidos($id_user, $row["patrocinio"], $row["rango"], $conn);
+                    if($ElRAngo){
+                        $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
+                        AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                    }else{
+                        AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                    }
+                }else{
+                    AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                }
+            }
+            $index++;
+        }
+
+        $msm = implode(" ", $resultArray);
+    } else {
+        $msm = "No se encontraron registros.";
+    }
+
+    return $msm;
+}
+
+function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
+    $sqlVerificacion = "SELECT EXISTS(SELECT 1 FROM beneficiosreferidos WHERE user = ? AND referido = ?)";
+    $stmtVerificacion = $conn->prepare($sqlVerificacion);
+    if (!$stmtVerificacion) {
+        die("Error en la preparación de la consulta: " . $conn->error);
+    }
+    $stmtVerificacion->bind_param("is", $id_user, $referido);
+    $stmtVerificacion->execute();
+    $stmtVerificacion->bind_result($existe);
+    $stmtVerificacion->fetch();
+    $stmtVerificacion->close();
+
+    if ($existe) {
+        return false;
+    } else {
+        $fechaFormateada = date('Y-m-d');
+        $sql = "INSERT INTO beneficiosreferidos (user, fecha, valor, referido) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            die("Error en la preparación de la consulta: " . $conn->error);
+        }
+        $stmt->bind_param("isds", $id_user, $fechaFormateada, $Ganancias, $referido);
+        $stmt->execute();
+        $stmt->close();
+    }
+    return true;
+}
+
+function verificarRAngoReferidos($id_user, $patrocinio, $rango, $conn){
+    
 }
 ?>

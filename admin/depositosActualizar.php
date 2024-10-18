@@ -326,12 +326,14 @@ function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $co
         while ($row = $result->fetch_assoc()) {
             if (isset($arrayBuscarReferidos[$index]) && $arrayBuscarReferidos[$index] != "") {
                 $inversionPadre = inversionPersonal($arrayBuscarReferidos[$index], $conn);
+
+                $ElRAngo = verificarRangoReferidos($arrayBuscarReferidos[$index], $row["patrocinio"], $row["rango"], $conn);
+                $resultArray[] =" referido: ". $arrayBuscarReferidos[$index] ." patrocinio: ". $row["patrocinio"] ." Rango ". $row["rango"] ." estado ". $ElRAngo;
+
                 if($row["rango"] === NULL && $row["inversion"] <= $inversionPadre){
                     $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
                     AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
                 }elseif($row["rango"] != NULL && $row["inversion"] <= $inversionPadre){
-                    $resultArray[] = "ID: " . $row["id"] . " - Inversion: " . $row["inversion"] . " - referido " . $arrayBuscarReferidos[$index];
-                    $ElRAngo = verificarRAngoReferidos($arrayBuscarReferidos[$index], $row["patrocinio"], $row["rango"], $conn);
                     if($ElRAngo){
                         $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
                         AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
@@ -347,7 +349,7 @@ function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $co
             $index++;
         }
 
-        $msm = implode(" ", $resultArray);
+        $msm = implode("\n", $resultArray);
     } else {
         $msm = "No se encontraron registros.";
     }
@@ -383,41 +385,31 @@ function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
     return true;
 }
 
-function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn){
+function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn) {
     $id_user = (int)$id_user;
-    $sql_1 = "SELECT COUNT(*) as total FROM referidos WHERE padre = ?";
+    $sql_1 = "SELECT id FROM referidos WHERE padre = ?";
     $stmt_1 = $conn->prepare($sql_1);
     
     if (!$stmt_1) {
         return false;
     }
-
+    
     $stmt_1->bind_param("i", $id_user);
     $stmt_1->execute();
-    
     $result_1 = $stmt_1->get_result();
-
+    
     if ($result_1) {
-        $row = $result_1->fetch_assoc();
-        $patrocinio = (int)$patrocinio;
-        $row = (int)$row;
-
-        if($row >= $patrocinio){
-            return true;
-        }else{
-            return false;
+        $referidos_ids = [];   
+        while ($row = $result_1->fetch_assoc()) {
+            $referidos_ids[] = (int)$row['id'];
         }
+    }
 
+    if(count($referidos_ids) >= (int)$patrocinio){
+        return true;
     }else{
         return false;
     }
-        
-    /*if ($result_1) {
-        $row = $result_1->fetch_assoc();
-        return $row['total'] >= $patrocinio;
-    } else {
-        return false;
-    }*/
-    
 }
+
 ?>

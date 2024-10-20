@@ -386,9 +386,12 @@ function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
 }
 
 function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn) {
+
     $id_user = (int)$id_user;
-    $sql_1 = "SELECT id FROM referidos WHERE padre = ?";
+    $sql_1 = "SELECT hijo FROM referidos WHERE padre = ?";
     $stmt_1 = $conn->prepare($sql_1);
+    $verificarRango = [];
+    $a = 0;
     
     if (!$stmt_1) {
         return false;
@@ -406,10 +409,44 @@ function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn) {
     }
 
     if(count($referidos_ids) >= (int)$patrocinio){
-        return true;
+        foreach ($referidos_id as $id) {
+            $verificarRango[] = verificarRango($id_user, $conn);
+        }
+        foreach ($verificarRango as $rangoVerificacion){
+            if((int)$rangoVerificacion >= (int)$rango){
+                $a++;
+            }
+        }
+        if($a >= (int)$patrocinio){
+            return true;
+        }else{
+            return false;
+        }
     }else{
         return false;
     }
+
+}
+
+function verificarRango($id_user, $conn) {
+
+    $stmt = $conn->prepare("SELECT MAX(fecha) AS max_fecha FROM beneficiosliderazgo WHERE user = ?");
+    $stmt->bind_param("s", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    
+    if ($row) {
+        $max_fecha = $row['max_fecha'];
+        $stmt = $conn->prepare("SELECT rango FROM beneficiosliderazgo WHERE user = ? AND fecha = ?");
+        $stmt->bind_param("ss", $id_user, $max_fecha);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    } else {
+        return null;
+    }
+
 }
 
 ?>

@@ -23,6 +23,24 @@ header{
     font-family: 'Hero', sans-serif;
 }
 
+.ps-1{
+    width: 2.4vw;
+    height: auto;
+}
+
+.ps-1 *{
+    fill: #fff;
+}
+
+.ps-2{
+    width: 2.4vw;
+    height: auto;
+}
+
+.ps-2 *{
+    fill: #00183B;
+}
+
 #login{
     background-color: rgb(0, 24, 59, 0.3);
 }
@@ -163,4 +181,10 @@ header{
     background-color: var(--azul);
     transform: scale(1.1);
     color: var(--blanco);
+}
+
+@media (max-width: 768px) {
+    .navbar-brand, .nav-link, .dropdown-item{
+        font-size: 15px;
+    }
 }

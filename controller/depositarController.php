@@ -141,6 +141,7 @@ if ($result->num_rows > 0) {
 
         $fechaInicio = date('Y-m-d', strtotime($inicio));
         $beneficios = buscarBeneficios($Iduser, $idDeposito, $conn);
+        $registrosPagos = registrosPagos($Iduser, $idDeposito, $conn);
 
         if($estado != "4"){
             if ($estado === "0"){
@@ -166,9 +167,93 @@ if ($result->num_rows > 0) {
                                 <td>'.$plan.' ('.$ganancias.')</td>
                                 <td>&#36;US '.round($beneficios, 2).'</td>
                                 <td>'.$tiempo.'</td>
-                                <td '.$colorAlert.'><strong>'.$final.'</strong></td></tr>';
+                                <td '.$colorAlert.'><strong>'.$final.'</strong></td>'.$registrosPagos;
         }
+    } 
+}
+
+// -----------------------------------------------------
+
+    $totalValor = 0;
+
+    $sql_1 = "SELECT SUM(cantidad) AS total_cantidad FROM depositos WHERE id_user = ? AND estado = 1";
+    $stmt_1 = $conn->prepare($sql_1);
+    $stmt_1->bind_param("i", $Iduser);
+    $stmt_1->execute();
+    $result_1 = $stmt_1->get_result();
+    $total_cantidad = 0;
+
+    if ($result_1->num_rows > 0) {
+        $row = $result_1->fetch_assoc();
+        $total_cantidad = !empty($row['total_cantidad']) ? $row['total_cantidad'] : 0;
+        $totalValor = $totalValor + $total_cantidad;
+        $total_cantidad = number_format($total_cantidad, 2, '.', ',');
     }
+
+    $total_intereses = 0;
+
+    $sql_2 = "SELECT SUM(valor) AS totalPlanBeneficios 
+            FROM beneficiosplan 
+            WHERE user = ? AND fecha <= CURDATE()";
+    $stmt_2 = $conn->prepare($sql_2);
+    $stmt_2->bind_param("i", $Iduser);
+    $stmt_2->execute();
+    $result_2 = $stmt_2->get_result();
+    $row = $result_2->fetch_assoc();
+
+    $total_intereses = !empty($row['totalPlanBeneficios']) ? $row['totalPlanBeneficios'] : 0;
+    $totalValor = $totalValor + $total_intereses;
+    $total_intereses = number_format($total_intereses, 2, '.', ',');
+
+// -----------------------------------------------------
+
+function registrosPagos($Iduser, $idDeposito, $conn){
+    $sql = "SELECT fecha, valor
+    FROM beneficiosplan 
+    WHERE user = ? AND id_deposito = ? AND fecha <= CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $Iduser, $idDeposito);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tabla = '<tr>
+        <td colspan="6">
+            <div class="accordion" id="accordionPlan'.$Iduser.'_'.$idDeposito.'">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button btn-sm py-1 px-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'.$Iduser.'_'.$idDeposito.'" aria-expanded="false" aria-controls="collapseOne">
+                            Ver extractos
+                        </button>
+                    </h2>
+                <div id="collapseOne'.$Iduser.'_'.$idDeposito.'" class="accordion-collapse collapse" data-bs-parent="#accordionPlan'.$Iduser.'_'.$idDeposito.'">
+            <div class="accordion-body">  
+                <table class="table table-striped table-sm">
+                    <tr class="table-dark">
+                        <th>Fecha</th>
+                        <th>Valor</th>
+                    <tr>';
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $tabla .= '<tr>
+                                <td>
+                                    '.$row['fecha'].'
+                                </td>
+                                <td>
+                                    '.$row['valor'].'
+                                </td>
+                            </tr>';
+                        }
+                $tabla .= '</table>
+            </div>
+        </td>
+    </tr>';
+
+    }else{
+        $tabla = '';
+    }
+
+    
+
+    return $tabla;
 }
 
 function buscarBeneficios($Iduser, $idDeposito, $conn) {

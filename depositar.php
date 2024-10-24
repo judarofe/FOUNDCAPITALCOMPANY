@@ -244,8 +244,8 @@
         <div class="row">
             <div class="col">
                 <p>
-                    Total Depositado: <?php echo "&#36;US ".$totalDepositado; ?><br>
-                    Total beneficios: <?php echo "&#36;US ".$Totalbeneficios; ?>
+                    Total Depositado: <?php echo "&#36;US ".$total_cantidad; ?><br>
+                    Total beneficios: <?php echo "&#36;US ".$total_intereses; ?>
                 </p>
             </div>
         </div>

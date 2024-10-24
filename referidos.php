@@ -6,8 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=
-    , initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>REFERIDOS | ELITE FOUND</title>
     <link rel="stylesheet" href="css/tools/8_0_1_normalize.css">
@@ -113,20 +112,18 @@
                     <table class="table table-hover text-center table-borderless">
                         <thead>
                             <tr class="cabeceraTable">
+                                <th>FECHA</th>
                                 <th>NIVEL</th>
-                                <th>PORCENTAJE</th>
-                                <th>REFERIDOS</th>
                                 <th>GANANCIAS</th>
                             </tr>
                             <tr class="espacioTabla">
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
-                                <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody class="cuerpotabla">
-                            
+                            <?php echo $referidosRegistro; ?>
                         </tbody>
                     </table>
                 </div>

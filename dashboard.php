@@ -106,7 +106,7 @@
                         </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_cantidad; ?></p></div>
+                        <div class="inputCard"><p class="card-text"><strong>Total depósitos: </strong>$US <?php echo $total_cantidad; ?><br><strong>Total: </strong>$US <?php echo $totalValor; ?></p></div>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
 
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_intereses?></p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_intereses?><br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                     <img class="svgCard" src="img/home/Grupo 21.png" alt="">
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_referidos?></p></div>
+                        <div class="inputCard"><p class="card-text"><strong>Bono de red: </strong>$US <?php echo $total_referidos?><br><strong>Volumen de equipo: </strong>$US  <?php echo $volumen?></p></div>
                     </div>
                 </div>
             </div>
@@ -152,12 +152,10 @@
                 <div class="card">
                     <h3 class="card-title">Bonos liderazgo</h3>
                     <br>
-                    <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
-                        <path id="Trazado_20" data-name="Trazado 20" d="M955.919,364H966.67c11.479,0,19.974,11.057,16.6,22.028q-.161.522-.348,1.059s10.166-4.384,6-24.174c-4-19-33-14.565-33-14.565V338.174l-21,18.739,21,18.044Z" transform="translate(-934.919 -338.174)" fill="#00183b"/>
-                    </svg>
-                    <br>
+                        <?php echo $rangoActual?>
+                    <br>          
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_liderazgo?></p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_liderazgo?><br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -173,7 +171,7 @@
                     </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                        <div class="inputCard"><p class="card-text">0.00<br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -189,7 +187,7 @@
                     </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                        <div class="inputCard"><p class="card-text">0.00<br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -197,7 +195,6 @@
 
     </div>
 </section>
-<section class="seccion_oscura"></section>
 
 <input type="hidden" id="user_value" value="<?php echo $Iduser?>">
 <footer class="seccion_clara">

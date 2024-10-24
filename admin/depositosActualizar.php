@@ -216,7 +216,7 @@ function contarDias($diaInicial, $diaFinal){
 }
 
 function gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias){
-    $ganancias = (($inversion*($fijo/100))*$multiplicador)/$contarDias;
+    $ganancias = (($inversion*($fijo/100))*12)/$contarDias;
     return $ganancias;
 }
 

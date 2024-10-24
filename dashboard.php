@@ -1,5 +1,6 @@
 <?php
     include(dirname(__FILE__).'/controller/dashboardController.php');
+    include(dirname(__FILE__).'/controller/resumen.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +106,7 @@
                         </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_cantidad; ?></p></div>
                     </div>
                 </div>
             </div>
@@ -126,7 +127,7 @@
 
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_intereses?></p></div>
                     </div>
                 </div>
             </div>
@@ -140,7 +141,7 @@
                     <img class="svgCard" src="img/home/Grupo 21.png" alt="">
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0</p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_referidos?></p></div>
                     </div>
                 </div>
             </div>
@@ -156,7 +157,7 @@
                     </svg>
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">0.00</p></div>
+                        <div class="inputCard"><p class="card-text">$US <?php echo $total_liderazgo?></p></div>
                     </div>
                 </div>
             </div>

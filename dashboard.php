@@ -155,7 +155,7 @@
                         <?php echo $rangoActual?>
                     <br>          
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_liderazgo?><br><br></p></div>
+                        <div class="inputCard"><p class="card-text"><strong><?php echo $nombreRango ?>:<strong> $US <?php echo $total_liderazgo?><br><br></p></div>
                     </div>
                 </div>
             </div>

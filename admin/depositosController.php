@@ -2,7 +2,7 @@
     require_once("../../../config-ext.php");
     include("../controller/encoded.php");
     
-    $sql="  SELECT d.id_depositos, u.id_user, u.nombre, u.apellido, u.email, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.id_interes, b.link, d.fecha, d.cantidad, d.archivo, d.estado
+    $sql="  SELECT d.id_depositos, u.id_user, u.nombre, u.apellido, u.email, p.plan, p.porcentajeMin, p.porcentajeMax, p.fijo, p.tiempo, p.id_interes, b.link, d.fecha, d.cantidad, d.archivo, d.estado, d.bono
     FROM depositos d
     JOIN user u ON d.id_user = u.id_user
     JOIN planes p ON d.id_plan = p.id_plan
@@ -20,7 +20,7 @@
             $apellido = decoded($row['apellido']);
             $email = decoded($row['email']);
 
-            $datos = $row['id_depositos'].",".$row['id_user'].",".$nombre.",".$apellido.",".$email.",".$row['plan'].",".$row['porcentajeMin'].",".$row['porcentajeMax'].",".$row['fijo'].",".$row['tiempo'].",".$row['link'].",".$row['fecha'].",".$row['cantidad'].",".$row['archivo'].",".$row['estado'].",".$row['id_interes'];
+            $datos = $row['id_depositos'].",".$row['id_user'].",".$nombre.",".$apellido.",".$email.",".$row['plan'].",".$row['porcentajeMin'].",".$row['porcentajeMax'].",".$row['fijo'].",".$row['tiempo'].",".$row['link'].",".$row['fecha'].",".$row['cantidad'].",".$row['archivo'].",".$row['estado'].",".$row['id_interes'].",".$row['bono'];
 
             if($row['estado'] === "0"){
                 $estado = "<td class=\"table-danger\"><button type=\"button\" class=\"btn btn-danger\" onclick=\"procesar('".$row['id_depositos']."')\">Aceptar</button></td>";

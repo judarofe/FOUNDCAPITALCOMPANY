@@ -39,15 +39,40 @@ $stmt_1->execute();
 $result_1 = $stmt_1->get_result();
 
 $referidosRegistro = '';
+$total = 0;
 
 if ($result_1->num_rows > 0) {
     $rows = [];
     while($row_1 = $result_1->fetch_assoc()) {
+        $nivelDeReferido = nivelReferido($row_1['referido'], $Iduser, $conn);
+        $nivelDeReferido = explode(",", $nivelDeReferido);
+        $nivelDeReferido = count($nivelDeReferido);
+        $total = $total + $row_1['valor'];
+
         $rows[] = '<tr>
             <td>'.$row_1['fecha'].'</td>
-            <td>'.$row_1['referido'].'</td>
-            <td>'.$row_1['valor'].'</td>
+            <td>'.$nivelDeReferido.'</td>
+            <td>&#36;US '.number_format($row_1['valor'], 2, '.', ',').'</td>
         </tr>';
     }
     $referidosRegistro = implode("", $rows);
+}
+
+function nivelReferido($referido, $Iduser, $conn){
+    $a=0;
+    $Registro = "";
+    $sql="SELECT padre FROM referidos WHERE hijo = $referido";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()) {
+            if($row["padre"] != $Iduser){
+                $Registro .= $row["padre"].",";
+                $Registro .= nivelReferido($row["padre"], $Iduser, $conn);
+            }else{
+                return $row["padre"];
+            }
+        }
+    }
+
+    return $Registro;
 }

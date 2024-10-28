@@ -25,14 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hash = $arraydatos[14];
     $estado = $arraydatos[15];
     $id_interes = $arraydatos[16];
+    $bonos = $arraydatos[17];
 
-    $inversionPersonal = inversionPersonal($id_user, $conn);
-    $equipo = equipo($id_user, $conn);
-    $equipo = substr($equipo, 0, -1);
-    $volumen = volumen($equipo, $conn);
-    $actualizacionInversion = $inversionPersonal + $inversion;
-    $rango = rango($actualizacionInversion, $volumen, $conn);
-    $beneficioRango = cargarrango($id_user, $rango, $conn);
     $diaInicial = diaInicial();
     $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
     $contarDias = contarDias($diaInicial, $diaFinal);
@@ -42,18 +36,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $gananciasViernes = crearGanancias($id_user, $diaInicial, $diaFinal, $ganancias, $id_depositos, $conn);
     }
 
-    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
-    $buscarReferidos = buscarReferidos($id_user, $conn);
-    $buscarReferidos = substr($buscarReferidos, 0, -1);
-    actualizarRangoReferidos($buscarReferidos, $conn);
-    $bonodeREdPreuba = distribuirBonodeRed($buscarReferidos, $id_user, $inversion, $conn);
+    if($bonos == 1){
+        $inversionPersonal = inversionPersonal($id_user, $conn);
+        $equipo = equipo($id_user, $conn);
+        $equipo = substr($equipo, 0, -1);
+        $volumen = volumen($equipo, $conn);
+        $actualizacionInversion = $inversionPersonal + $inversion;
+        $rango = rango($actualizacionInversion, $volumen, $conn);
+        $beneficioRango = cargarrango($id_user, $rango, $conn);
+        
+        $buscarReferidos = buscarReferidos($id_user, $conn);
+        $buscarReferidos = substr($buscarReferidos, 0, -1);
+        actualizarRangoReferidos($buscarReferidos, $conn);
+        $bonodeREdPreuba = distribuirBonodeRed($buscarReferidos, $id_user, $inversion, $conn);
 
-    echo $bonodeREdPreuba;
+        echo "con bono";
+    }
+
+    $verficarReferidoNoBono = verficarReferidoNoBono($id_user, $conn); // falta verificar
+
+    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
+
+    echo $bonos;
 
 }
 
 function inversionPersonal($id_user, $conn) {
-    $sql = "SELECT SUM(cantidad) AS total_cantidad FROM depositos WHERE id_user = ? AND estado = 1";
+    $sql = "SELECT SUM(cantidad) AS total_cantidad FROM depositos WHERE id_user = ? AND estado = 1 AND bono = 1";
     $stmt = $conn->prepare($sql);
     
     if ($stmt === false) {
@@ -328,22 +337,25 @@ function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $co
                 $inversionPadre = inversionPersonal($arrayBuscarReferidos[$index], $conn);
 
                 $ElRAngo = verificarRangoReferidos($arrayBuscarReferidos[$index], $row["patrocinio"], $row["rango"], $conn);
-                $resultArray[] =" referido: ". $arrayBuscarReferidos[$index] ." patrocinio: ". $row["patrocinio"] ." Rango ". $row["rango"] ." estado ". $ElRAngo;
-
+                
                 if($row["rango"] === NULL && $row["inversion"] <= $inversionPadre){
                     $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
                     AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                    $resultArray[] = "1 "."padre: ".$arrayBuscarReferidos[$index]." ganancia: ".$Ganancias." hijo: ".$id_user." rango: ".$row["rango"]." inversionRequerida: ".$row["inversion"]." inversionPadre: ".$inversionPadre;
                 }elseif($row["rango"] != NULL && $row["inversion"] <= $inversionPadre){
-                    if($ElRAngo){
+                    if($ElRAngo !== false){
                         $Ganancias = (float)$inversionPersonal * ((float)$row["porcentaje"] / 100);
                         AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                        $resultArray[] = "2 "."padre: ".$arrayBuscarReferidos[$index]." ganancia: ".$Ganancias." hijo: ".$id_user." rango: ".$row["rango"]." inversionRequerida: ".$row["inversion"]." inversionPadre: ".$inversionPadre;
                     }else{
                         $Ganancias = 0;
                         AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                        $resultArray[] = "4 "."padre: ".$arrayBuscarReferidos[$index]." ganancia: ".$Ganancias." hijo: ".$id_user." rango: ".$row["rango"]." inversionRequerida: ".$row["inversion"]." inversionPadre: ".$inversionPadre;
                     }
                 }else{
                     $Ganancias = 0;
                     AgregarBonoDeRed($arrayBuscarReferidos[$index], $Ganancias, $id_user, $conn);
+                    $resultArray[] = "5 "."padre: ".$arrayBuscarReferidos[$index]." ganancia: ".$Ganancias." hijo: ".$id_user." rango: ".$row["rango"]." inversionRequerida: ".$row["inversion"]." inversionPadre: ".$inversionPadre;
                 }
             }
             $index++;
@@ -403,30 +415,43 @@ function verificarRangoReferidos($id_user, $patrocinio, $rango, $conn) {
     if ($result_1) {
         $referidos_ids = [];   
         while ($row = $result_1->fetch_assoc()) {
-            $referidos_ids[] = (int)$row['hijo']; // Cambiar 'id' por 'hijo'
+            $referidos_ids[] = (int)$row['hijo'];
         }
     }
 
     if (count($referidos_ids) >= $patrocinio) {
-        foreach ($referidos_ids as $id) { // Corregido 'referidos_id' a 'referidos_ids'
-            $rangoVerificacion = verificarRango($id, $conn); // Cambiar $id_user a $id
+        foreach ($referidos_ids as $id) {
+            $rangoVerificacion = verificarRango($id, $conn);
             if ($rangoVerificacion !== null && (int)$rangoVerificacion['rango'] >= $rango) {
                 $a++;
             }
         }
-        
-        return $a >= $patrocinio;
-    } else {
+    }
+
+    if((int)$a >= (int)$patrocinio){
+        return true;
+    }else{
         return false;
     }
 }
 
 function verificarRango($id_user, $conn) {
-    $stmt = $conn->prepare("SELECT rango FROM beneficiosliderazgo WHERE user = ? ORDER BY fecha DESC LIMIT 1");
+    $stmt = $conn->prepare("SELECT rango FROM beneficiosliderazgo WHERE user = ? ORDER BY rango DESC LIMIT 1");
     $stmt->bind_param("s", $id_user);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_assoc(); // Devuelve el rango directamente o false si no hay resultados
+    return $result->fetch_assoc();
 }
 
+function verficarReferidoNoBono($id_user, $conn){ // falta verificar
+    $sql = "SELECT padre FROM referidos WHERE hijo = $id_user";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()) {
+            $Registro = $row["padre"];
+        }
+    }
+
+    return $Registro;
+}
 ?>

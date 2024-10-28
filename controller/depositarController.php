@@ -163,9 +163,9 @@ if ($result->num_rows > 0) {
             
             $depositosAll .=    '<tr>
                                 <td>'.$fechaInicio.'</td>
-                                <td>'.$cantidad.'</td>
+                                <td>&#36;US '.number_format($cantidad, 2, '.', ',').'</td>
                                 <td>'.$plan.' ('.$ganancias.')</td>
-                                <td>&#36;US '.round($beneficios, 2).'</td>
+                                <td>&#36;US '.number_format(round($beneficios, 2), 2, '.', ',').'</td>
                                 <td>'.$tiempo.'</td>
                                 <td '.$colorAlert.'><strong>'.$final.'</strong></td>'.$registrosPagos;
         }

@@ -129,6 +129,13 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <p>
+                    Total bonos de red: <?php echo "&#36;US ".number_format($total, 2, '.', ','); ?>
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 <footer class="seccion_clara">

@@ -76,7 +76,7 @@
         $rangoActual = '<img src="img/home/planComercial.png" class="svgCard">';
     }else{
         $rangoActual = '<img src="img/rango/'.$rangoActual_5.'.png" class="svgCard" alt="'.$rangoActual_5.'">';
-        $nombreRango = nombreRango($rangoActual_5, $conn);
+        
     }
 
     $equipo = equipo($id_user, $conn);
@@ -131,17 +131,4 @@
         }
     }
 
-    function nombreRango($rangoActual_5, $conn) {
-
-        $rangoActual_5 = mysqli_real_escape_string($conn, $rangoActual_5);
-        $sql = "SELECT rango FROM liderazgo WHERE id = '$rangoActual_5'";  
-        $result = mysqli_query($conn, $sql);
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            return $row['rango'];
-        } else {
-            return null;
-        }
-
-    }
 ?>

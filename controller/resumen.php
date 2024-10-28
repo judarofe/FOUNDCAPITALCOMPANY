@@ -62,7 +62,10 @@
 
     $rangoActual_5 = 0;
     $rangoActual = "";
-    $sql_5 = "SELECT rango FROM beneficiosliderazgo WHERE user = ? ORDER BY id DESC LIMIT 1";
+    $sql_5 = "SELECT b.rango AS rango, l.rango AS nombre
+        FROM beneficiosliderazgo b
+        JOIN liderazgo l ON b.rango = l.id
+        WHERE user = ? ORDER BY b.id DESC LIMIT 1";
     $stmt_5 = $conn->prepare($sql_5);
     $stmt_5->bind_param("i", $id_user);
     $stmt_5->execute();
@@ -74,9 +77,10 @@
 
     if($rangoActual_5 == 0 || $rangoActual_5 == 1){
         $rangoActual = '<img src="img/home/planComercial.png" class="svgCard">';
+        $nombreRAngo = "<br>";
     }else{
         $rangoActual = '<img src="img/rango/'.$rangoActual_5.'.png" class="svgCard" alt="'.$rangoActual_5.'">';
-        
+        $nombreRAngo = $row_5['nombre'];
     }
 
     $equipo = equipo($id_user, $conn);
@@ -130,5 +134,4 @@
             return 0;
         }
     }
-
 ?>

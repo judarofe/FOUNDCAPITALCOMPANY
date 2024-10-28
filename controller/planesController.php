@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
             <div class="col-md-6"><p>'.$descripcion.'</p></div>
             <div class="col-md-6">
                 <article>
-                    <div class="tarjeta">
+                    <div class="tarjeta" data-aos="flip-right">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">

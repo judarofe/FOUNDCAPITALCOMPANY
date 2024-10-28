@@ -11,7 +11,7 @@ if ($result->num_rows > 0) {
         $cadena = "";
         $listado = "";
        $planes .= '
-        <article>
+        <article data-aos="zoom-in">
             <div class="tarjeta">
                 <div class="card">
                     <div class="card-body">

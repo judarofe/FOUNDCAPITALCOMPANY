@@ -238,11 +238,11 @@
     <div class="customers marcador"><!--<p>254k</p><p>total customers</p>--></div>
     <div class="transactions marcador"><!--<p>50M</p><p>total transactions</p>--></div>
     <div class="payments marcador"><!--<p>2631</p><p>total daily Payments</p>--></div>
-    <div class="info"><p>En ELITE FOUND, entendemos la importancia de tomar decisiones financieras inteligentes y seguras. Nuestro compromiso es brindarte la oportunidad de invertir en algunos de los mercados más sólidos, respetados y diversificados del mundo, incluyendo el S&P 500, la Bolsa de Valores de Tokio, la Bolsa de Londres, el NASDAQ, así como en materias primas y por supuesto, en criptomonedas con gran proyección de crecimiento. Aquí, no solo te brindamos un camino hacia la inversión, sino también hacia la confianza y la rentabilidad.</p></div>
-    <div class="ilustracion"><img src="img/home/ilustracion1.png" alt=""></div>
+    <div data-aos="zoom-in-right" class="info"><p>En ELITE FOUND, entendemos la importancia de tomar decisiones financieras inteligentes y seguras. Nuestro compromiso es brindarte la oportunidad de invertir en algunos de los mercados más sólidos, respetados y diversificados del mundo, incluyendo el S&P 500, la Bolsa de Valores de Tokio, la Bolsa de Londres, el NASDAQ, así como en materias primas y por supuesto, en criptomonedas con gran proyección de crecimiento. Aquí, no solo te brindamos un camino hacia la inversión, sino también hacia la confianza y la rentabilidad.</p></div>
+    <div data-aos="zoom-in-left" class="ilustracion"><img src="img/home/ilustracion1.png" alt=""></div>
 </section>
 <section class="seccion_clara" id="Mercados">
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div data-aos="zoom-in" id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="slideHome">
@@ -344,20 +344,20 @@
 <section class="seccion_oscura">
     <h1>¿POR QUÉ INVERTIR CON NOSOTROS?</h1>
     <div class="galeriaX4">
-        <article class="row">
-             <div class="col-3 centrarElementos"><img src="img/home/acompañamiento.png" alt=""></div>
+        <article class="row flex-md-row justify-content-md-center" data-aos="zoom-in-right">
+             <div class="col-3 centrarElementos ilustracion"><img src="img/home/acompañamiento.png" alt=""></div>
              <div class="col-9"><h3>Acompañamiento</h3><p>Tu éxito es nuestro éxito. Ofrecemos un servicio al cliente excepcional y estamos disponibles para responder a tus preguntas y ayudarte en cada paso del camino. Tu satisfacción es lo más importante para nosotros.</p></div>
         </article>
-        <article class="row">
-             <div class="col-3 centrarElementos"><img src="img/home/rentabilidad.png" alt=""></div>
+        <article class="row flex-md-row justify-content-md-center" data-aos="zoom-in-left">
+             <div class="col-3 centrarElementos ilustracion"><img src="img/home/rentabilidad.png" alt=""></div>
              <div class="col-9"><h3>Rentabilidad Consistente</h3><p>Nuestro objetivo es claro: queremos ayudarte a lograr un crecimiento financiero sostenible. Ofrecemos un atractivo porcentaje de rentabilidad semanal en todos nuestros paquetes de inversión. Ya sea que estés comenzando con $50 o estés listo para invertir $10000, nuestro enfoque en la rentabilidad constante puede ayudarte a alcanzar tus metas financieras.</p></div>
         </article>
-        <article class="row">
-             <div class="col-3 centrarElementos"><img src="img/home/universal.png" alt=""></div>
+        <article class="row flex-md-row justify-content-md-center" data-aos="zoom-in-right">
+             <div class="col-3 centrarElementos ilustracion"><img src="img/home/universal.png" alt=""></div>
              <div class="col-9"><h3>Acceso Universal</h3><p>No importa si eres un inversor experimentado o si apenas estás empezando tu viaje en el mundo de las inversiones. En ELITE FOUND, todos son bienvenidos. Nuestro de paquete se adapta a diferentes niveles de inversión y experiencia.</p></div>
         </article>
-        <article class="row">
-             <div class="col-3 centrarElementos"><img src="img/home/seguridad.png" alt=""></div>
+        <article class="row flex-md-row justify-content-md-center" data-aos="zoom-in-left">
+             <div class="col-3 centrarElementos ilustracion"><img src="img/home/seguridad.png" alt=""></div>
              <div class="col-9"><h3>Seguridad</h3><p>Contamos con los más altps estándares de seguridad sobre tu información.</p></div>
         </article>
     </div>
@@ -369,7 +369,7 @@
     </div>
 </section>
 <section class="imagenFondo seccion_6" style="height: 56.4vw;">
-    <div class="leyenda seccion_oscura">
+    <div class="leyenda seccion_oscura" data-aos="flip-up">
         <p>Con gran orgullo, mantenemos firmemente nuestro compromiso con la responsabilidad y la coherencia hacia nuestros clientes, nuestra familia y todos aquellos que han depositado su confianza en nosotros.</p>
     </div>
 </section>

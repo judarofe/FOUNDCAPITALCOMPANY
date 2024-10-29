@@ -28,18 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             eliminarRegistro($conn, $row['id']);
             modificarRegistro($conn, $user);
             emailconfirmado($EmailDecoded, $emailUser, $emailPass);
-            header("Location: ../index.php");
+            $verifica = "El correo electrónico ha sido verificado exitosamente. Por favor, inicia sesión para continuar.";
+            header("Location: ../index.php?mensaje=".urlencode($verifica));
             exit;
         } else {
-            header("Location: ../index.php");
+            $verifica = "No se pudo verificar el correo electrónico. Por favor, inténtalo nuevamente e inicia sesión.";
+            header("Location: ../index.php?error=".urlencode($verifica));
             exit;
         }
     }else{
-        header("Location: ../index.php");
+        $verifica = "No se pudo verificar el correo electrónico. Por favor, inténtalo nuevamente e inicia sesión.";
+        header("Location: ../index.php?error=".urlencode($verifica));
         exit;
     }
 } else {
-    header("Location: ../index.php");
+    $verifica = "No se pudo verificar el correo electrónico. Por favor, inténtalo nuevamente e inicia sesión.";
+    header("Location: ../index.php?error=".urlencode($verifica));
     exit;
 }
 

@@ -206,10 +206,6 @@ section hr{
     font-family: 'NotoSans-Regular', sans-serif;
 }
 
-.botonExtra{
-    width: 50%;
-    margin: auto;
-}
 .formDepositar input,
 .formDepositar select{
     background-color: var(--azul_1);
@@ -221,6 +217,34 @@ section hr{
     background-color: var(--azul);
     border: 0.5vw solid var(--azul);
     color: var(--blanco);
+}
+
+.formDepositar_1 {
+    margin: auto;
+    background-color: var(--blanco);
+    border-radius: 2vw;
+    border: none;
+    position: relative;
+    padding: 2vw;
+    font-family: 'NotoSans-Regular', sans-serif;
+}
+
+.formDepositar_1 input,
+.formDepositar_1 select{
+    background-color: var(--azul_1);
+    border: 0.5vw solid var(--azul_1);
+    color: var(--blanco);
+}
+
+.formDepositar_1 span{
+    background-color: var(--azul);
+    border: 0.5vw solid var(--azul);
+    color: var(--blanco);
+}
+
+.botonExtra{
+    width: 50%;
+    margin: auto;
 }
 
 .btnExtra{

@@ -116,7 +116,7 @@
                         <div id="respuesta" style="color: red"></div>
                         <div class="row modalFoo">
                             <div class="col">
-                                <p style="text-align: right;"><a href=""><i>¿Has olvidado tu contraseña?</i></a></p>
+                                <p style="text-align: right;"><button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#olvidoPass"><i>¿Has olvidado tu contraseña?</i></button></p>
                             </div>
                         </div>
                     </div>
@@ -125,6 +125,36 @@
                     <div id="btnLogin">
                         <button id="btnAcceso" type="button" class="btn">ACCESO</button>
                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="olvidoPass" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="olvidoPassLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none;">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="controller/changepassword.php" method="post">
+                <div class="modal-body formDepositar_1">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="modal-title">¿Has olvidado tu contraseña?</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="email" class="form-control inputRegistro" name="EmailUser" id="EmailUser" placeholder="Email ID" required>
+                                <label for="EmailUser">Correo electrónico</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none";>
+                    <button type="submit" class="btn  botonRegistro">Enviar correo</button>
                 </div>
             </form>
         </div>

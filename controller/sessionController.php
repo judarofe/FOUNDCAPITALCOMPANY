@@ -21,6 +21,22 @@ if(isset($_GET["id"])){
     </div>';
 }
 
+if(isset($_GET["mensaje"])){
+    $prueba = '
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; z-index: 100; width: 100%; bottom: 0;">
+        <p><strong>¡Buen trabajo! </strong> '.$_GET["mensaje"].'</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+}
+
+if(isset($_GET["error"])){
+    $prueba = '
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position:fixed; z-index: 100; width: 100%; bottom: 0;">
+        <p><strong>¡Oops...! </strong> '.$_GET["error"].'</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+}
+
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     return;
 }

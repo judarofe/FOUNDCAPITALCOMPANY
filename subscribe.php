@@ -38,8 +38,8 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
             }else{
                 if($row['confirma'] === 0){
                     session_destroy();
-                    $emailUser = decoded($row['email']);
-                    header("location: confirmarEmail.php?3m41l=".urlencode(str_rot13($emailUser)));
+                    $email = decoded($row['email']);
+                    header("location: confirmarEmail.php?3m41l=".urlencode(str_rot13($email)));
                     exit;
                 }else{
                     date_default_timezone_set('America/Bogota');
@@ -48,9 +48,9 @@ if(isset($_POST['EmailUser'], $_POST['passUser'])){
                     $dispositivo = obtenerDispositivo();
                     $userName = $row['username'];
                     $email = decoded($row['email']);
-                    //accesoCuenta($fechaHoraActual,$direccionIP,$dispositivo,$userName,$email,$emailUser,$emailPass);
+                    $prueba = accesoCuenta($fechaHoraActual,$direccionIP,$dispositivo,$userName,$email,$emailUser,$emailPass);
                     header("location: dashboard.php");
-                    exit;
+                    exit;                    
                 }
             }
         } else {

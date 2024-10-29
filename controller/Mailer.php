@@ -9,7 +9,7 @@ require 'phpMailer/SMTP.php';
 
 $cssEmail = '
 .tabla {
-    width: 450px;
+    width: 550px;
     margin: auto;
     border-collapse: collapse;
     border: none;
@@ -284,10 +284,83 @@ function accesoCuenta($fechaHoraActual,$direccionIP,$dispositivo,$userName,$emai
         $mail->send();
 
         } catch (Exception $e) {
+            return ("Error de envío: " . $mail->ErrorInfo);
+        }
+}
+
+function enviaContraseña($codigo, $Email_user, $emailUser, $emailPass) {
+
+    global $cssEmail;
+        
+    $mail = new PHPMailer(true);
+
+        try {
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = $emailUser;
+            $mail->Password = $emailPass;
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+            
+            $mail->setFrom($emailUser);
+            $mail->addAddress($Email_user);
+            $mail->isHTML(true);
+            $mail->Subject = 'Contraseña restablecida';
+
+            $caracteres = mb_str_split($codigo);
+            $resultado = '';
+            foreach ($caracteres as $caracter) {
+                $resultado .= '<span class="fontRobotoMono letraDecoracion">' . htmlspecialchars($caracter) . '</span>';
+            }
+
+            $mail->Body = '
+            <html>
+                <head>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Roboto+Mono:wght@300;700&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+                    <style>'.$cssEmail.'</style>
+                </head>
+                <body>
+                    <table class="tabla oscuro claroFont" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th class="titulo fontPoppins">
+                                Contraseña establecida
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="fontRoboto">
+                                Por favor, utiliza esta contraseña de 8 caracteres para acceder a tu cuenta. Te recomendamos encarecidamente cambiarla lo antes posible para garantizar la seguridad de tu información.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fontRobotoMono">
+                                '.$resultado.'
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1 class="fontPoppins">
+                                    <span class="letraDecoracion">ELITE FOUND</span>
+                                </h1>
+                            </td>
+                        <tr>
+                    </tabla>
+                </body>
+            </html>
+            ';
+
+            $mail->send();
+        } catch (Exception $e) {
             error_log("Error de envío: " . $mail->ErrorInfo);
         }
 
-        return;
+        $verifica = "Revisa tu bandeja de entrada, tu contraseña ha sido restablecida.";
+        header("Location: ../index.php?mensaje=".urlencode($verifica));
+        exit();
 }
 
 ?>

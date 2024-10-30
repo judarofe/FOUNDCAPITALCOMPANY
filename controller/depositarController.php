@@ -62,7 +62,7 @@ if ($result->num_rows > 0) {
        $planes .= '
         <article>
             <div class="tarjeta">
-                <div class="card">
+                <div class="card" data-aos="zoom-in">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-9">

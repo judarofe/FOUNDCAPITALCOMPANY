@@ -113,3 +113,41 @@
     border: none;
     border-bottom: 0.3vw solid var(--azul);
 }
+
+@media (max-width: 768px) {
+    .seccion_1 h2{
+        font-size: 30px;
+    }
+
+    .seccion_2{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas:    ". customers transactions payments ."
+                                ". . . . ."
+                                ". info info info ."
+                                ". ilustracion ilustracion ilustracion .";
+        height: auto !important;
+    }
+
+    .texto_1 {
+        height: auto !important;
+    }
+
+    .slideHome{
+        grid-template-areas:"izquierda izquierda"
+                            "derecha derecha";
+    }
+
+    .videoSlide{
+        width: 100%;
+        overflow-y: hidden;
+        padding: 5px;
+    }
+
+    .seccion_6 .leyenda{
+        width: 94vw;
+        padding: 1vw;
+        margin: 2vw;
+    }
+
+}

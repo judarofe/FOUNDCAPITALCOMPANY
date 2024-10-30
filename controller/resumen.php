@@ -77,10 +77,10 @@
 
     if($rangoActual_5 == 0 || $rangoActual_5 == 1){
         $rangoActual = '<img src="img/home/planComercial.png" class="svgCard">';
-        $nombreRAngo = "<br>";
+        $nombreRAngo = "";
     }else{
         $rangoActual = '<img src="img/rango/'.$rangoActual_5.'.png" class="svgCard" alt="'.$rangoActual_5.'">';
-        $nombreRAngo = $row_5['nombre'];
+        $nombreRAngo = $row_5['nombre'].": ";
     }
 
     $equipo = equipo($id_user, $conn);

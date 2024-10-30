@@ -92,7 +92,7 @@
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-right">
                     <h3 class="card-title">Depósito</h3>
                     <br>
                         <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112.351 76.093">
@@ -114,7 +114,7 @@
 
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-left">
                     <h3 class="card-title">Interés total ganado</h3>
                     <br>
                     <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.135 94.24">
@@ -127,7 +127,7 @@
 
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_intereses?><br><br></p></div>
+                        <div class="inputCard"><p class="card-text"><strong>Total interés:</strong> $US <?php echo $total_intereses?><br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -135,13 +135,13 @@
 
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-right">
                     <h3 class="card-title">Referidos</h3>
                     <br>
                     <img class="svgCard" src="img/home/Grupo 21.png" alt="">
                     <br>
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text"><strong>Bono de red: </strong>$US <?php echo $total_referidos?><br><strong>Volumen de equipo: </strong>$US  <?php echo $volumen?></p></div>
+                        <div class="inputCard"><p class="card-text"><strong>Bono de red: </strong>$US <?php echo $total_referidos?><br><br></p></div>
                     </div>
                 </div>
             </div>
@@ -149,13 +149,13 @@
 
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-left">
                     <h3 class="card-title">Bonos liderazgo</h3>
                     <br>
                         <?php echo $rangoActual?>
                     <br>          
                     <div class="card-body">
-                        <div class="inputCard"><p class="card-text">$US <?php echo $total_liderazgo?><br><strong><?php echo $nombreRAngo ?></strong></p></div>
+                        <div class="inputCard"><p class="card-text"><strong><?php echo $nombreRAngo ?> </strong>$US <?php echo $total_liderazgo?><br><strong>Volumen de equipo: </strong>$US  <?php echo $volumen?></p></div>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
         <!--
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-right">
                     <h3 class="card-title">Herramientas</h3>
                     <br>
                     <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">
@@ -179,7 +179,7 @@
 
         <div class="col">
             <div class="container">
-                <div class="card">
+                <div class="card" data-aos="zoom-in-left">
                     <h3 class="card-title">Simulador</h3>
                     <br>
                     <svg class="svgCard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.002 48.913">

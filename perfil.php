@@ -109,7 +109,15 @@
                                     <div class="col">
                                         <div class="mb-3 text-center">
                                             <label for="Direccion" class="form-label">Email</label>
-                                            <input id="Direccion" type="text" class="form-control" value="<?php echo $email?>" readonly>
+                                            <input id="Direccion" type="text" class="form-control" value="http://192.168.18.31/pd/?id=<?php echo urlencode($userName)?>" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3 text-center">
+                                            <label for="linkReferido" class="form-label">Link referido</label>
+                                            <input id="linkReferido" type="text" class="form-control" value="<?php echo $email?>" readonly>
                                         </div>
                                     </div>
                                 </div>

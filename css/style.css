@@ -29,6 +29,7 @@ h1, h2, h3 {
 p, a, table, li {
     font-family: 'NotoSans-Regular', sans-serif;
     font-size: 1.3vw;
+    text-align: justify;
 }
 
 body{
@@ -314,4 +315,46 @@ footer{
     padding: 0.5vw;
     text-align: center;
     border-radius: 0.5vw;
+}
+
+@media (max-width: 768px) {
+    h1, h2, h3 {
+        font-size: 15px;
+    }
+
+    p{
+        font-size: 10px;
+    }
+
+    section{
+        padding: 1vw;
+        padding-top: 2vw;
+    }
+
+    .galeriaX4 {
+        margin: 5vw;
+        display: grid;
+        gap: 3vw;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .articulos article{
+        width: 95%;
+    }
+
+    .btn-articule{
+        font-size: 10px;
+    }
+
+    .tarjeta h5{
+        font-size: 15px;
+    }
+    
+    .tarjeta h6{
+        font-size: 10px;
+    }
+       
+    .tarjeta svg {
+        height: 5vw;
+    }
 }

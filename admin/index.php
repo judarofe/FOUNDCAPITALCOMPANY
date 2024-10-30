@@ -30,6 +30,7 @@
                                 <th>Usuario</th>
                                 <th>Email</th>
                                 <th>Actualizar</th>
+                                <th>Entrar como</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $diaInicial = diaInicial();
     $diaFinal = diaFinal($diaInicial, $tiempo, $multiplicador);
     $contarDias = contarDias($diaInicial, $diaFinal);
+    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
         
     if($fijo !== ""){
         $ganancias = gananciasDiarias($inversion, $multiplicador, $fijo, $contarDias);
@@ -54,8 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $verficarReferidoNoBono = verficarReferidoNoBono($id_user, $conn); // falta verificar
-
-    cambiarEstado(1, $diaInicial, $id_depositos, $diaFinal, $conn);
 
     echo $bonos;
 
@@ -370,21 +369,7 @@ function distribuirBonodeRed($buscarReferidos, $id_user, $inversionPersonal, $co
 }
 
 function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
-    $sqlVerificacion = "SELECT EXISTS(SELECT 1 FROM beneficiosreferidos WHERE user = ? AND referido = ?)";
-    $stmtVerificacion = $conn->prepare($sqlVerificacion);
-    if (!$stmtVerificacion) {
-        die("Error en la preparación de la consulta: " . $conn->error);
-    }
-    $stmtVerificacion->bind_param("is", $id_user, $referido);
-    $stmtVerificacion->execute();
-    $stmtVerificacion->bind_result($existe);
-    $stmtVerificacion->fetch();
-    $stmtVerificacion->close();
-
-    if ($existe) {
-        return false;
-    } else {
-        $fechaFormateada = date('Y-m-d');
+    $fechaFormateada = date('Y-m-d');
         $sql = "INSERT INTO beneficiosreferidos (user, fecha, valor, referido) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
@@ -393,7 +378,6 @@ function AgregarBonoDeRed($id_user, $Ganancias, $referido, $conn) {
         $stmt->bind_param("isds", $id_user, $fechaFormateada, $Ganancias, $referido);
         $stmt->execute();
         $stmt->close();
-    }
     return true;
 }
 

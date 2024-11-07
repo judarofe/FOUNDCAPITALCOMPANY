@@ -50,13 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $buscarReferidos = substr($buscarReferidos, 0, -1);
         actualizarRangoReferidos($buscarReferidos, $conn);
         $bonodeREdPreuba = distribuirBonodeRed($buscarReferidos, $id_user, $inversion, $conn);
-
-        echo "con bono";
     }
 
-    $verficarReferidoNoBono = verficarReferidoNoBono($id_user, $conn); // falta verificar
+    $verificarReferidoNoBono = verificarReferidoNoBono($id_user, $inversion, $conn); // falta verificar
 
-    echo $bonos;
+    echo $verificarReferidoNoBono;
 
 }
 
@@ -427,15 +425,64 @@ function verificarRango($id_user, $conn) {
     return $result->fetch_assoc();
 }
 
-function verficarReferidoNoBono($id_user, $conn){ // falta verificar
-    $sql = "SELECT padre FROM referidos WHERE hijo = $id_user";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        while($row = $result->fetch_assoc()) {
-            $Registro = $row["padre"];
-        }
+function verificarReferidoNoBono($id_user, $inversion, $conn) {
+
+    $stmt = $conn->prepare("SELECT padre FROM referidos WHERE hijo = ?");
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $Registro = null;
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $Registro = $row["padre"];
     }
 
-    return $Registro;
+    if ($Registro !== null) {
+        $rango = verificarRango($Registro, $conn);
+        if ($rango !== null && isset($rango['rango'])) {
+            $rango_2 = (int)$rango['rango'];
+        } else {
+            $rango_2 = 0;
+        }
+
+        if ($rango_2 >= 1) {
+            return false;
+        }
+    }
+    
+    $porcentaje = porcentajeGanaciaNoBono($Registro, $conn);
+
+    if($porcentaje != false){
+        $Ganancias = (float)$inversion * ($porcentaje / 100);
+        AgregarBonoDeRed($Registro, $Ganancias, $id_user, $conn);
+        return "si se pudo";
+    }else{
+        return "no se pudo";
+    }
 }
+
+function porcentajeGanaciaNoBono($id_user, $conn) {
+    $sql = "
+        SELECT p.fijoPorcentaje
+        FROM depositos d
+        JOIN planes p ON d.id_plan = p.id_plan
+        WHERE d.id_user = ? AND d.bono = 0
+        LIMIT 1";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_user);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    
+    if ($row = $result->fetch_assoc()) {
+        return $row['fijoPorcentaje'];
+    } else {
+        return false;
+    }
+}
+
+
 ?>

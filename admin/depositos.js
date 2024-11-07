@@ -19,7 +19,7 @@ function procesar(dato){
                 },
                 success: function(data){
                     location.reload();
-                    //alert(data);
+                    //console.log(data);
                 }
             });
         }

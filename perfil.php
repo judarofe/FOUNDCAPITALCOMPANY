@@ -35,9 +35,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link" href="referidos.php">Referidos</a>
                     </li>
@@ -109,7 +111,7 @@
                                     <div class="col">
                                         <div class="mb-3 text-center">
                                             <label for="Direccion" class="form-label">Email</label>
-                                            <input id="Direccion" type="text" class="form-control" value="http://192.168.18.31/pd/?id=<?php echo urlencode($userName)?>" readonly>
+                                            <input id="Direccion" type="text" class="form-control" value="<?php echo $email?>" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +119,7 @@
                                     <div class="col">
                                         <div class="mb-3 text-center">
                                             <label for="linkReferido" class="form-label">Link referido</label>
-                                            <input id="linkReferido" type="text" class="form-control" value="<?php echo $email?>" readonly>
+                                            <input id="linkReferido" type="text" class="form-control" value="http://192.168.18.31/pd/?id=<?php echo urlencode($userName)?>" readonly>
                                         </div>
                                     </div>
                                 </div>

@@ -1,12 +1,19 @@
 <?php
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+
+    if($_SESSION["UserTipo"] == 1){
+        $enlaceUser = "admin/index.php";
+    }else{
+        $enlaceUser = "perfil.php";
+    }
+
     $menuPerfil = '
     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
         '.$_SESSION['userName'].'
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a href="perfil.php" class="dropdown-item">Perfil</a>
+            <a href="'.$enlaceUser.'" class="dropdown-item">Perfil</a>
         </li>
         <li>
             <form method="post" action="./controller/btnLogout.php">
@@ -15,6 +22,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         </li>
     </ul>
     ';
+
 } else {
     $prueba = '';
     $menuPerfil = '

@@ -39,9 +39,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="depositar.php">Depósitos</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link active" href="referidos.php">Referidos</a>
                     </li>

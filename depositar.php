@@ -43,9 +43,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="depositar.php">Depósitos</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="retiros.php">Retiros</a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link" href="referidos.php">Referidos</a>
                     </li>
@@ -134,6 +136,11 @@
                                                 <option value="" selected disabled>Seleccione</option>
                                                 <?php echo $selectPlanes; ?>
                                             </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <?php echo $mensajeBilletera;?>
+                                            </div>
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="BilleteraInversion" class="form-label">Selección billetera</label>
